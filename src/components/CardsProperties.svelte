@@ -17,7 +17,6 @@
         <div class="col">
           <div class="card h-100" style="width: 18rem; margin: auto;">
             <!-- <img src={propertie.img_url || $imagePreview} class="card-img-top" alt={propertie.title} style="height: 13rem; object-fit: cover;"> -->
-
             
             <div id={propertie.title.split(' ').join('')} class="carousel carousel-dark slide" data-bs-ride="true">
               <div class="carousel-indicators">

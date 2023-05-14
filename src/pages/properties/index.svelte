@@ -43,7 +43,9 @@
     <CardsProperties />
 
     {#if $cardsRenders}
-        <CardsRender />
+      <CardsRender />
+      <CardsRender />
+      <CardsRender />
     {/if}
 
   </div>  

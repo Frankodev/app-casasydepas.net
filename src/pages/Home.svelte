@@ -1,7 +1,3 @@
-<script>
-  import { claim_space } from "svelte/internal";
-
-</script>
 
   
 <h1>Home</h1>
