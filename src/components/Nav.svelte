@@ -5,14 +5,13 @@
   import { link } from 'svelte-spa-router'
   import active from 'svelte-spa-router/active'
 
-  // import { location } from 'svelte-spa-router'
-  // console.log('location', $location)
 
   // user de stores - variable de estado global
   import { user } from '../stores/authStore.js'
 
   const handleLogOut = async () => {
     await auth.signOut()
+    user.set(null)
   }
 
 </script>
@@ -44,11 +43,13 @@
 
           {#if $user}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active-link" href="/#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi perfil</a>
+            <a class="nav-link dropdown-toggle active-link" href="/#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi cuenta</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" use:link use:active href="/mis-propiedades">Administrar mis propiedades</a></li>
+              <li><a class="dropdown-item" use:link use:active href="/mi-cuenta/#/mis-propiedades">Administrar mis propiedades</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" use:link use:active href="/mi-informacion">Mi información</a></li>
+              <li><a class="dropdown-item" use:link use:active href="/mi-cuenta/#/publicar-propiedades">Publicar propiedad</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" use:link use:active href="/mi-cuenta/#/mi-informacion">Mi información</a></li>
             </ul>
           </li>
           {/if}

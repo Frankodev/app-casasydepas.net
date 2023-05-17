@@ -55,7 +55,7 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="ModalLabel">Publicar mis propiedades</h1>
+          <h1 class="modal-title fs-5" id="ModalLabel">Coworking Inmobiliario</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -69,8 +69,18 @@
 
             <button type="submit" class="btn btn-primary">Ingresar</button>
           </form>
+          <div class="pt-4">
+            <h6 class="text-dark">No tienes una cuenta?<a href="https://wa.me/5217445889420" class="link-register" target="_blank">Regístrate</a></h6>
+          </div>
         </div>
 
       </div>
     </div>
   </div>
+
+  <style>
+    .link-register {
+      color: #6610f2;
+      margin-left: .2rem;
+    }
+  </style>
