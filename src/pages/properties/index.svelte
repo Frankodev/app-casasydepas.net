@@ -8,6 +8,8 @@
   // components
   import CardsRender from "../../components/CardsRender.svelte";
   import CardsProperties from "../../components/CardsProperties.svelte";
+  // toastify-js
+  import {toastifyMessage} from '../../lib/toastify.js'
   // dataProperties de stores - variable de estado global
   import { dataProperties, cardsRenders } from "../../stores/dataProperties.js";
 
@@ -24,6 +26,7 @@
         console.log('dataProperties-global', $dataProperties)
       },
       (err) => {
+        toastifyMessage(`Ocurrio un error ${err}`, 'deny');
         console.log(err);
       }
     );

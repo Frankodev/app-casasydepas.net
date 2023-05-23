@@ -38,7 +38,7 @@
 
           <li class="nav-item">
             <!-- class="nav-link disabled" -->
-            <a class="nav-link" use:link use:active href="/marketplace">Marketplace</a>
+            <a class="nav-link disabled" use:link use:active href="/marketplace">Marketplace</a>
           </li>
 
           {#if $user}
