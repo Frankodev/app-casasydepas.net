@@ -19,20 +19,6 @@
     auth.onAuthStateChanged( (userLog) => {
       userLog ? user.set(userLog) : user.set(null);
       $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
-
-      // función que consulta las propiedades del usuario logeado
-      // let properties = [];
-      // if ($user) {
-      //   const docsRef = collection(db, "properties");
-      //   const queryRef = query(docsRef, where("user", "==", `${$user.email}`));
-
-      //   const querySnapshot = await getDocs(queryRef);
-      //   querySnapshot.forEach((propertie) => {
-      //     properties.push(propertie.data());
-      //   });
-      //   propertiesUser.set(properties);
-      //   cardsRenders.set(false);
-      // }
     });    
   });
 </script>
