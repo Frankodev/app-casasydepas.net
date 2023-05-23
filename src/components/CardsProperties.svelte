@@ -114,9 +114,9 @@
           </h5>
           <h4 class="card-title">{`$${Number(propertie.price).toLocaleString('en')} MXN` || "0.00"}</h4>
           <div class="d-flex gap-3 mb-2" style="height: 21px;">
-            <div class="d-flex gap-1"><spam>{propertie.bedroom || '?'}</spam> <spam><img src="/icons/bed.svg" alt="bed"></spam></div>
+            <div class="d-flex gap-1"><spam>{propertie.bedroom || '?'}</spam> <spam><img src="/icons/bed.svg" alt="bedroom"></spam></div>
             <div class="d-flex gap-1"><spam>{propertie.bathroom || '?'}</spam> <spam><img src="/icons/shower.svg" alt="bathroom"></spam></div>
-            <div class="d-flex gap-1"><spam>{`${propertie.building} m²` || '?'}</spam> <spam><img src="/icons/rule.svg" alt="rule"></spam></div>
+            <div class="d-flex gap-1"><spam>{`${propertie.building} m²` || '?'}</spam> <spam><img src="/icons/rule.svg" alt="building"></spam></div>
           </div>
           <p class="card-text ellipsis">
             {`${propertie.description.substring(0,51)}...` ||

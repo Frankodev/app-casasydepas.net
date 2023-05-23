@@ -19,18 +19,23 @@
 
   // form - object constructor propertie
   const email = $user.email
+  const today = new Date().toLocaleDateString('es-MX')
   const propertie = {
     user: email,
-    img_url_1: '',
-    img_url_2: '',
-    img_url_3: '',
+    time_stamp: today,
+    img_url_1: "",
+    img_url_2: "",
+    img_url_3: "",
     title: "",
+    bedroom: "",
+    bathroom: "",
+    building: "",
     description: "",
     price: 0,
     commission: 0,
     shared: 0,
-    transaction: '',
-    tel: '',
+    transaction: "",
+    tel: "",
   };
   console.log('email', email)
   
