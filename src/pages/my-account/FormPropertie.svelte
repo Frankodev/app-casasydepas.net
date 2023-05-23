@@ -13,7 +13,6 @@
     auth.onAuthStateChanged((userLog) => {
       userLog ? user.set(userLog) : user.set(null);
       $user ? replace("/mi-cuenta/#/publicar-propiedades") : push("/");
-      // userLog ? email.set(userLog.email) : email.set(null)
     });
   });
 
@@ -32,7 +31,7 @@
     transaction: '',
     tel: '',
   };
-  console.log('email', email)
+  console.log('email:', email)
   
   // función que crea una nueva propiedad en la db firestore - dentro de su usuario
   const handleSubmit = async () => {

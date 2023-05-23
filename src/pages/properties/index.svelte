@@ -13,7 +13,7 @@
   // dataProperties de stores - variable de estado global
   import { dataProperties, cardsRenders } from "../../stores/dataProperties.js";
 
-  onMount(async () => {
+  onMount(() => {
     // función que trae las propiedades que están almacenadas en firestore
     onSnapshot(
       collection(db, "properties"),
