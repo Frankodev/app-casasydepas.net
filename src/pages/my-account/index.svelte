@@ -15,28 +15,26 @@
   import { cardsRenders } from "../../stores/dataProperties.js";
 
   // función que comprueba si un usuario esta logeado, si lo esta, carga su pagina de propiedades
-  onMount(() => {
-    auth.onAuthStateChanged(async (userLog) => {
+  onMount(async () => {
+    auth.onAuthStateChanged( (userLog) => {
       userLog ? user.set(userLog) : user.set(null);
       $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
 
       // función que consulta las propiedades del usuario logeado
-      let properties = [];
-      if ($user) {
-        const docsRef = collection(db, "properties");
-        const queryRef = query(docsRef, where("user", "==", `${$user.email}`));
+      // let properties = [];
+      // if ($user) {
+      //   const docsRef = collection(db, "properties");
+      //   const queryRef = query(docsRef, where("user", "==", `${$user.email}`));
 
-        const querySnapshot = await getDocs(queryRef);
-        querySnapshot.forEach((propertie) => {
-          properties.push(propertie.data());
-        });
-        propertiesUser.set(properties);
-        cardsRenders.set(false);
-      }
-    });
+      //   const querySnapshot = await getDocs(queryRef);
+      //   querySnapshot.forEach((propertie) => {
+      //     properties.push(propertie.data());
+      //   });
+      //   propertiesUser.set(properties);
+      //   cardsRenders.set(false);
+      // }
+    });    
   });
-
-  console.log("propertiesUser MY ACCOUNT", $propertiesUser);
 </script>
 
 <div class="container">
