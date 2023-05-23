@@ -9,7 +9,7 @@
   import CardsRender from "../../components/CardsRender.svelte";
   import CardsProperties from "../../components/CardsProperties.svelte";
   // toastify-js
-  import {toastifyMessage} from '../../lib/toastify.js'
+  import { toastifyMessage } from "../../lib/toastify.js";
   // dataProperties de stores - variable de estado global
   import { dataProperties, cardsRenders } from "../../stores/dataProperties.js";
 
@@ -23,21 +23,23 @@
         });
         dataProperties.set(data);
         cardsRenders.set(false);
-        console.log('dataProperties-global', $dataProperties)
+        console.log("dataProperties-global", $dataProperties);
       },
       (err) => {
-        toastifyMessage(`Ocurrio un error ${err}`, 'deny');
+        toastifyMessage(`Ocurrio un error ${err}`, "deny");
         console.log(err);
       }
     );
   });
-
 </script>
 
 <div class="container">
   <div class="text-center">
     <h1>Ventas y Rentas</h1>
-    <h6>Encuentra las mejores propiedades de la red de casasydepas.net - Coworking Inmobiliario</h6>
+    <h6>
+      Encuentra las mejores propiedades de la red de casasydepas.net - Coworking
+      Inmobiliario
+    </h6>
   </div>
   <hr />
 
@@ -65,5 +67,12 @@
         tipo de propiedad (casa, departamento, terreno), etc.
       </li>
     </ul>
+  </div>
+  <div>
+    <h4>Tareas firestore</h4>
+    <ol>
+      <li>configurar la consulta a firestore limitada a 10 documentos cuando se monte la pagina</li>
+      <li>crear un boton con una funcion que al hacer click haga la consulta de 10 documentos más y renderizar las 20 propiedades</li>
+    </ol>
   </div>
 </div>

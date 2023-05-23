@@ -3,16 +3,13 @@
   import { fade } from "svelte/transition";
 
   // firebase
-  import { auth, db } from "../../firebase/config.js";
-  import { collection, getDocs, query, where } from "firebase/firestore";
+  import { auth } from "../../firebase/config.js";
   // components
   import CardsProperties from "../../components/CardsProperties.svelte";
-  import CardsRender from "../../components/CardsRender.svelte";
   // spa-router
   import { link, push, replace } from "svelte-spa-router";
   // variable de estado global
   import { user, propertiesUser } from "../../stores/authStore.js";
-  import { cardsRenders } from "../../stores/dataProperties.js";
 
   // función que comprueba si un usuario esta logeado, si lo esta, carga su pagina de propiedades
   onMount(async () => {
@@ -28,13 +25,13 @@
     <h1>Mis propiedades</h1>
     <h6>Bienvenido a la red de casasydepas.net - Coworking Inmobiliario</h6>    
   </div>
-  <hr />
+  <hr style="color: transparent; margin: 2rem 0;" />
 
   <div class="container" in:fade={{ duration: 600 }}>
+    <div class="container-btn-upload-propertie">
+      <a use:link href="/mi-cuenta/#/publicar-propiedades" class="btn btn-primary upload-propertie">Publicar propiedad</a>
+    </div>
 
-    {#if $cardsRenders}
-      <CardsRender />
-    {/if}
     {#if $propertiesUser.length}
       <CardsProperties properties={$propertiesUser} />
     {:else}
@@ -52,31 +49,32 @@
   <!-- Eliminar sección de abajo -->
   <hr />
   <ul>
-    <li>el asesor podra administrar las propiedades</li>
+    <li>el asesor podra administrar las propiedades que haya publicado previamente</li>
     <li>
       tendra un enlace al formulario para dar de alta una propiedad en VENTA o
-      RENTA
+      RENTA, <strong>este enlace desaparecera al momento de tener 10 propiedades dadas de alta</strong>
     </li>
     <li>
-      podra eliminar propiedades (si ya la vendio o ya no quiero compartir la
-      propiedad con los demas asesores y publico en general)
+      podra eliminar propiedades <strong>si ya la vendio o ya no quiero compartir la
+        propiedad con los demas asesores y publico en general</strong>
     </li>
   </ul>
 
   <hr />
   <h3>configuración de firestore - base de datos</h3>
   <ul>
-    <li>
-      1er caso, el usuario se logea y no tiene ninguna propiedad dada de alta,
-      MOSTRAR mensaje de bienvenida.
-    </li>
-    <li>
-      2do caso, el usuario ya dio de alta 1 propiedad, cuando se LOGEA de nuevo,
-      mostrar las propiedades que tiene dadas de alta.
-    </li>
-    <li>
-      3er caso, mientras el usuario este LOGEADO, mostrar las propiedades que
-      tenga dadas de alta y el formulario para dar de alta una nueva propiedad
-    </li>
+    <li>Establecer una configuración para que el asesor solo pueda dar de alta 10 propiedades en VENTA o RENTA</li>
   </ul>
 </div>
+
+<style>
+  .container-btn-upload-propertie {
+    position: relative;
+  }
+
+  .upload-propertie {
+    position: absolute;
+    top: -2.4rem;
+    right: .4rem;
+  }
+</style>

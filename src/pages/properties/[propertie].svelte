@@ -24,15 +24,23 @@
     {#each $viewPropertie as propertie}
     
     <div class="mt-3">
+      <h4 class="text-primary">IMAGENES</h4>
       <img src={propertie.img_url_1} width="250" alt={propertie.title}>
       <img src={propertie.img_url_2} width="250" alt={propertie.title}>
       <img src={propertie.img_url_3} width="250" alt={propertie.title}>
     </div>
+    <h4 class="text-primary">TITULO</h4>
     <h1>{params.propertie.split('-').join(' ')}</h1>
+    <h4 class="text-primary">PRECIO</h4>
     <p>${propertie.price}</p>
+    <h4 class="text-primary">DESCRIPCION</h4>
     <p>{propertie.description}</p>
+    <h4 class="text-primary">TELEFONO CONTACTO</h4>
     <a href={`tel:${propertie.tel}`} class="btn btn-primary">Contactar asesor</a>
     {/each}
+    
+    <h4 class="text-primary">COMO SE ENTREGA</h4>
+    <h4 class="text-primary">COMISION Y CUANTO COMPARTE - <strong>SOLO A ASESORES LOGEADOS</strong></h4>
     
   </div>
 

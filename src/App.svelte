@@ -14,16 +14,16 @@
 
   // variable de estado global
   import { user, userEmail, propertiesUser } from "./stores/authStore.js";
-  import { cardsRenders } from "./stores/dataProperties.js";
+  import { dataProperties, cardsRenders } from "./stores/dataProperties.js";
 
   onMount(() => {
     // función que comprueba si un usuario esta logeado
     auth.onAuthStateChanged(async (userLog) => {
       userLog ? user.set(userLog) : user.set(null);
-      userLog ? userEmail.set(userLog.email) : userEmail.set(null)
+      userLog ? userEmail.set(userLog.email) : userEmail.set(null);
       $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
 
-      $user ? console.log("user App", $user.email) : console.log('NO hay user')
+      $user ? console.log("user App", $user.email) : console.log("NO hay user");
 
       // función que consulta las propiedades del usuario logeado
       let properties = [];
@@ -37,12 +37,11 @@
         properties.push(propertie.data());
       });
       propertiesUser.set(properties);
-      cardsRenders.set(false);      
+      dataProperties.set(properties);
+      // cardsRenders.set(false);
       console.log("propertiesUser-global", $propertiesUser);
     });
   });
-
-
 </script>
 
 <main>
