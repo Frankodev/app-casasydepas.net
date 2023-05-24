@@ -113,6 +113,7 @@
             {`${propertie.title.substring(0,28)}` || "No hay un título para esta propiedad"}
           </h5>
           <h4 class="card-title">{`$${Number(propertie.price).toLocaleString('en')} MXN` || "0.00"}</h4>
+          <!-- <h4 class="card-title">${propertie.price || "0.00"}</h4> -->
           <div class="d-flex gap-3 mb-2" style="height: 21px;">
             <div class="d-flex gap-1"><spam>{propertie.bedroom || '?'}</spam> <spam><img src="/icons/bed.svg" alt="bedroom"></spam></div>
             <div class="d-flex gap-1"><spam>{propertie.bathroom || '?'}</spam> <spam><img src="/icons/shower.svg" alt="bathroom"></spam></div>
@@ -127,16 +128,15 @@
             use:link
             href={`/ventas-rentas/#/${propertie.title.split(" ").join("-")}`}
             on:click={getPorpertie(propertie.title)}
-            class="btn btn-primary">Ver más</a
+            class="btn btn-primary">Ver más info</a
           >
         </div>
 
         {#if $user}
-          <div class="card-footer">
-            <small class="text-muted"
-              >Comparto el {propertie.shared || 0}% de mi comisión del {propertie.commission ||
-                0}%</small
-            >
+          <div class="card-footer text-center">
+            <small class="text-muted">
+              Comisión {propertie.commission ||"0%"}, Comparto el {propertie.shared || "0%"}
+            </small>
           </div>
         {/if}
       </div>
