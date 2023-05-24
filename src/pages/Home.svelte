@@ -13,6 +13,8 @@
     <h2>Fecha:</h2>
     <div style="background-color: aquamarine;">
       <p>timeStamp: "{today}"</p>
+      <p>link de easybroker para tomar diseño</p>
+      <p>https://www.easybroker.com/mx/inmueble/santorini-villas-en-preventa</p>
     </div>
   </div>
 
