@@ -71,8 +71,14 @@
   <div>
     <h4>Tareas firestore</h4>
     <ol>
-      <li>configurar la consulta a firestore limitada a 10 documentos cuando se monte la pagina</li>
-      <li>crear un boton con una funcion que al hacer click haga la consulta de 10 documentos más y renderizar las 20 propiedades</li>
+      <li>
+        configurar la consulta a firestore limitada a 10 documentos cuando se
+        monte la pagina
+      </li>
+      <li>
+        crear un boton con una funcion que al hacer click haga la consulta de 10
+        documentos más y renderizar las 20 propiedades
+      </li>
     </ol>
   </div>
 </div>
