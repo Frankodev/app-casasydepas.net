@@ -12,22 +12,27 @@
   // spa-router
   import { push, replace } from "svelte-spa-router";
   // user de stores - variable de estado global
-  import { user, propertiesUser, imagesPropertie } from "../../stores/authStore.js";
+  import {
+    user,
+    propertiesUser,
+    imagesPropertie,
+  } from "../../stores/authStore.js";
   // toastify-js
   import { toastifyMessage } from "../../lib/toastify.js";
 
   // variables de entorno
+  let urlImage = "";
+  let images = [];
+
+  // constructor objeto propertie
   const allPropertiesUser = $propertiesUser;
   const email = $user.email;
   const today = new Date().toLocaleDateString("es-MX");
-  let urlImage = "";
-  let images = [];
+  let imagesUrls = $imagesPropertie;
   const propertie = {
     user: email,
     time_stamp: today,
-    img_url_1: "",
-    img_url_2: "",
-    img_url_3: "",
+    imagesUrl: imagesUrls,
     transaction: "venta",
     title: "",
     property: "casa",
@@ -38,8 +43,8 @@
     land: "",
     building: "",
     bedroom: "3",
-    bathroom: "2",
-    mid_bathroom: "1",
+    bathroom: "1",
+    mid_bathroom: "0",
     description: "",
     notes: "",
   };
@@ -67,12 +72,14 @@
 
   // función que carga las imagenes en el storage
   const handleImages = async (event) => {
-    // colocar cada url a la posicion de los espacios de las imagenes que puede tener cada propiedad
 
-    // tener un contador de imagenes, para que el usuario sepa que solo puede cargar 10 imagenes.
-    // crear un indicardor dentro del formulario que solo puede cargar 10 imagenes
-    // cada que cargue una imagen sobre escribir el indicador de cuantas imagenes aun puede subir
-    // ejemplo de indicador 10/10 -> 9/10 -> 8/10 -> etc.
+    // CARGAR
+    // 1.1 -> almacenar las imagenes en un array
+    // 1.2 -> guardar el array de imagenes dentro del objeto propertie en firebase: [link, linl, link, etc]
+
+    // DESCARGAR
+    // 1.1 -> extraer las imagenes con un bucle
+    // 1.2 -> renderizar las imagenes dentro de las etiquetas img: <img src={link} />
 
     try {
       const img = event.target.files[0];
@@ -82,7 +89,7 @@
       urlImage = await getUrl(imagePath);
 
       images.push(urlImage);
-      imagesPropertie.set(images)
+      imagesPropertie.set(images);
       console.log("array imagenes", images);
 
       // console.log("url imagen", urlImage);
@@ -94,7 +101,7 @@
   };
 </script>
 
-<div class="container">
+<div class="container relative">
   <div class="text-center">
     <h1>Publicar propiedad</h1>
     <p>
@@ -104,29 +111,53 @@
   </div>
   <hr />
 
-
-  <div class="container">
+  <div class="carrousel-images">
     <div class="d-flex gap-1">
+      {#if !$imagesPropertie.length}
+        <div
+          class="border border-2 border-primary border-opacity-75 rounded d-flex justify-content-center align-items-center"
+          style="overflow: hidden; object-fit: cover; width: 104px; height: 104px;"
+        >
+          <img
+            src="/icons/add_photo.svg"
+            alt="add_photo"
+            width="48"
+            height="48"
+          />
+        </div>
+      {/if}
+
       {#each $imagesPropertie as image}
-      <div class="border border-2 border-primary border-opacity-75 rounded" style="overflow: hidden; object-fit: cover;">
-        <img src={image} alt="" width="200" height="200">
-      </div>
+        <div
+        >
+          <img
+            src={image}
+            alt="Imagen de la propiedad"
+            class="border rounded border-2 border-primary border-opacity-75"
+            style="object-fit: cover;"
+            width="148"
+            height="148"
+          />
+        </div>
       {/each}
     </div>
   </div>
 
-  <form>
-    <div class="mb-3 pt-3">
+  <form class="form-properties" on:submit|preventDefault={handleSubmit}>
+    <div class="mb-5">
+      {#if $imagesPropertie.length < 10}
       <input
+        name="files"
+        id="files"
         class="form-control"
+        style="background-color: #f8f8f8;"
         type="file"
-        multiple
         on:change={handleImages}
       />
+      {/if}
+      <label for="files" class="form-label badge text-bg-primary">Sube las mejores fotos <span class="badge bg-danger">{$imagesPropertie.length}/10</span></label>
     </div>
-  </form>
 
-  <form class="form-properties" on:submit|preventDefault={handleSubmit}>
     <div class="row mb-3">
       <div class="col col-auto">
         <label for="transaction" class="form-label">Operación</label>
@@ -287,13 +318,10 @@
           id="bathroom"
           bind:value={propertie.bathroom}
         >
-          <option value="1">1</option>
-          <option value="2" selected>2</option>
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
           <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="+7">+7</option>
+          <option value="+4">+4</option>
         </select>
       </div>
 
@@ -305,13 +333,10 @@
           id="mid_bathroom"
           bind:value={propertie.mid_bathroom}
         >
+          <option value="0" selected>0</option>
           <option value="1">1</option>
-          <option value="2" selected>2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="+7">+7</option>
+          <option value="2">2</option>
+          <option value="+3">+3</option>
         </select>
       </div>
     </div>
@@ -350,8 +375,23 @@
 </div>
 
 <style>
+  .relative {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .carrousel-images {
+    width: 100%;
+    position: relative;
+    overflow: scroll;
+  }
+
+  .carrousel-images::-webkit-scrollbar {
+    display: none;
+}
+
   .form-properties {
-    margin: 2rem 0;
+    margin: 1rem 0 2rem 0;
   }
 
   .row {
