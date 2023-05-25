@@ -42,11 +42,11 @@
   });
 </script>
 
-<main>
+<div>
   <Nav />
   <Router {routes} />
 
   <slot />
 
   <ModalSignIn />
-</main>
+</div>

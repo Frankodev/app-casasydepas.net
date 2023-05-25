@@ -1,26 +1,27 @@
 <script>
   import { onMount } from "svelte";
   // firebase
-  import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-  import { auth, db } from "../../firebase/config.js";
+  import { addDoc, collection } from "firebase/firestore";
+  import {
+    auth,
+    db,
+    storageRef,
+    uploadImages,
+    getUrl,
+  } from "../../firebase/config.js";
   // spa-router
   import { push, replace } from "svelte-spa-router";
   // user de stores - variable de estado global
-  import { user, propertiesUser } from "../../stores/authStore.js";
+  import { user, propertiesUser, imagesPropertie } from "../../stores/authStore.js";
   // toastify-js
   import { toastifyMessage } from "../../lib/toastify.js";
 
-  // función que comprueba si un usuario esta logeado, si lo esta, carga su pagina de usuario
-  onMount(() => {
-    auth.onAuthStateChanged((userLog) => {
-      userLog ? user.set(userLog) : user.set(null);
-      $user ? replace("/mi-cuenta/#/publicar-propiedades") : push("/");
-    });
-  });
-
-  // form -constructor new propertie
+  // variables de entorno
+  const allPropertiesUser = $propertiesUser;
   const email = $user.email;
   const today = new Date().toLocaleDateString("es-MX");
+  let urlImage = "";
+  let images = [];
   const propertie = {
     user: email,
     time_stamp: today,
@@ -43,17 +44,50 @@
     notes: "",
   };
 
+  // función que comprueba si un usuario esta logeado, si lo esta, carga su pagina de usuario
+  onMount(() => {
+    auth.onAuthStateChanged((userLog) => {
+      userLog ? user.set(userLog) : user.set(null);
+      $user ? replace("/mi-cuenta/#/publicar-propiedades") : push("/");
+    });
+  });
+
   // función que crea una nueva propiedad en la db firestore - dentro de su usuario
-  const allPropertiesUser = $propertiesUser;
   const handleSubmit = async () => {
     console.log("enviando propiedad ...", propertie);
-
     allPropertiesUser.push(propertie);
-
     try {
       await addDoc(collection(db, "properties"), propertie);
       replace("/mi-cuenta/#/mis-propiedades");
       propertiesUser.set(allPropertiesUser);
+    } catch (error) {
+      toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
+    }
+  };
+
+  // función que carga las imagenes en el storage
+  const handleImages = async (event) => {
+    // colocar cada url a la posicion de los espacios de las imagenes que puede tener cada propiedad
+
+    // tener un contador de imagenes, para que el usuario sepa que solo puede cargar 10 imagenes.
+    // crear un indicardor dentro del formulario que solo puede cargar 10 imagenes
+    // cada que cargue una imagen sobre escribir el indicador de cuantas imagenes aun puede subir
+    // ejemplo de indicador 10/10 -> 9/10 -> 8/10 -> etc.
+
+    try {
+      const img = event.target.files[0];
+      // const imagePath = storageRef(`properties/${img.name}`);
+      const imagePath = storageRef(`${email.split("@", 1)}/${img.name}`);
+      await uploadImages(imagePath, img);
+      urlImage = await getUrl(imagePath);
+
+      images.push(urlImage);
+      imagesPropertie.set(images)
+      console.log("array imagenes", images);
+
+      // console.log("url imagen", urlImage);
+
+      toastifyMessage("Imágen cargada con exito.", "success");
     } catch (error) {
       toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
     }
@@ -69,6 +103,28 @@
     </p>
   </div>
   <hr />
+
+
+  <div class="container">
+    <div class="d-flex gap-1">
+      {#each $imagesPropertie as image}
+      <div class="border border-2 border-primary border-opacity-75 rounded" style="overflow: hidden; object-fit: cover;">
+        <img src={image} alt="" width="200" height="200">
+      </div>
+      {/each}
+    </div>
+  </div>
+
+  <form>
+    <div class="mb-3 pt-3">
+      <input
+        class="form-control"
+        type="file"
+        multiple
+        on:change={handleImages}
+      />
+    </div>
+  </form>
 
   <form class="form-properties" on:submit|preventDefault={handleSubmit}>
     <div class="row mb-3">

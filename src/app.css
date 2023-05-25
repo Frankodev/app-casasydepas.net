@@ -10,6 +10,7 @@
 
   .row-prop {
     justify-content: start;
+    /* gap: 1rem; */
   }
 }
 

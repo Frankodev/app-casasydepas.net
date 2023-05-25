@@ -27,7 +27,7 @@
 <div class="row row-cols-1 row-cols-md-3 g-4 row-prop">
   {#each properties as propertie}
     <div class="col">
-      <div class="card h-100" style="width: 18rem; margin: auto;">
+      <div class="card h-100" style="width: 19rem; margin: auto;">
         <!-- <img src={propertie.img_url || $imagePreview} class="card-img-top" alt={propertie.title} style="height: 13rem; object-fit: cover;"> -->
 
         <div
@@ -163,4 +163,10 @@
   .tag-renta {
     background-color: #20c997;
   }
+
+  @media (max-width: 768px) {
+  .row-cols-md-3>* {
+    padding: 0;
+  }
+}
 </style>

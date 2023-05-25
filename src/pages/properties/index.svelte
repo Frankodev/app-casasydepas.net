@@ -43,12 +43,12 @@
   </div>
   <hr />
 
-  <div class="container" in:fade={{ duration: 600 }}>
+  <main in:fade={{ duration: 600 }}>
     {#if $cardsRenders}
       <CardsRender />
     {/if}
     <CardsProperties properties={$dataProperties} />
-  </div>
+  </main>
 
   <hr />
   <div>

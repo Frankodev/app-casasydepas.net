@@ -6,3 +6,4 @@ import { writable, readable } from 'svelte/store'
 export const user = writable(null)
 export const userEmail = writable(null)
 export const propertiesUser = writable([])
+export const imagesPropertie = writable([])
