@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   // firebase
   import { addDoc, collection } from "firebase/firestore";
   import {
@@ -14,11 +14,20 @@
   // user de stores - variable de estado global
   import {
     user,
+    userEmail,
     propertiesUser,
     imagesPropertie,
   } from "../../stores/authStore.js";
   // toastify-js
   import { toastifyMessage } from "../../lib/toastify.js";
+
+  // función que comprueba si un usuario esta logeado, si lo esta, carga su pagina de usuario
+  onMount(() => {
+    auth.onAuthStateChanged((userLog) => {
+      userLog ? user.set(userLog) : user.set(null);
+      $user ? replace("/mi-cuenta/#/publicar-propiedades") : push("/");
+    });
+  });
 
   // variables de entorno
   let urlImage = "";
@@ -26,13 +35,31 @@
 
   // constructor objeto propertie
   const allPropertiesUser = $propertiesUser;
-  const email = $user.email;
+  const email = $userEmail;
   const today = new Date().toLocaleDateString("es-MX");
-  let imagesUrls = $imagesPropertie;
+  
+  // función que carga las imagenes en el storage
+  const handleImages = async (event) => {
+    try {
+      const img = event.target.files[0];
+      // referencia en donde se creará la carpeta y contendra las imgs
+      const imagePath = storageRef(`${email.split("@", 1)}/${img.name}`);
+      await uploadImages(imagePath, img);
+      urlImage = await getUrl(imagePath);
+      toastifyMessage("Imágen cargada con exito.", "success");
+
+      images.push(urlImage);
+      imagesPropertie.set(images);
+
+      console.log("Array Urls", $imagesPropertie);
+    } catch (error) {
+      toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
+    }
+  };
+
   const propertie = {
     user: email,
     time_stamp: today,
-    imagesUrl: imagesUrls,
     transaction: "venta",
     title: "",
     property: "casa",
@@ -49,56 +76,25 @@
     notes: "",
   };
 
-  // función que comprueba si un usuario esta logeado, si lo esta, carga su pagina de usuario
-  onMount(() => {
-    auth.onAuthStateChanged((userLog) => {
-      userLog ? user.set(userLog) : user.set(null);
-      $user ? replace("/mi-cuenta/#/publicar-propiedades") : push("/");
-    });
-  });
-
   // función que crea una nueva propiedad en la db firestore - dentro de su usuario
   const handleSubmit = async () => {
-    console.log("enviando propiedad ...", propertie);
-    allPropertiesUser.push(propertie);
+    allPropertiesUser.push({...propertie, imagesUrl: $imagesPropertie});
     try {
-      await addDoc(collection(db, "properties"), propertie);
-      replace("/mi-cuenta/#/mis-propiedades");
+      await addDoc(collection(db, "properties"), {...propertie, imagesUrl: $imagesPropertie});
+      toastifyMessage("Tu propiedad se ha publicado exitosamente.", "success");
       propertiesUser.set(allPropertiesUser);
+
+      // @ts-ignore
+      document.getElementById('form').reset()
+      imagesPropertie.set([])
+      replace("/mi-cuenta/#/mis-propiedades");
+
     } catch (error) {
       toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
     }
   };
 
-  // función que carga las imagenes en el storage
-  const handleImages = async (event) => {
 
-    // CARGAR
-    // 1.1 -> almacenar las imagenes en un array
-    // 1.2 -> guardar el array de imagenes dentro del objeto propertie en firebase: [link, linl, link, etc]
-
-    // DESCARGAR
-    // 1.1 -> extraer las imagenes con un bucle
-    // 1.2 -> renderizar las imagenes dentro de las etiquetas img: <img src={link} />
-
-    try {
-      const img = event.target.files[0];
-      // const imagePath = storageRef(`properties/${img.name}`);
-      const imagePath = storageRef(`${email.split("@", 1)}/${img.name}`);
-      await uploadImages(imagePath, img);
-      urlImage = await getUrl(imagePath);
-
-      images.push(urlImage);
-      imagesPropertie.set(images);
-      console.log("array imagenes", images);
-
-      // console.log("url imagen", urlImage);
-
-      toastifyMessage("Imágen cargada con exito.", "success");
-    } catch (error) {
-      toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
-    }
-  };
 </script>
 
 <div class="container relative">
@@ -128,8 +124,7 @@
       {/if}
 
       {#each $imagesPropertie as image}
-        <div
-        >
+        <div>
           <img
             src={image}
             alt="Imagen de la propiedad"
@@ -143,19 +138,23 @@
     </div>
   </div>
 
-  <form class="form-properties" on:submit|preventDefault={handleSubmit}>
+  <form class="form-properties" on:submit|preventDefault={handleSubmit} id="form">
     <div class="mb-5">
       {#if $imagesPropertie.length < 10}
-      <input
-        name="files"
-        id="files"
-        class="form-control"
-        style="background-color: #f8f8f8;"
-        type="file"
-        on:change={handleImages}
-      />
+        <input
+          name="files"
+          id="files"
+          class="form-control"
+          style="background-color: #f8f8f8;"
+          type="file"
+          on:change={handleImages}
+        />
       {/if}
-      <label for="files" class="form-label badge text-bg-primary">Sube las mejores fotos <span class="badge bg-danger">{$imagesPropertie.length}/10</span></label>
+      <label for="files" class="form-label badge text-bg-primary"
+        >Sube las mejores fotos <span class="badge bg-danger"
+          >{$imagesPropertie.length}/10</span
+        ></label
+      >
     </div>
 
     <div class="row mb-3">
@@ -388,7 +387,7 @@
 
   .carrousel-images::-webkit-scrollbar {
     display: none;
-}
+  }
 
   .form-properties {
     margin: 1rem 0 2rem 0;

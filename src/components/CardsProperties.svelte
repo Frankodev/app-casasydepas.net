@@ -6,11 +6,9 @@
     imagePreview,
     viewPropertie,
   } from "../stores/dataProperties.js";
-  import { user, imagesPropertie } from "../stores/authStore.js";
+  import { user } from "../stores/authStore.js";
   // spa-router
   import { link } from "svelte-spa-router";
-  import { each } from "svelte/internal";
-  // components
 
   // prop - componente
   export let properties;
@@ -31,9 +29,8 @@
   {#each properties as propertie}
     <div class="col">
       <div class="card h-100" style="width: 19rem; margin: auto;">
-        <!-- <img src={propertie.img_url || $imagePreview} class="card-img-top" alt={propertie.title} style="height: 13rem; object-fit: cover;"> -->
         <div
-          id={propertie.title.split(" ").join("")}
+          id={propertie.title.split(RegExp(/s*([.,?:])s*/g), 1).join('').split(' ').join('')}
           class="carousel carousel-dark slide"
           data-bs-ride="true"
         >
@@ -41,7 +38,7 @@
             {#each propertie.imagesUrl as _, index}
               <button
                 type="button"
-                data-bs-target={`#${propertie.title.split(" ").join("")}`}
+                data-bs-target={`#${propertie.title.split(RegExp(/s*([.,?:])s*/g), 1).join('').split(' ').join('')}`}
                 data-bs-slide-to={`${index}`}
                 class={index == 0 ? "active" : " "}
                 aria-current={index == 0 ? "true" : " "}
@@ -66,7 +63,7 @@
           <button
             class="carousel-control-prev"
             type="button"
-            data-bs-target={`#${propertie.title.split(" ").join("")}`}
+            data-bs-target={`#${propertie.title.split(RegExp(/s*([.,?:])s*/g), 1).join('').split(' ').join('')}`}
             data-bs-slide="prev"
           >
             <span class="carousel-control-prev-icon" aria-hidden="true" />
@@ -75,7 +72,7 @@
           <button
             class="carousel-control-next"
             type="button"
-            data-bs-target={`#${propertie.title.split(" ").join("")}`}
+            data-bs-target={`#${propertie.title.split(RegExp(/s*([.,?:])s*/g), 1).join('').split(' ').join('')}`}
             data-bs-slide="next"
           >
             <span class="carousel-control-next-icon" aria-hidden="true" />
@@ -95,7 +92,7 @@
             {`$${Number(propertie.price).toLocaleString("en")} MXN` || "0.00"}
           </h4>
           <!-- <h4 class="card-title">${propertie.price || "0.00"}</h4> -->
-          <div class="d-flex gap-3 mb-2" style="height: 21px;">
+          <div class="d-flex gap-2 mb-2 align-items-center" style="height: 21px;">
             <div class="d-flex gap-1">
               <spam>{propertie.bedroom || "?"}</spam>
               <spam><img src="/icons/bed.svg" alt="bedroom" /></spam>
@@ -121,7 +118,7 @@
 
           <a
             use:link
-            href={`/ventas-rentas/#/${propertie.title.split(" ").join("-")}`}
+            href={`/ventas-rentas/#/${propertie.title.split(RegExp(/s*([.,?:])s*/g), 1).join('').split(' ').join('-')}`}
             on:click={getPorpertie(propertie.title)}
             class="btn btn-primary">Ver más info</a
           >
@@ -144,21 +141,24 @@
   .tag-venta,
   .tag-renta {
     position: absolute;
-    top: 0.1rem;
-    right: 0.1rem;
+    top: 0.4rem;
+    right: .4rem;
     padding: 0.1rem 0.6rem;
     font-weight: 600;
     text-transform: uppercase;
+    letter-spacing: .08rem;
     color: azure;
     border-radius: 4px;
   }
 
   .tag-venta {
-    background-color: #fd7e14;
+    background: rgb(221,25,0);
+    background: linear-gradient(172deg, rgba(221,25,0,1) 0%, rgba(249,85,39,1) 35%, rgba(255,42,0,1) 100%);
   }
 
   .tag-renta {
-    background-color: #20c997;
+    background: rgb(137,141,255);
+    background: linear-gradient(172deg, rgba(137,141,255,1) 0%, rgba(80,181,255,1) 35%, rgba(0,202,255,1) 100%);
   }
 
   @media (max-width: 768px) {
