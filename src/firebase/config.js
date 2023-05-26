@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 
 
 // Your web app's Firebase configuration
@@ -27,8 +27,10 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 // Initialize Storage
 export const storage = getStorage()
-export const storageRef = (images) => ref(storage, images)
-
-export const uploadImages = (storageRef, images) => uploadBytes(storageRef, images)
-
-export const getUrl = (imagesRef) => getDownloadURL(imagesRef)
+export const storageRef = (imagesRef) => ref(storage, imagesRef)
+// función que carga la imagen en el storage
+export const uploadImages = (storageRef, imagesUpload) => uploadBytes(storageRef, imagesUpload)
+// función que trae la url a la app
+export const getUrl = (imagesUrl) => getDownloadURL(imagesUrl)
+// función para eliminar imágenes en el storage
+export const deleteImg = (imagesDelete) => deleteObject(ref(storage, imagesDelete))

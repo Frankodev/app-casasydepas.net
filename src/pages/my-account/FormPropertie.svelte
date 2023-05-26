@@ -1,5 +1,5 @@
 <script>
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
   // firebase
   import { addDoc, collection } from "firebase/firestore";
   import {
@@ -8,6 +8,7 @@
     storageRef,
     uploadImages,
     getUrl,
+    deleteImg,
   } from "../../firebase/config.js";
   // spa-router
   import { push, replace } from "svelte-spa-router";
@@ -37,23 +38,37 @@
   const allPropertiesUser = $propertiesUser;
   const email = $userEmail;
   const today = new Date().toLocaleDateString("es-MX");
-  
+
   // función que carga las imagenes en el storage
   const handleImages = async (event) => {
     try {
       const img = event.target.files[0];
       // referencia en donde se creará la carpeta y contendra las imgs
       const imagePath = storageRef(`${email.split("@", 1)}/${img.name}`);
+
       await uploadImages(imagePath, img);
       urlImage = await getUrl(imagePath);
       toastifyMessage("Imágen cargada con exito.", "success");
 
-      images.push(urlImage);
+      images.push({ url: urlImage, path: imagePath.fullPath });
       imagesPropertie.set(images);
-
-      console.log("Array Urls", $imagesPropertie);
     } catch (error) {
       toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
+    }
+  };
+
+  // función para eliminar imágenes del storage
+  const imageDelete = async ({ target }) => {
+    try {
+      const imagePathDelete = target.dataset.path;
+      await deleteImg(imagePathDelete);
+      const newImages = $imagesPropertie.filter(
+        (image) => image.path !== imagePathDelete
+      );
+      imagesPropertie.set(newImages);
+      toastifyMessage("Se eliminó la imagen.", "delete");
+    } catch (error) {
+      toastifyMessage("No se pudo eliminar la imagen.", "deny");
     }
   };
 
@@ -78,23 +93,23 @@
 
   // función que crea una nueva propiedad en la db firestore - dentro de su usuario
   const handleSubmit = async () => {
-    allPropertiesUser.push({...propertie, imagesUrl: $imagesPropertie});
+    allPropertiesUser.push({ ...propertie, imagesUrl: $imagesPropertie });
     try {
-      await addDoc(collection(db, "properties"), {...propertie, imagesUrl: $imagesPropertie});
+      await addDoc(collection(db, "properties"), {
+        ...propertie,
+        imagesUrl: $imagesPropertie,
+      });
       toastifyMessage("Tu propiedad se ha publicado exitosamente.", "success");
       propertiesUser.set(allPropertiesUser);
 
       // @ts-ignore
-      document.getElementById('form').reset()
-      imagesPropertie.set([])
+      document.getElementById("form").reset();
+      imagesPropertie.set([]);
       replace("/mi-cuenta/#/mis-propiedades");
-
     } catch (error) {
       toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
     }
   };
-
-
 </script>
 
 <div class="container relative">
@@ -124,9 +139,16 @@
       {/if}
 
       {#each $imagesPropertie as image}
-        <div>
+        <div class="relative">
+          <button
+            class="close-image bg-danger border rounded-circle"
+            on:click={imageDelete}
+            data-path={image.path}
+          >
+            X
+          </button>
           <img
-            src={image}
+            src={image.url}
             alt="Imagen de la propiedad"
             class="border rounded border-2 border-primary border-opacity-75"
             style="object-fit: cover;"
@@ -138,7 +160,11 @@
     </div>
   </div>
 
-  <form class="form-properties" on:submit|preventDefault={handleSubmit} id="form">
+  <form
+    class="form-properties"
+    on:submit|preventDefault={handleSubmit}
+    id="form"
+  >
     <div class="mb-5">
       {#if $imagesPropertie.length < 10}
         <input
@@ -369,7 +395,11 @@
       />
     </div>
 
-    <button class="btn btn-primary">Publicar propiedad</button>
+    <button
+      class={`btn btn-primary ${
+        $imagesPropertie.length <= 4 ? "disabled" : ""
+      }`}>Publicar propiedad</button
+    >
   </form>
 </div>
 
@@ -387,6 +417,21 @@
 
   .carrousel-images::-webkit-scrollbar {
     display: none;
+  }
+
+  .close-image {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    font-weight: 600;
+    color: antiquewhite;
+
+    cursor: pointer;
   }
 
   .form-properties {

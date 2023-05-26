@@ -22,7 +22,6 @@
     console.log(propertieView);
   };
 
-  let slider = 0;
 </script>
 
 <div class="row row-cols-1 row-cols-md-3 g-4 row-prop">
@@ -48,16 +47,30 @@
           </div>
 
           <div class="carousel-inner">
-            {#each propertie.imagesUrl as image, index}
+            
+            {#if propertie.imagesUrl.length === 0}
+            <div class="carousel-item active" >
+              <img
+                src={$imagePreview}
+                class="d-block w-100 card-img-top"
+                style="height: 13rem; object-fit: cover; border-radius: 4px 4px 0 0;"
+                alt={propertie.title}
+              />
+            </div>
+
+            {:else}
+              {#each propertie.imagesUrl as image, index}
               <div class="carousel-item {index == 0 ? 'active' : ' '}">
                 <img
-                  src={image || $imagePreview}
+                  src={image}
                   class="d-block w-100 card-img-top"
                   style="height: 13rem; object-fit: cover; border-radius: 4px 4px 0 0;"
                   alt={propertie.title}
                 />
               </div>
-            {/each}
+              {/each}
+            {/if}
+
           </div>
 
           <button

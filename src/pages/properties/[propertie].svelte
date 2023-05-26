@@ -8,16 +8,13 @@
   export let params
 
   console.log('propiedad para renderizar', $viewPropertie)
+
+  const returnUser = () => window.history.back();
 </script>
 
 <div class="container p-4">
-  <div class="pt-2">
-    {#if $user}
-    <a use:link href="/mi-cuenta/#/mis-propiedades">Regresar</a>
-    {:else}
-    <a use:link href="/ventas-rentas">Regresar</a>
-    {/if}
-  </div>
+
+  <button class="btn btn-link pt-2" on:click={returnUser}>Regresar <span>&#11148;</span></button>
 
   <div>
 
