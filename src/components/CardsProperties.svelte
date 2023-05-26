@@ -48,7 +48,7 @@
 
           <div class="carousel-inner">
             
-            {#if propertie.imagesUrl.length === 0}
+            {#if !propertie.imagesUrl.length}
             <div class="carousel-item active" >
               <img
                 src={$imagePreview}

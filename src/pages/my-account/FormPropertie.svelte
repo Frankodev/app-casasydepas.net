@@ -123,7 +123,7 @@
   <hr />
 
   <div class="carrousel-images">
-    <div class="d-flex gap-1">
+    <div class="d-flex gap-1 carrousel">
       {#if !$imagesPropertie.length}
         <div
           class="border border-2 border-primary border-opacity-75 rounded d-flex justify-content-center align-items-center"
@@ -223,6 +223,7 @@
           class="form-control"
           id="title"
           placeholder="Casa en Venta de 2 niveles en la Col. Costa Azul, en Acapulco, Gro."
+          required
         />
       </div>
     </div>
@@ -239,6 +240,7 @@
           class="form-control"
           id="price"
           placeholder="1,250,000"
+          required
         />
       </div>
 
@@ -378,6 +380,7 @@
         id="description"
         rows="3"
         placeholder="Casa en venta en excelente estado, ubicada en la Colonia Costa Azul, a 2 cuadras de la Costera Miguel Alemán, en Acapulco, Gro. Cuenta con 3 recámaras, 2 baños, cocina, sala, comedor ..."
+        required
       />
     </div>
 
@@ -404,19 +407,68 @@
 </div>
 
 <style>
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #dadada;
+  }
+  input:-ms-input-placeholder,
+  input::-webkit-input-placeholder,
+  input::-moz-placeholder {
+    color: #eaeaea;
+  }
+
   .relative {
     position: relative;
     overflow: hidden;
   }
 
   .carrousel-images {
-    width: 100%;
     position: relative;
     overflow: scroll;
+    width: 100%;
+    min-width: 10rem;
+    height: 100%;
+    padding: 0.5rem;
+    border-radius: 4px;
   }
 
-  .carrousel-images::-webkit-scrollbar {
+  .carrousel {
+    overflow: scroll;
+    min-width: fit-content;
+  }
+
+  .carrousel::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Estilos para motores Webkit y blink (Chrome, Safari, Opera... )*/
+  .carrousel-images::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+
+  .carrousel-images::-webkit-scrollbar:vertical {
+    display: none;
+  }
+
+  .carrousel-images::-webkit-scrollbar:horizontal {
+    width: .5rem;
+    height: .68rem;
+  }
+
+  .carrousel-images::-webkit-scrollbar-button:increment,
+  .carrousel-images::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  .carrousel-images::-webkit-scrollbar-thumb {
+    background-color: #737373;
+    border-radius: .5rem;
+    border: .15rem solid #edf1f4;
+  }
+
+  .carrousel-images::-webkit-scrollbar-track {
+    border-radius: .25rem;
   }
 
   .close-image {

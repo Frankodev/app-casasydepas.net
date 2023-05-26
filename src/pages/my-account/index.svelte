@@ -34,11 +34,13 @@
 
   <div class="container" in:fade={{ duration: 600 }}>
     <div class="container-btn-upload-propertie">
+      {#if $propertiesUser.length < 10}
       <a
         use:link
         href="/mi-cuenta/#/publicar-propiedades"
         class="btn btn-primary upload-propertie">Publicar propiedad</a
       >
+      {/if}
     </div>
 
     {#if $propertiesUser.length}

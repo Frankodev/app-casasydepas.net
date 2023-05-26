@@ -7,7 +7,7 @@
 
 
   // user de stores - variable de estado global
-  import { user } from '../stores/authStore.js'
+  import { user, propertiesUser } from '../stores/authStore.js'
 
   const handleLogOut = async () => {
     await auth.signOut()
@@ -47,8 +47,10 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" use:link use:active href="/mi-cuenta/#/mis-propiedades">Administrar mis propiedades</a></li>
               <li><hr class="dropdown-divider"></li>
+              {#if $propertiesUser.length < 10}
               <li><a class="dropdown-item" use:link use:active href="/mi-cuenta/#/publicar-propiedades">Publicar propiedad</a></li>
               <li><hr class="dropdown-divider"></li>
+              {/if}
               <li><a class="dropdown-item" use:link use:active href="/mi-cuenta/#/mi-informacion">Mi información</a></li>
             </ul>
           </li>
