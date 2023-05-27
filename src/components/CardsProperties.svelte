@@ -101,26 +101,27 @@
           <h4 class="card-title">
             {`$${Number(propertie.price).toLocaleString("en")} MXN` || "0.00"}
           </h4>
-          <!-- <h4 class="card-title">${propertie.price || "0.00"}</h4> -->
+          
           <div class="d-flex gap-2 mb-2 align-items-center" style="height: 21px;">
             <div class="d-flex gap-1">
               <spam>{propertie.bedroom || "?"}</spam>
-              <spam><img src="/icons/bed.svg" alt="bedroom" /></spam>
+              <spam><img src="/icons/bed.svg" alt="bedroom"/></spam>
             </div>
             <div class="d-flex gap-1">
               <spam>{propertie.bathroom || "?"}</spam>
-              <spam><img src="/icons/shower.svg" alt="bathroom" /></spam>
+              <spam><img src="/icons/shower.svg" alt="bathroom"/></spam>
             </div>
             <div class="d-flex gap-1">
               <spam>{`${propertie.land ? propertie.land : "?"}`}</spam>
-              <spam><img src="/icons/land.svg" alt="land" /></spam>
+              <spam><img src="/icons/land.svg" alt="land"/></spam>
             </div>
             <div class="d-flex gap-1">
               <spam>{`${propertie.building}` || "?"}</spam>
-              <spam><img src="/icons/rule.svg" alt="building" /></spam>
+              <spam><img src="/icons/rule.svg" alt="building"/></spam>
               <spam>m²</spam>
             </div>
           </div>
+
           <p class="card-text ellipsis">
             {`${propertie.description.substring(0, 51)}...` ||
               "No hay una descripción para esta propiedad"}

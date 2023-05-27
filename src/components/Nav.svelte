@@ -15,7 +15,7 @@
 </script>
 
 <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
+    <div class="container-fluid nav-max-width">
 
       <span class="navbar-brand">casasydepas.net</span>
 
@@ -70,5 +70,9 @@
     .active-link {
       font-weight: 500;
       color: #000000e6;
+    }
+
+    .nav-max-width {
+      max-width: 1100px;
     }
   </style>
