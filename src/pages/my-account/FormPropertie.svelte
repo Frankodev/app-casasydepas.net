@@ -45,13 +45,13 @@
       const img = event.target.files[0];
       // referencia en donde se creará la carpeta y contendra las imgs
       const imagePath = storageRef(`${email.split("@", 1)}/${img.name}`);
-
       await uploadImages(imagePath, img);
+
       urlImage = await getUrl(imagePath);
       toastifyMessage("Imágen cargada con exito.", "success");
-
       images.push({ url: urlImage, path: imagePath.fullPath });
       imagesPropertie.set(images);
+
     } catch (error) {
       toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
     }
@@ -62,11 +62,11 @@
     try {
       const imagePathDelete = target.dataset.path;
       await deleteImg(imagePathDelete);
-      const newImages = $imagesPropertie.filter(
-        (image) => image.path !== imagePathDelete
-      );
+
+      const newImages = $imagesPropertie.filter((image) => image.path !== imagePathDelete);
       imagesPropertie.set(newImages);
       toastifyMessage("Se eliminó la imagen.", "delete");
+
     } catch (error) {
       toastifyMessage("No se pudo eliminar la imagen.", "deny");
     }
@@ -95,17 +95,15 @@
   const handleSubmit = async () => {
     allPropertiesUser.push({ ...propertie, imagesUrl: $imagesPropertie });
     try {
-      await addDoc(collection(db, "properties"), {
-        ...propertie,
-        imagesUrl: $imagesPropertie,
-      });
+      await addDoc(collection(db, "properties"), {...propertie, imagesUrl: $imagesPropertie});
+
       toastifyMessage("Tu propiedad se ha publicado exitosamente.", "success");
       propertiesUser.set(allPropertiesUser);
-
       // @ts-ignore
       document.getElementById("form").reset();
       imagesPropertie.set([]);
       replace("/mi-cuenta/#/mis-propiedades");
+      
     } catch (error) {
       toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
     }
@@ -173,6 +171,8 @@
           class="form-control"
           style="background-color: #f8f8f8;"
           type="file"
+          accept="image/png, image/jpg, image/jpeg"
+          size="2500000"
           on:change={handleImages}
         />
       {/if}

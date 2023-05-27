@@ -4,8 +4,6 @@
   // spa-router
   import { link } from 'svelte-spa-router'
   import active from 'svelte-spa-router/active'
-
-
   // user de stores - variable de estado global
   import { user } from '../stores/authStore.js'
 
@@ -61,7 +59,6 @@
       {:else}
       <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalSignIn">Ingresar</button>
       {/if}
-        
         
       </div>
     </div>

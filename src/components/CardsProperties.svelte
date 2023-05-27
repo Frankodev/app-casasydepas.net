@@ -15,11 +15,8 @@
 
   // función para mostrar propiedades en su propia página
   const getPorpertie = (title) => {
-    const propertieView = $dataProperties.filter(
-      (propertie) => propertie.title === title
-    );
+    const propertieView = $dataProperties.filter((propertie) => propertie.title === title);
     viewPropertie.set(propertieView);
-    console.log(propertieView);
   };
 
 </script>
