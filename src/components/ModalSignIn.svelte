@@ -14,9 +14,7 @@
         try {
           const userLogin = await signInWithEmailAndPassword(auth, email, password)
           push('/mis-propiedades')
-
           toastifyMessage(`¡Hola ${userLogin.user.email.split('@',1)} bienvenido!`, 'success');
-
           handleResetForm()
 
         } catch (error) {

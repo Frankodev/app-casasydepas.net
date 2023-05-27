@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
   // firebase
-  import { getDocs, collection, onSnapshot, doc } from "firebase/firestore";
+  import { collection, onSnapshot } from "firebase/firestore";
   import { db } from "../../firebase/config.js";
   // components
   import CardsRender from "../../components/CardsRender.svelte";
@@ -23,11 +23,9 @@
         });
         dataProperties.set(data);
         cardsRenders.set(false);
-        console.log("dataProperties-global", $dataProperties);
       },
       (err) => {
         toastifyMessage(`Ocurrio un error ${err}`, "deny");
-        console.log(err);
       }
     );
   });
@@ -67,18 +65,5 @@
         tipo de propiedad (casa, departamento, terreno), etc.
       </li>
     </ul>
-  </div>
-  <div>
-    <h4>Tareas firestore</h4>
-    <ol>
-      <li>
-        configurar la consulta a firestore limitada a 10 documentos cuando se
-        monte la pagina
-      </li>
-      <li>
-        crear un boton con una funcion que al hacer click haga la consulta de 10
-        documentos más y renderizar las 20 propiedades
-      </li>
-    </ol>
   </div>
 </div>

@@ -22,7 +22,6 @@
       userLog ? user.set(userLog) : user.set(null);
       userLog ? userEmail.set(userLog.email) : userEmail.set(null);
       $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
-      $user ? console.log("user App", $user.email) : console.log("NO hay user");
 
       // función que consulta las propiedades del usuario logeado
       let properties = [];
@@ -37,7 +36,6 @@
       });
       propertiesUser.set(properties);
       dataProperties.set(properties);
-      console.log("propertiesUser-global", $propertiesUser);
     });
   });
 </script>
