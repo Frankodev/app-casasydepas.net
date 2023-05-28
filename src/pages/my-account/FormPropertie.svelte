@@ -16,6 +16,7 @@
   import {
     user,
     userEmail,
+    brokerName,
     propertiesUser,
     imagesPropertie,
   } from "../../stores/authStore.js";
@@ -36,11 +37,9 @@
 
   // constructor objeto propertie
   const allPropertiesUser = $propertiesUser;
-  const broker = $userEmail.split('@', 1);
   const email = $userEmail;
   const today = new Date().toLocaleDateString("es-MX");
-
-  console.log('broker', broker)
+  const broker = $brokerName;
 
   // función que carga las imagenes en el storage
   const handleImages = async (event) => {
@@ -54,7 +53,6 @@
       toastifyMessage("Imágen cargada con exito.", "success");
       images.push({ url: urlImage, path: imagePath.fullPath });
       imagesPropertie.set(images);
-
     } catch (error) {
       toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
     }
@@ -66,10 +64,11 @@
       const imagePathDelete = target.dataset.path;
       await deleteImg(imagePathDelete);
 
-      const newImages = $imagesPropertie.filter((image) => image.path !== imagePathDelete);
+      const newImages = $imagesPropertie.filter(
+        (image) => image.path !== imagePathDelete
+      );
       imagesPropertie.set(newImages);
       toastifyMessage("Se eliminó la imagen.", "delete");
-
     } catch (error) {
       toastifyMessage("No se pudo eliminar la imagen.", "deny");
     }
@@ -100,7 +99,10 @@
   const handleSubmit = async () => {
     allPropertiesUser.push({ ...propertie, imagesUrl: $imagesPropertie });
     try {
-      await addDoc(collection(db, "properties"), {...propertie, imagesUrl: $imagesPropertie});
+      await addDoc(collection(db, "properties"), {
+        ...propertie,
+        imagesUrl: $imagesPropertie,
+      });
 
       toastifyMessage("Tu propiedad se ha publicado exitosamente.", "success");
       propertiesUser.set(allPropertiesUser);
@@ -108,7 +110,6 @@
       document.getElementById("form").reset();
       imagesPropertie.set([]);
       replace("/mi-cuenta/#/mis-propiedades");
-      
     } catch (error) {
       toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
     }
@@ -293,7 +294,6 @@
           bind:value={propertie.tel}
         />
       </div>
-    
 
       <div class="col col-md-2">
         <label for="whatsapp" class="form-label">WhatsApp</label>
@@ -387,7 +387,14 @@
     </div>
 
     <div class="mb-3">
-      <label for="description" class="form-label">Descripción de la propiedad</label>
+      <h6>Dirección</h6>
+      <input class="form-control" type="text" placeholder="Av. Principal #123">
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label"
+        >Descripción de la propiedad</label
+      >
       <textarea
         bind:value={propertie.description}
         name="description"
@@ -423,7 +430,6 @@
 </div>
 
 <style>
-
   input::placeholder,
   textarea::placeholder {
     color: #dadada;
@@ -468,8 +474,8 @@
   }
 
   .carrousel-images::-webkit-scrollbar:horizontal {
-    width: .5rem;
-    height: .68rem;
+    width: 0.5rem;
+    height: 0.68rem;
   }
 
   .carrousel-images::-webkit-scrollbar-button:increment,
@@ -479,12 +485,12 @@
 
   .carrousel-images::-webkit-scrollbar-thumb {
     background-color: #737373;
-    border-radius: .5rem;
-    border: .15rem solid #edf1f4;
+    border-radius: 0.5rem;
+    border: 0.15rem solid #edf1f4;
   }
 
   .carrousel-images::-webkit-scrollbar-track {
-    border-radius: .25rem;
+    border-radius: 0.25rem;
   }
 
   .close-image {

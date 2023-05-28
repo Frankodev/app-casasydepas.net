@@ -104,7 +104,7 @@
 
       <div class="mb-2">
         <h5 class="text-info">Ubicación</h5>
-        <p>{propertie.direction}</p>
+        <p>{propertie.direction || 'Av. ..., Col. ..., Ciudad ..., C.P. 00000, Edo. ...'}</p>
       </div>
 
       {#if $user}
