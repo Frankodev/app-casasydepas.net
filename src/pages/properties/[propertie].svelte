@@ -5,8 +5,6 @@
   import { user } from "../../stores/authStore.js";
   export let params;
 
-  console.log("propiedad para renderizar", $viewPropertie);
-
   const returnUser = () => window.history.back();
 </script>
 
@@ -103,8 +101,8 @@
       </div>
 
       <div class="mb-2">
-        <h5 class="text-info">Ubicación</h5>
-        <p>{propertie.direction || 'Av. ..., Col. ..., Ciudad ..., C.P. 00000, Edo. ...'}</p>
+        <h5 class="text-info">Dirección</h5>
+        <p>{`${propertie.address.direction}, ${propertie.address.colony}, ${propertie.address.city}, ${propertie.address.estate}, ${propertie.address.postal}` || "No se proporcionó la dirección de la propiedad"}</p>
       </div>
 
       {#if $user}

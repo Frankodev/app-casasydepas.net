@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   // firebase
-  import { addDoc, collection } from "firebase/firestore";
+  import { addDoc, collection, setDoc, doc } from "firebase/firestore";
   import {
     auth,
     db,
@@ -91,6 +91,7 @@
     bedroom: "2",
     bathroom: "1",
     mid_bathroom: "0",
+    address: {direction: "", development: "", colony: "", city: "", estate: "Guerrero", postal: ""},
     description: "",
     notes: "",
   };
@@ -99,10 +100,7 @@
   const handleSubmit = async () => {
     allPropertiesUser.push({ ...propertie, imagesUrl: $imagesPropertie });
     try {
-      await addDoc(collection(db, "properties"), {
-        ...propertie,
-        imagesUrl: $imagesPropertie,
-      });
+      await addDoc(collection(db, "properties"), {...propertie,imagesUrl: $imagesPropertie,});
 
       toastifyMessage("Tu propiedad se ha publicado exitosamente.", "success");
       propertiesUser.set(allPropertiesUser);
@@ -167,8 +165,7 @@
   <form
     class="form-properties"
     on:submit|preventDefault={handleSubmit}
-    id="form"
-  >
+    id="form">
     <div class="mb-5">
       {#if $imagesPropertie.length < 10}
         <input
@@ -182,55 +179,56 @@
           on:change={handleImages}
         />
       {/if}
-      <label for="files" class="form-label badge text-bg-primary"
-        >Sube las mejores fotos <span class="badge bg-danger"
-          >{$imagesPropertie.length}/10</span
-        ></label
-      >
+      <label for="files" class="form-label badge text-bg-primary">
+        Sube las mejores fotos <span class="badge bg-danger">{$imagesPropertie.length}/10</span>
+      </label>
     </div>
 
-    <div class="row mb-3">
-      <div class="col col-auto">
-        <label for="transaction" class="form-label">Operación</label>
-        <select
-          class="form-select"
-          aria-label="Default select"
-          name="transaction"
-          id="transaction"
-          bind:value={propertie.transaction}
-        >
-          <option value="venta" selected>Venta</option>
-          <option value="renta">Renta</option>
-        </select>
-      </div>
-
-      <div class="col col-auto">
-        <label for="property" class="form-label">Tipo</label>
-        <select
-          class="form-select"
-          aria-label="Default select"
-          name="property"
-          id="property"
-          bind:value={propertie.property}
-        >
-          <option value="casa" selected>Casa</option>
-          <option value="departamento">Departamento</option>
-          <option value="terreno">Terreno</option>
-        </select>
-      </div>
-
-      <div class="col">
-        <label for="title" class="form-label">Título</label>
-        <input
-          bind:value={propertie.title}
-          name="title"
-          type="text"
-          maxlength="88"
-          class="form-control"
-          id="title"
-          placeholder="Casa en Venta de 2 niveles en la Col. Costa Azul, en Acapulco, Gro."
-          required
-        />
+    <div class="mb-3">
+      <h2 class="badge text-bg-dark">Tipo de operación</h2>
+      <div class="row mt-0">
+        <div class="col col-auto">
+          <label for="transaction" class="form-label">Operación</label>
+          <select
+            class="form-select"
+            aria-label="Default select"
+            name="transaction"
+            id="transaction"
+            bind:value={propertie.transaction}
+          >
+            <option value="venta" selected>Venta</option>
+            <option value="renta">Renta</option>
+          </select>
+        </div>
+  
+        <div class="col col-auto">
+          <label for="property" class="form-label">Tipo</label>
+          <select
+            class="form-select"
+            aria-label="Default select"
+            name="property"
+            id="property"
+            bind:value={propertie.property}
+          >
+            <option value="casa" selected>Casa</option>
+            <option value="departamento">Departamento</option>
+            <option value="terreno">Terreno</option>
+          </select>
+        </div>
+  
+        <div class="col">
+          <label for="title" class="form-label">Título</label>
+          <input
+            bind:value={propertie.title}
+            name="title"
+            type="text"
+            maxlength="88"
+            class="form-control"
+            id="title"
+            placeholder="Casa en Venta de 2 niveles en la Col. Costa Azul, en Acapulco, Gro."
+            required
+          />
+        </div>
       </div>
     </div>
 
@@ -308,117 +306,172 @@
       </div>
     </div>
 
-    <div class="row mb-3">
-      <div class="col">
-        <label for="land" class="form-label">Terreno m²</label>
-        <input
-          bind:value={propertie.land}
-          name="land"
-          type="number"
-          min="0"
-          max="9999"
-          class="form-control"
-          id="land"
-          placeholder="120"
-        />
-      </div>
-
-      <div class="col">
-        <label for="building" class="form-label">Construcción m²</label>
-        <input
-          bind:value={propertie.building}
-          name="building"
-          type="number"
-          min="0"
-          max="9999"
-          class="form-control"
-          id="building"
-          placeholder="220"
-        />
-      </div>
-
-      <div class="col">
-        <label for="bedroom" class="form-label">Recámaras</label>
-        <select
-          class="form-select"
-          name="bedroom"
-          id="bedroom"
-          bind:value={propertie.bedroom}
-        >
-          <option value="1">1</option>
-          <option value="2" selected>2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="+7">+7</option>
-        </select>
-      </div>
-
-      <div class="col col-md-2">
-        <label for="bathroom" class="form-label">Baños</label>
-        <select
-          class="form-select"
-          name="bathroom"
-          id="bathroom"
-          bind:value={propertie.bathroom}
-        >
-          <option value="1" selected>1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="+4">+4</option>
-        </select>
-      </div>
-
-      <div class="col col-md-2">
-        <label for="mid_bathroom" class="form-label">½ Baños</label>
-        <select
-          class="form-select"
-          name="mid_bathroom"
-          id="mid_bathroom"
-          bind:value={propertie.mid_bathroom}
-        >
-          <option value="0" selected>0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="+3">+3</option>
-        </select>
+    <div class="mb-3">
+      <h2 class="badge text-bg-dark">Distribución</h2>
+      <div class="row mt-0">
+        <div class="col">
+          <label for="land" class="form-label">Terreno m²</label>
+          <input
+            bind:value={propertie.land}
+            name="land"
+            type="number"
+            min="0"
+            max="9999"
+            class="form-control"
+            id="land"
+            placeholder="120"
+          />
+        </div>
+  
+        <div class="col">
+          <label for="building" class="form-label">Construcción m²</label>
+          <input
+            bind:value={propertie.building}
+            name="building"
+            type="number"
+            min="0"
+            max="9999"
+            class="form-control"
+            id="building"
+            placeholder="220"
+          />
+        </div>
+  
+        <div class="col">
+          <label for="bedroom" class="form-label">Recámaras</label>
+          <select
+            class="form-select"
+            name="bedroom"
+            id="bedroom"
+            bind:value={propertie.bedroom}
+          >
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="+7">+7</option>
+          </select>
+        </div>
+  
+        <div class="col col-md-2">
+          <label for="bathroom" class="form-label">Baños</label>
+          <select
+            class="form-select"
+            name="bathroom"
+            id="bathroom"
+            bind:value={propertie.bathroom}
+          >
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="+4">+4</option>
+          </select>
+        </div>
+  
+        <div class="col col-md-2">
+          <label for="mid_bathroom" class="form-label">½ Baños</label>
+          <select
+            class="form-select"
+            name="mid_bathroom"
+            id="mid_bathroom"
+            bind:value={propertie.mid_bathroom}
+          >
+            <option value="0" selected>0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="+3">+3</option>
+          </select>
+        </div>
       </div>
     </div>
 
     <div class="mb-3">
-      <h6>Dirección</h6>
-      <input class="form-control" type="text" placeholder="Av. Principal #123">
+      <h2 class="badge text-bg-dark">Dirección</h2>
+      <div class="row mt-0">
+        <div class="col">
+          <label for="address" class="form-label">Calle y número</label>
+          <input name="address" id="address" bind:value={propertie.address.direction} class="form-control" type="text" placeholder="Av. Principal #123">
+        </div>
+  
+        <div class="col col-md-4">
+          <label for="development" class="form-label">Desarrollo</label>
+          <input aria-labelledby="passwordHelpBlock" name="development" id="development" bind:value={propertie.address.development} class="form-control" type="text" placeholder="Fracc. La Marquesa">
+          <div id="passwordHelpBlock" class="form-text mt-0">
+            <small class="text-muted">
+              Opcional
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-0">
+        <div class="col col-md-4">
+          <label for="colony" class="form-label">Colonia</label>
+          <input name="colony" id="colony" bind:value={propertie.address.colony} class="form-control" type="text" placeholder="Col. Llano Largo">
+        </div>
+
+        <div class="col col-md-3">
+          <label for="city" class="form-label">Ciudad</label>
+          <input name="city" id="city" bind:value={propertie.address.city} class="form-control" type="text" placeholder="Acapulco de Juárez">
+        </div>
+
+        <div class="col col-md-3">
+          <label for="estate" class="form-label">Estado</label>
+          <select
+            class="form-select"
+            name="estate"
+            id="estate"
+            bind:value={propertie.address.estate}
+          >
+            <option value="Guerrero" selected>Guerrero</option>
+          </select>
+        </div>
+
+        <div class="col col-md-1">
+          <label for="postal" class="form-label">C.P.</label>
+          <input name="postal" id="postal" bind:value={propertie.address.postal} class="form-control" type="text" placeholder="39906">
+        </div>
+      </div>
     </div>
 
     <div class="mb-3">
-      <label for="description" class="form-label"
-        >Descripción de la propiedad</label
-      >
-      <textarea
-        bind:value={propertie.description}
-        name="description"
-        maxlength="1498"
-        class="form-control"
-        id="description"
-        rows="3"
-        placeholder="Casa en venta en excelente estado, ubicada en la Colonia Costa Azul, a 2 cuadras de la Costera Miguel Alemán, en Acapulco, Gro. Cuenta con 3 recámaras, 2 baños, cocina, sala, comedor ..."
-        required
-      />
+      <h2 class="badge text-bg-dark">Descripción</h2>
+      <div class="row mt-0">
+        <div class="col">
+          <label for="description" class="form-label">Descripción de la propiedad</label>
+          <textarea
+            bind:value={propertie.description}
+            name="description"
+            maxlength="1498"
+            class="form-control"
+            id="description"
+            rows="6"
+            placeholder="Casa en venta en excelente estado, ubicada en la Colonia Costa Azul, a 2 cuadras de la Costera Miguel Alemán, en Acapulco, Gro. Cuenta con 3 recámaras, 2 baños, cocina, sala, comedor ..."
+            required
+          />
+        </div>
+      </div>
     </div>
 
     <div class="mb-3">
-      <label for="notes" class="form-label">Notas para los asesores</label>
-      <textarea
-        bind:value={propertie.notes}
-        name="notes"
-        maxlength="1498"
-        class="form-control"
-        id="notes"
-        rows="3"
-        placeholder="* El pago de la comisión es de $50,000 mil pesos, comparto el 50%.
-* La casa se entrega sin muebles, se dejan los 3 aires acondicionados."
-      />
+      <h2 class="badge text-bg-dark">Notas para los asesores de la red</h2>
+      <div class="row mt-0">
+        <div class="col">
+          <label for="notes" class="form-label">Notas y obervaciones</label>
+          <textarea
+            bind:value={propertie.notes}
+            name="notes"
+            maxlength="1498"
+            class="form-control"
+            id="notes"
+            rows="3"
+            placeholder="El pago de la comisión es de $50,000 mil pesos, comparto el 50%. La propiedad se entrega sin muebles, se dejan los 3 aires acondicionados. Etc."
+          />
+        </div>
+      </div>
+      
     </div>
 
     <button

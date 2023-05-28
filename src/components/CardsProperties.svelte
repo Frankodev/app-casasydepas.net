@@ -94,10 +94,13 @@
         </div>
 
         <div class="card-body border-top border-light">
-          <h5 class="card-title text-primary">
-            {`${propertie.title.substring(0, 28)}` ||
-              "No hay un título para esta propiedad"}
-          </h5>
+          <div class="mb-2">
+            <h5 class="card-title text-primary mb-0">
+              {`${propertie.title.substring(0, 28)}` ||
+                "No hay un título para esta propiedad"}
+            </h5>
+            <span class="badge text-bg-light">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
+          </div>
           <h4 class="card-title">
             {`$${Number(propertie.price).toLocaleString("en")} MXN` || "0.00"}
           </h4>
@@ -112,11 +115,11 @@
               <spam><img src="/icons/shower.svg" alt="bathroom"/></spam>
             </div>
             <div class="d-flex gap-1">
-              <spam>{`${propertie.land ? propertie.land : "?"}`}</spam>
+              <spam>{`${propertie.land ? propertie.land : "0"}`}</spam>
               <spam><img src="/icons/land.svg" alt="land"/></spam>
             </div>
             <div class="d-flex gap-1">
-              <spam>{`${propertie.building}` || "?"}</spam>
+              <spam>{`${propertie.building}` || "0"}</spam>
               <spam><img src="/icons/rule.svg" alt="building"/></spam>
               <spam>m²</spam>
             </div>
