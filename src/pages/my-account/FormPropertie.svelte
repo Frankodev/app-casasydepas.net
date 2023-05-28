@@ -36,8 +36,11 @@
 
   // constructor objeto propertie
   const allPropertiesUser = $propertiesUser;
+  const broker = $userEmail.split('@', 1);
   const email = $userEmail;
   const today = new Date().toLocaleDateString("es-MX");
+
+  console.log('broker', broker)
 
   // función que carga las imagenes en el storage
   const handleImages = async (event) => {
@@ -81,10 +84,12 @@
     price: "",
     commission: "5%",
     shared: "50%",
+    broker: broker,
     tel: "",
+    whatsapp: "",
     land: "",
     building: "",
-    bedroom: "3",
+    bedroom: "2",
     bathroom: "1",
     mid_bathroom: "0",
     description: "",
@@ -277,15 +282,28 @@
         </select>
       </div>
 
-      <div class="col">
+      <div class="col col-md-2">
         <label for="tel" class="form-label">Teléfono</label>
         <input
           class="form-control"
           type="tel"
           name="tel"
           id="tel"
-          placeholder="7441237788"
+          placeholder="7443218899"
           bind:value={propertie.tel}
+        />
+      </div>
+    
+
+      <div class="col col-md-2">
+        <label for="whatsapp" class="form-label">WhatsApp</label>
+        <input
+          class="form-control"
+          type="tel"
+          name="whatsapp"
+          id="whatsapp"
+          placeholder="7443218899"
+          bind:value={propertie.whatsapp}
         />
       </div>
     </div>
@@ -328,8 +346,8 @@
           bind:value={propertie.bedroom}
         >
           <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3" selected>3</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
           <option value="6">6</option>
@@ -369,9 +387,7 @@
     </div>
 
     <div class="mb-3">
-      <label for="description" class="form-label"
-        >Descripción de la propiedad</label
-      >
+      <label for="description" class="form-label">Descripción de la propiedad</label>
       <textarea
         bind:value={propertie.description}
         name="description"

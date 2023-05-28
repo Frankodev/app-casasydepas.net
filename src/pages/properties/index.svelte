@@ -35,35 +35,16 @@
   <div class="text-center">
     <h1>Ventas y Rentas</h1>
     <h6>
-      Encuentra las mejores propiedades de la red de casasydepas.net - Coworking
-      Inmobiliario
+      Encuentra las mejores propiedades en la red de casasydepas.net - Coworking Inmobiliario
     </h6>
   </div>
   <hr />
 
-  <main in:fade={{ duration: 600 }}>
+  <main in:fade={{ duration: 600 }} class="mb-2">
     {#if $cardsRenders}
       <CardsRender />
     {/if}
     <CardsProperties properties={$dataProperties} />
   </main>
 
-  <hr />
-  <div>
-    <p>
-      En esta página se mostraran todas las propiedades que los asesores hayan
-      dado de alta desde su perfil para venta o renta
-    </p>
-    <ul>
-      <li><strong>Mostrar</strong> todas las propiedades en venta y renta</li>
-      <li>
-        Crear una <strong>barra de busqueda</strong> para buscar propiedades por
-        descripción (título - Casa en venta en mozimba)
-      </li>
-      <li>
-        Crear un <strong>menu para poder filtrar</strong> propiedades por precio,
-        tipo de propiedad (casa, departamento, terreno), etc.
-      </li>
-    </ul>
-  </div>
 </div>
