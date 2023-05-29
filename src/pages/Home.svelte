@@ -1,16 +1,16 @@
 <script>
   const today = new Date().toLocaleDateString('es-MX')
 
-  const email = 'francisco_cisneros@coworking.net'.split('@', 1).join('').split('_', 2)
+  // const email = 'francisco_cisneros@coworking.net'.split('@', 1).join('').split('_', 2)
 
-  let names = []
-  email.forEach((word) => {
-    const upperCase = word[0].toUpperCase()
-    const wordSubString = word.substring(1)
-    const name = `${upperCase}${wordSubString}`
-    names.push(name)
-  })
-  const broker = names.join(' ')
+  // let names = []
+  // email.forEach((word) => {
+  //   const upperCase = word[0].toUpperCase()
+  //   const wordSubString = word.substring(1)
+  //   const name = `${upperCase}${wordSubString}`
+  //   names.push(name)
+  // })
+  // const broker = names.join(' ')
   // console.log(broker)
 </script>
 

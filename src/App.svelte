@@ -32,7 +32,8 @@
       const queryRef = query(docsRef, where("user", "==", `${$userEmail}`));
       const querySnapshot = await getDocs(queryRef);
       querySnapshot.forEach((propertie) => {
-        properties.push(propertie.data());
+        // properties.push(propertie.data(), propertie.id);
+        properties.push({...propertie.data(), id: propertie.id});
       });
       propertiesUser.set(properties);
       dataProperties.set(properties);

@@ -59,36 +59,6 @@
       </div>
     {/if}
   </div>
-
-  <!-- Eliminar sección de abajo -->
-  <hr />
-  <ul>
-    <li>
-      el asesor podra administrar las propiedades que haya publicado previamente
-    </li>
-    <li>
-      tendra un enlace al formulario para dar de alta una propiedad en VENTA o
-      RENTA, <strong
-        >este enlace desaparecera al momento de tener 10 propiedades dadas de
-        alta</strong
-      >
-    </li>
-    <li>
-      podra eliminar propiedades <strong
-        >si ya la vendio o ya no quiero compartir la propiedad con los demas
-        asesores y publico en general</strong
-      >
-    </li>
-  </ul>
-
-  <hr />
-  <h3>configuración de firestore - base de datos</h3>
-  <ul>
-    <li>
-      Establecer una configuración para que el asesor solo pueda dar de alta 10
-      propiedades en VENTA o RENTA
-    </li>
-  </ul>
 </div>
 
 <style>

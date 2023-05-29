@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, doc, deleteDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 
 
@@ -34,3 +34,6 @@ export const uploadImages = (storageRef, imagesUpload) => uploadBytes(storageRef
 export const getUrl = (imagesUrl) => getDownloadURL(imagesUrl)
 // función para eliminar imágenes en el storage
 export const deleteImg = (imagesDelete) => deleteObject(ref(storage, imagesDelete))
+
+// función para eliminar una propiedad
+export const deletePropertie = (idProperti) => deleteDoc(doc(db, 'properties', idProperti))

@@ -18,7 +18,10 @@
   <main>
     {#each $viewPropertie as propertie}
 
-      <h1 class="text-center mb-4 text-primary">{params.propertie.split("-").join(" ")}</h1>
+      <div class="text-center mb-4">
+        <h1 class="text-primary">{params.propertie.split("-").join(" ")}</h1>
+        <span class="badge text-bg-dark">{propertie.address.development || propertie.address.colony}</span>
+      </div>
 
       <div class="container-galery">
         <div id="carousel" class="carousel slide carousel-fade">
@@ -26,7 +29,7 @@
 
             {#each propertie.imagesUrl as image, index}
               <div class={`carousel-item ${index == 0 ? 'active' : ''}`}>
-                <img src={image} class="d-block w-100" alt={propertie.title}>
+                <img src={image.url} class="d-block w-100 min-render" alt={propertie.title}>
               </div>
             {/each}
 
@@ -55,19 +58,19 @@
             <h5 class="text-info">Distribución</h5>
             <div class="d-flex gap-2 mb-2 align-items-center opacity-75" style="height: 21px;">
               <div class="d-flex gap-1">
-                <spam class="distribution">{propertie.bedroom || "?"}</spam>
+                <spam class="distribution">{propertie.bedroom || "0"}</spam>
                 <spam><img class="opacity-75" src="/icons/bed.svg" alt="bedroom" width="28" height="28"/></spam>
               </div>
               <div class="d-flex gap-1">
-                <spam class="distribution">{propertie.bathroom || "?"}</spam>
+                <spam class="distribution">{propertie.bathroom || "0"}</spam>
                 <spam><img class="opacity-75" src="/icons/shower.svg" alt="bathroom" width="28" height="28"/></spam>
               </div>
               <div class="d-flex gap-1">
-                <spam class="distribution">{`${propertie.land ? propertie.land : "?"}`}</spam>
+                <spam class="distribution">{`${propertie.land ? propertie.land : "0"}`}</spam>
                 <spam><img class="opacity-75" src="/icons/land.svg" alt="land" width="28" height="28"/></spam>
               </div>
               <div class="d-flex gap-1">
-                <spam class="distribution">{`${propertie.building}` || "?"}</spam>
+                <spam class="distribution">{`${propertie.building}` || "0"}</spam>
                 <spam><img class="opacity-75" src="/icons/rule.svg" alt="building" width="28" height="28"/></spam>
                 <spam>m²</spam>
               </div>
@@ -77,7 +80,7 @@
           <div class="mb-3">
             <h5 class="text-info">Datos de contacto</h5>
             <span class="badge text-bg-dark mb-1">Agente Inmobiliario</span>
-            <h5 class="text-dark-emphasis">{propertie.broker}</h5>
+            <h5 class="text-dark-emphasis">{propertie.broker || 'casasydepas.net'}</h5>
             <a href={`tel:${propertie.tel}`} class="btn btn-primary">Llamar asesor</a>
             <a target="_blank" href={`https://wa.me/521${propertie.whatsapp}`} class="btn btn-success">WhatsApp</a>
           </div>
@@ -133,6 +136,7 @@
     font-weight: 500;
     line-height: 1.2;
   }
+
   .container-galery {
     width: 100%;
     display: flex;
@@ -149,6 +153,12 @@
     width: 32rem;
     height: 22rem;
     border-radius: 8px;
+  }
+
+  .min-render {
+    min-height: 352px;
+    object-fit: cover;
+    object-position: center;
   }
 
   /* Tag VENTAS / RENTAS */
@@ -198,5 +208,9 @@
     border-radius: 8px;
     margin: auto;
   }
-    }
+
+  .min-render {
+    min-height: 269px;
+  }
+}
 </style>

@@ -1,12 +1,16 @@
 <script>
   // @ts-nocheck
+  // firebase
+  import { deletePropertie, deleteImg } from "../firebase/config.js";
   // dataProperties de stores - variable de estado global
   import {
     dataProperties,
     imagePreview,
     viewPropertie,
   } from "../stores/dataProperties.js";
-  import { user } from "../stores/authStore.js";
+  import { user, userEmail, propertiesUser } from "../stores/authStore.js";
+  // toastify-js
+  import { toastifyMessage } from "../lib/toastify.js";
   // spa-router
   import { link } from "svelte-spa-router";
 
@@ -18,6 +22,29 @@
     const propertieView = $dataProperties.filter((propertie) => propertie.title === title);
     viewPropertie.set(propertieView);
   };
+
+  const deleteProperties = async ({target}) => {
+    try {
+      const idPropertie = target.dataset.id
+      console.log('id', idPropertie)
+      // await deletePropertie(idPropertie)
+      // window.location.reload()
+      
+      // eliminar el array de imagenes del storage
+      const propertieImages = $propertiesUser.filter((propertie) => propertie.id === idPropertie)
+      const imagesPropertie = propertieImages[0].imagesUrl.map(image => image.path)
+      imagesPropertie.forEach(path => {
+        console.log(path)
+      })
+      
+      // console.log('images', imagesPropertie)
+      // await deleteImg(imagePathDelete);
+      
+      toastifyMessage("Se eliminó la propiedad.", "delete");
+    } catch (error) {
+      toastifyMessage("No se pudo eliminar la propiedad.", "deny");
+    }
+  }
 
 </script>
 
@@ -59,7 +86,7 @@
               {#each propertie.imagesUrl as image, index}
               <div class="carousel-item {index == 0 ? 'active' : ' '}">
                 <img
-                  src={image}
+                  src={image.url}
                   class="d-block w-100 card-img-top"
                   style="height: 13rem; object-fit: cover; border-radius: 4px 4px 0 0;"
                   alt={propertie.title}
@@ -107,11 +134,11 @@
           
           <div class="d-flex gap-2 mb-2 align-items-center" style="height: 21px;">
             <div class="d-flex gap-1">
-              <spam>{propertie.bedroom || "?"}</spam>
+              <spam>{propertie.bedroom || "0"}</spam>
               <spam><img src="/icons/bed.svg" alt="bedroom"/></spam>
             </div>
             <div class="d-flex gap-1">
-              <spam>{propertie.bathroom || "?"}</spam>
+              <spam>{propertie.bathroom || "0"}</spam>
               <spam><img src="/icons/shower.svg" alt="bathroom"/></spam>
             </div>
             <div class="d-flex gap-1">
@@ -136,6 +163,10 @@
             on:click={getPorpertie(propertie.title)}
             class="btn btn-primary">Ver más info</a
           >
+
+          {#if propertie.user === $userEmail}
+          <button data-id={propertie.id} class="btn btn-outline-danger" on:click={deleteProperties}>Eliminar</button>
+          {/if}
         </div>
 
         {#if $user}

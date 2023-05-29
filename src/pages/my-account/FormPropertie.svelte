@@ -100,7 +100,7 @@
   const handleSubmit = async () => {
     allPropertiesUser.push({ ...propertie, imagesUrl: $imagesPropertie });
     try {
-      await addDoc(collection(db, "properties"), {...propertie,imagesUrl: $imagesPropertie,});
+      await addDoc(collection(db, "properties"), {...propertie, imagesUrl: $imagesPropertie});
 
       toastifyMessage("Tu propiedad se ha publicado exitosamente.", "success");
       propertiesUser.set(allPropertiesUser);
@@ -232,7 +232,7 @@
       </div>
     </div>
 
-    <div class="row mb-3">
+    <div class="row mb-4 mt-0">
       <div class="col">
         <label for="price" class="form-label">Precio</label>
         <input
@@ -321,6 +321,11 @@
             id="land"
             placeholder="120"
           />
+          <div class="form-text mt-0">
+            <small class="text-muted">
+              Opcional
+            </small>
+          </div>
         </div>
   
         <div class="col">
@@ -389,16 +394,21 @@
 
     <div class="mb-3">
       <h2 class="badge text-bg-dark">Dirección</h2>
-      <div class="row mt-0">
+      <div class="row mt-0 mb-2">
         <div class="col">
           <label for="address" class="form-label">Calle y número</label>
           <input name="address" id="address" bind:value={propertie.address.direction} class="form-control" type="text" placeholder="Av. Principal #123">
+          <div class="form-text mt-0">
+            <small class="text-muted">
+              Opcional
+            </small>
+          </div>
         </div>
   
         <div class="col col-md-4">
           <label for="development" class="form-label">Desarrollo</label>
-          <input aria-labelledby="passwordHelpBlock" name="development" id="development" bind:value={propertie.address.development} class="form-control" type="text" placeholder="Fracc. La Marquesa">
-          <div id="passwordHelpBlock" class="form-text mt-0">
+          <input name="development" id="development" bind:value={propertie.address.development} class="form-control" type="text" placeholder="Fracc. La Marquesa">
+          <div class="form-text mt-0">
             <small class="text-muted">
               Opcional
             </small>
@@ -469,6 +479,11 @@
             rows="3"
             placeholder="El pago de la comisión es de $50,000 mil pesos, comparto el 50%. La propiedad se entrega sin muebles, se dejan los 3 aires acondicionados. Etc."
           />
+          <div class="form-text mt-0">
+            <small class="text-muted">
+              Opcional
+            </small>
+          </div>
         </div>
       </div>
       

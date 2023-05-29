@@ -47,9 +47,9 @@
               <li><hr class="dropdown-divider"></li>
               {#if $propertiesUser.length < 10}
               <li><a class="dropdown-item" use:link use:active href="/mi-cuenta/#/publicar-propiedades">Publicar propiedad</a></li>
-              <li><hr class="dropdown-divider"></li>
+              <!-- <li><hr class="dropdown-divider"></li> -->
               {/if}
-              <li><a class="dropdown-item" use:link use:active href="/mi-cuenta/#/mi-informacion">Mi información</a></li>
+              <!-- <li><a class="dropdown-item" use:link use:active href="/mi-cuenta/#/mi-informacion">Mi información</a></li> -->
             </ul>
           </li>
           {/if}
