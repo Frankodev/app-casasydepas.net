@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   // firebase
-  import { addDoc, collection, setDoc, doc } from "firebase/firestore";
+  import { addDoc, collection } from "firebase/firestore";
   import {
     auth,
     db,
@@ -22,6 +22,8 @@
   } from "../../stores/authStore.js";
   // toastify-js
   import { toastifyMessage } from "../../lib/toastify.js";
+  // uuid
+  import { v4 as uuidv4 } from "uuid"
 
   // función que comprueba si un usuario esta logeado, si lo esta, carga su pagina de usuario
   onMount(() => {
@@ -34,48 +36,15 @@
   // variables de entorno
   let urlImage = "";
   let images = [];
+  let folder = `propertie_${uuidv4().split('-', 1).join('')}`;
 
   // constructor objeto propertie
   const allPropertiesUser = $propertiesUser;
   const email = $userEmail;
   const today = new Date().toLocaleDateString("es-MX");
   const broker = $brokerName;
-
-  // función que carga las imagenes en el storage
-  const handleImages = async (event) => {
-    try {
-      const img = event.target.files[0];
-      // referencia en donde se creará la carpeta y contendra las imgs
-      const imagePath = storageRef(`${email.split("@", 1)}/${img.name}`);
-      await uploadImages(imagePath, img);
-
-      urlImage = await getUrl(imagePath);
-      toastifyMessage("Imágen cargada con exito.", "success");
-      images.push({ url: urlImage, path: imagePath.fullPath });
-      imagesPropertie.set(images);
-    } catch (error) {
-      toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
-    }
-  };
-
-  // función para eliminar imágenes del storage
-  const imageDelete = async ({ target }) => {
-    try {
-      const imagePathDelete = target.dataset.path;
-      await deleteToImg(imagePathDelete);
-      
-      const newImages = $imagesPropertie.filter(
-        (image) => image.path !== imagePathDelete
-      );
-      imagesPropertie.set(newImages);
-      toastifyMessage("Se eliminó la imagen.", "delete");
-    } catch (error) {
-      toastifyMessage("No se pudo eliminar la imagen.", "deny");
-    }
-  };
-
+  
   const propertie = {
-    id: "",
     user: email,
     time_stamp: today,
     transaction: "venta",
@@ -95,6 +64,37 @@
     address: {direction: "", development: "", colony: "", city: "", estate: "Guerrero", postal: ""},
     description: "",
     notes: "",
+  };
+
+  // función que carga las imagenes en el storage
+  const handleImages = async (event) => {
+    try {
+      const img = event.target.files[0];
+      // referencia en donde se creará la carpeta y contendra las imgs
+      const imagePath = storageRef(`${email.split("@", 1)}/${folder}/${img.name}`);
+      await uploadImages(imagePath, img);
+
+      urlImage = await getUrl(imagePath);
+      toastifyMessage("Imágen cargada con exito.", "success");
+      images.push({ url: urlImage, path: imagePath.fullPath });
+      imagesPropertie.set(images);
+    } catch (error) {
+      toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
+    }
+  };
+
+  // función para eliminar imágenes del storage
+  const imageDelete = async ({ target }) => {
+    try {
+      const imagePathDelete = target.dataset.path;
+      await deleteToImg(imagePathDelete);
+      
+      const newImages = $imagesPropertie.filter((image) => image.path !== imagePathDelete);
+      imagesPropertie.set(newImages);
+      toastifyMessage("Se eliminó la imagen.", "delete");
+    } catch (error) {
+      toastifyMessage("No se pudo eliminar la imagen.", "deny");
+    }
   };
 
   // función que crea una nueva propiedad en la db firestore - dentro de su usuario

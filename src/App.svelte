@@ -14,7 +14,6 @@
 
   // variable de estado global
   import { user, userEmail, propertiesUser } from "./stores/authStore.js";
-  import { dataProperties } from "./stores/dataProperties.js";
 
   onMount(() => {
     // función que comprueba si un usuario esta logeado
@@ -22,8 +21,6 @@
       userLog ? user.set(userLog) : user.set(null);
       userLog ? userEmail.set(userLog.email) : userEmail.set(null);
       $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
-
-      console.log('user:', $userEmail)
 
       // función que consulta las propiedades del usuario logeado
       let properties = [];
@@ -34,11 +31,9 @@
       const queryRef = query(docsRef, where("user", "==", `${$userEmail}`));
       const querySnapshot = await getDocs(queryRef);
       querySnapshot.forEach((propertie) => {
-        // properties.push(propertie.data(), propertie.id);
         properties.push({...propertie.data(), id: propertie.id});
       });
       propertiesUser.set(properties);
-      // dataProperties.set(properties);
     });
   });
 </script>

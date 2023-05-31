@@ -4,8 +4,6 @@
   import { signInWithEmailAndPassword } from "firebase/auth";
   // spa-router
   import { push } from "svelte-spa-router";
-  // user de stores - variable de estado global
-  import { brokerName } from '../stores/authStore.js'
   // toastify-js
   import { toastifyMessage } from "../lib/toastify.js";
 
@@ -17,10 +15,9 @@
   // función login
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      push("/mis-propiedades");
+      toastifyMessage(`¡Hola ${email.split("@", 1).join("").split("_", 2).join(" ")} bienvenido!`, "success");
+      push("/mi-cuenta/#/mis-propiedades");
       handleResetForm();
-      // toastifyMessage(`¡Hola ${email.split("@", 1).join("").split("_", 2).join(" ")} bienvenido!`, "success");
-      toastifyMessage(`¡Hola ${$brokerName} bienvenido!`, "success");
     } catch (error) {
       // console.log('error mensaje', error.message)
       // console.log('error codigo', error.code)

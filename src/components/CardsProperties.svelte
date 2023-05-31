@@ -2,9 +2,8 @@
   // @ts-nocheck
   // firebase
   import { deletePropertie, deleteToImg } from "../firebase/config.js";
-  // dataProperties de stores - variable de estado global
+  // stores - variable de estado global
   import {
-    dataProperties,
     imagePreview,
     viewPropertie,
   } from "../stores/dataProperties.js";
@@ -12,14 +11,14 @@
   // toastify-js
   import { toastifyMessage } from "../lib/toastify.js";
   // spa-router
-  import { link, push } from "svelte-spa-router";
+  import { link } from "svelte-spa-router";
 
   // prop - componente
   export let properties;
 
   // función para mostrar propiedades en su propia página
   const getPorpertie = (title) => {
-    const propertieView = $propertiesUser.filter((propertie) => propertie.title === title) && $dataProperties.filter((propertie) => propertie.title === title);
+    const propertieView = properties.filter((propertie) => propertie.title === title);
     viewPropertie.set(propertieView);
   };
 
@@ -27,10 +26,9 @@
     try {
       const idPropertie = target.dataset.id;
       const newsPropertiesUser = $propertiesUser.filter((propertie) => propertie.id !== idPropertie)
-      console.log("eliminando...", idPropertie);
       await deletePropertie(idPropertie)
 
-      // eliminar el array de imagenes del storage
+      // función que elimina las imagenes del storage
       const propertie = $propertiesUser.filter((propertie) => propertie.id === idPropertie);
       const imagesPropertie = propertie[0].imagesUrl.map((image) => image.path);
 
@@ -42,7 +40,6 @@
       async function imagesPop() {
         let path = getPathImage();
         await deleteToImg(path);
-        console.log('path', path);
       }
 
       const delayClear = imagesPropertie.length * 1350

@@ -35,7 +35,6 @@
       });
       const broker = fullName.join(" ");
       brokerName.set(broker)
-      console.log('broker:', broker)
       }
 
     });
