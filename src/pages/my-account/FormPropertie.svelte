@@ -459,6 +459,8 @@
             class="form-control"
             id="description"
             rows="6"
+            cols="10"
+            wrap="hard"
             placeholder="Casa en venta en excelente estado, ubicada en la Colonia Costa Azul, a 2 cuadras de la Costera Miguel Alemán, en Acapulco, Gro. Cuenta con 3 recámaras, 2 baños, cocina, sala, comedor ..."
             required
           />

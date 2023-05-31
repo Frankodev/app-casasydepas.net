@@ -51,27 +51,27 @@
 
           <div class="mb-3">
             <h5 class="text-info">Precio</h5>
-            <h4>{`$${Number(propertie.price).toLocaleString("en")} MXN` || "0.00"}</h4>
+            <h4 class="fields-card">{`$${Number(propertie.price).toLocaleString("en")} MXN` || "0.00"}</h4>
           </div>
 
           <div class="mb-3">
             <h5 class="text-info">Distribución</h5>
-            <div class="d-flex gap-2 mb-2 align-items-center opacity-75" style="height: 21px;">
+            <div class="d-flex gap-2 mb-2 align-items-center fields-card" >
               <div class="d-flex gap-1">
                 <spam class="distribution">{propertie.bedroom || "0"}</spam>
-                <spam><img class="opacity-75" src="/icons/bed.svg" alt="bedroom" width="28" height="28"/></spam>
+                <spam class="opacity-75"><img class="opacity-75" src="/icons/bed.svg" alt="bedroom" width="28" height="28"/></spam>
               </div>
               <div class="d-flex gap-1">
                 <spam class="distribution">{propertie.bathroom || "0"}</spam>
-                <spam><img class="opacity-75" src="/icons/shower.svg" alt="bathroom" width="28" height="28"/></spam>
+                <spam class="opacity-75"><img class="opacity-75" src="/icons/shower.svg" alt="bathroom" width="28" height="28"/></spam>
               </div>
               <div class="d-flex gap-1">
                 <spam class="distribution">{`${propertie.land ? propertie.land : "0"}`}</spam>
-                <spam><img class="opacity-75" src="/icons/land.svg" alt="land" width="28" height="28"/></spam>
+                <spam class="opacity-75"><img class="opacity-75" src="/icons/land.svg" alt="land" width="28" height="28"/></spam>
               </div>
               <div class="d-flex gap-1">
                 <spam class="distribution">{`${propertie.building}` || "0"}</spam>
-                <spam><img class="opacity-75" src="/icons/rule.svg" alt="building" width="28" height="28"/></spam>
+                <spam class="opacity-75"><img class="opacity-75" src="/icons/rule.svg" alt="building" width="28" height="28"/></spam>
                 <spam>m²</spam>
               </div>
             </div>
@@ -80,14 +80,14 @@
           <div class="mb-3">
             <h5 class="text-info">Datos de contacto</h5>
             <span class="badge text-bg-dark mb-1">Agente Inmobiliario</span>
-            <h5 class="text-dark-emphasis">{propertie.broker || 'casasydepas.net'}</h5>
+            <h5 class="text-dark-emphasis fields-card">{propertie.broker || 'casasydepas.net'}</h5>
             <a href={`tel:${propertie.tel}`} class="btn btn-primary">Llamar asesor</a>
             <a target="_blank" href={`https://wa.me/521${propertie.whatsapp}`} class="btn btn-success">WhatsApp</a>
           </div>
 
           <div class="mb-3">
-            <span class="badge text-bg-dark">Fecha de alta</span>
-            <p>{propertie.time_stamp || '00/00/0000'}</p>
+            <span class="badge text-bg-dark mb-1">Fecha de alta</span>
+            <p class="fields-card">{propertie.time_stamp || '00/00/0000'}</p>
           </div>
 
         </div>
@@ -95,31 +95,34 @@
 
       <div class="mb-2">
         <h5 class="text-info">Características</h5>
-        <p>{propertie.features || '* Terraza * Jardín * Alberca * Área de juegos'}</p>
+        <p class="fields-info">{propertie.features || '* Terraza * Jardín * Alberca * Área de juegos'}</p>
       </div>
 
       <div class="mb-2">
         <h5 class="text-info">Descripción</h5>
-        <p>{propertie.description}</p>
+        <p class="fields-info">{propertie.description}</p>
       </div>
 
       <div class="mb-2">
         <h5 class="text-info">Dirección</h5>
-        <p>{`${propertie.address.direction}, ${propertie.address.colony}, ${propertie.address.city}, ${propertie.address.estate}, ${propertie.address.postal}` || "No se proporcionó la dirección de la propiedad"}</p>
+        <p class="fields-info">{`${propertie.address.direction}, ${propertie.address.colony}, ${propertie.address.city}, ${propertie.address.estate}, ${propertie.address.postal}` || "No se proporcionó la dirección de la propiedad"}</p>
       </div>
 
       {#if $user}
       <div class="mb-2">
-        <div class="d-flex align-items-center gap-2 mb-3">
-          <h6 class="text-info m-0">Comisión</h6>
-          <p class="badge text-bg-dark m-0">{propertie.commission}</p>
-
-          <h6 class="text-info m-0">Comparto el</h6>
-          <p class="badge text-bg-dark m-0">{propertie.shared}</p>
-        </div>
+        
           
         <h5 class="text-info">Comentarios / Notas del asesor</h5>
-        <p>{propertie.notes || 'El asesor no dejo ninguna nota.'}</p>
+        <div class="fields-info">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <h6 class="text-primary m-0">Comisión</h6>
+            <p class="badge text-bg-dark m-0">{propertie.commission}</p>
+  
+            <h6 class="text-primary m-0">Comparto el</h6>
+            <p class="badge text-bg-dark m-0">{propertie.shared}</p>
+          </div>
+          <p>{propertie.notes || 'El asesor no dejo ninguna nota.'}</p>
+        </div>
       </div>
       {/if}
 
@@ -135,6 +138,22 @@
   h6 {
     font-weight: 500;
     line-height: 1.2;
+  }
+
+  .fields-card,
+  .fields-info {
+    background-color: #edf1f4;
+    color: #1c1a1c;
+    border-radius: .2rem;
+  }
+
+  .fields-card {
+    padding: .6rem .4rem; 
+  }
+
+  .fields-info {
+    padding: 1rem;
+    white-space: pre-line;
   }
 
   .container-galery {
