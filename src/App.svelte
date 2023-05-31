@@ -23,6 +23,8 @@
       userLog ? userEmail.set(userLog.email) : userEmail.set(null);
       $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
 
+      console.log('user:', $userEmail)
+
       // función que consulta las propiedades del usuario logeado
       let properties = [];
       if (!$user) {
@@ -36,7 +38,7 @@
         properties.push({...propertie.data(), id: propertie.id});
       });
       propertiesUser.set(properties);
-      dataProperties.set(properties);
+      // dataProperties.set(properties);
     });
   });
 </script>

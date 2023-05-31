@@ -14,23 +14,13 @@
   let password = "";
   
   const handleEmailLogin = async () => {
-    // constructor del nombre del asesor logeado
-    let fullName = [];
-    const names = email.split("@", 1).join("").split("_", 2);
-    names.forEach((name) => {
-      const upperCase = name[0].toUpperCase();
-      const wordSubString = name.substring(1);
-      const full = `${upperCase}${wordSubString}`;
-      fullName.push(full);
-    });
-    const broker = fullName.join(" ");
-    brokerName.set(broker)
   // función login
     try {
       await signInWithEmailAndPassword(auth, email, password);
       push("/mis-propiedades");
-      toastifyMessage(`¡Hola ${broker} bienvenido!`, "success");
       handleResetForm();
+      // toastifyMessage(`¡Hola ${email.split("@", 1).join("").split("_", 2).join(" ")} bienvenido!`, "success");
+      toastifyMessage(`¡Hola ${$brokerName} bienvenido!`, "success");
     } catch (error) {
       // console.log('error mensaje', error.message)
       // console.log('error codigo', error.code)

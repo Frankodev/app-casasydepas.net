@@ -33,7 +33,7 @@ export const uploadImages = (storageRef, imagesUpload) => uploadBytes(storageRef
 // función que trae la url a la app
 export const getUrl = (imagesUrl) => getDownloadURL(imagesUrl)
 // función para eliminar imágenes en el storage
-export const deleteImg = (imagesDelete) => deleteObject(ref(storage, imagesDelete))
+export const deleteToImg = (imagesDelete) => deleteObject(ref(storage, imagesDelete))
 
 // función para eliminar una propiedad
 export const deletePropertie = (idProperti) => deleteDoc(doc(db, 'properties', idProperti))

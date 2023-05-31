@@ -5,12 +5,12 @@
   import { user } from "../../stores/authStore.js";
   export let params;
 
-  const returnUser = () => window.history.back();
+  const returnView = () => window.history.back();
 </script>
 
 <div class="container p-4">
   <div class="mb-3">
-    <button class="btn btn-link" on:click={returnUser}>
+    <button class="btn btn-link" on:click={returnView}>
       Regresar <span>&#11148;</span>
     </button>
   </div>
@@ -20,7 +20,7 @@
 
       <div class="text-center mb-4">
         <h1 class="text-primary">{params.propertie.split("-").join(" ")}</h1>
-        <span class="badge text-bg-dark">{propertie.address.development || propertie.address.colony}</span>
+        <span class="badge text-bg-dark">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
       </div>
 
       <div class="container-galery">

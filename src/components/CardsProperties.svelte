@@ -1,7 +1,7 @@
 <script>
   // @ts-nocheck
   // firebase
-  import { deletePropertie, deleteImg } from "../firebase/config.js";
+  import { deletePropertie, deleteToImg } from "../firebase/config.js";
   // dataProperties de stores - variable de estado global
   import {
     dataProperties,
@@ -12,40 +12,50 @@
   // toastify-js
   import { toastifyMessage } from "../lib/toastify.js";
   // spa-router
-  import { link } from "svelte-spa-router";
+  import { link, push } from "svelte-spa-router";
 
   // prop - componente
   export let properties;
 
   // función para mostrar propiedades en su propia página
   const getPorpertie = (title) => {
-    const propertieView = $dataProperties.filter((propertie) => propertie.title === title);
+    const propertieView = $propertiesUser.filter((propertie) => propertie.title === title) && $dataProperties.filter((propertie) => propertie.title === title);
     viewPropertie.set(propertieView);
   };
 
-  const deleteProperties = async ({target}) => {
+  const deleteProperties = async ({ target }) => {
     try {
-      const idPropertie = target.dataset.id
-      console.log('id', idPropertie)
-      // await deletePropertie(idPropertie)
-      // window.location.reload()
-      
+      const idPropertie = target.dataset.id;
+      const newsPropertiesUser = $propertiesUser.filter((propertie) => propertie.id !== idPropertie)
+      console.log("eliminando...", idPropertie);
+      await deletePropertie(idPropertie)
+
       // eliminar el array de imagenes del storage
-      const propertieImages = $propertiesUser.filter((propertie) => propertie.id === idPropertie)
-      const imagesPropertie = propertieImages[0].imagesUrl.map(image => image.path)
-      imagesPropertie.forEach(path => {
-        console.log(path)
-      })
+      const propertie = $propertiesUser.filter((propertie) => propertie.id === idPropertie);
+      const imagesPropertie = propertie[0].imagesUrl.map((image) => image.path);
+
+      function getPathImage() {
+        let path = imagesPropertie.pop()
+        return path
+      }
       
-      // console.log('images', imagesPropertie)
-      // await deleteImg(imagePathDelete);
-      
-      toastifyMessage("Se eliminó la propiedad.", "delete");
+      async function imagesPop() {
+        let path = getPathImage();
+        await deleteToImg(path);
+        console.log('path', path);
+      }
+
+      const delayClear = imagesPropertie.length * 1350
+      let imgPath = setInterval(() => imagesPop(), 1250)
+      setTimeout(() => { clearInterval(imgPath) }, delayClear)
+
+      toastifyMessage("Se eliminó la propiedad de forma correcta.", "delete");
+      propertiesUser.set(newsPropertiesUser)
+
     } catch (error) {
       toastifyMessage("No se pudo eliminar la propiedad.", "deny");
     }
-  }
-
+  };
 </script>
 
 <div class="row row-cols-1 row-cols-md-3 g-4 row-prop">
@@ -53,7 +63,11 @@
     <div class="col">
       <div class="card h-100" style="width: 19rem; margin: auto;">
         <div
-          id={propertie.title.split(RegExp(/s*([.,?:])s*/g), 1).join('').split(' ').join('')}
+          id={propertie.title
+            .split(RegExp(/s*([.,?:])s*/g), 1)
+            .join("")
+            .split(" ")
+            .join("")}
           class="carousel carousel-dark slide"
           data-bs-ride="true"
         >
@@ -61,7 +75,11 @@
             {#each propertie.imagesUrl as _, index}
               <button
                 type="button"
-                data-bs-target={`#${propertie.title.split(RegExp(/s*([.,?:])s*/g), 1).join('').split(' ').join('')}`}
+                data-bs-target={`#${propertie.title
+                  .split(RegExp(/s*([.,?:])s*/g), 1)
+                  .join("")
+                  .split(" ")
+                  .join("")}`}
                 data-bs-slide-to={`${index}`}
                 class={index == 0 ? "active" : " "}
                 aria-current={index == 0 ? "true" : " "}
@@ -71,36 +89,37 @@
           </div>
 
           <div class="carousel-inner">
-            
             {#if !propertie.imagesUrl.length}
-            <div class="carousel-item active" >
-              <img
-                src={$imagePreview}
-                class="d-block w-100 card-img-top"
-                style="height: 13rem; object-fit: cover; border-radius: 4px 4px 0 0;"
-                alt={propertie.title}
-              />
-            </div>
-
-            {:else}
-              {#each propertie.imagesUrl as image, index}
-              <div class="carousel-item {index == 0 ? 'active' : ' '}">
+              <div class="carousel-item active">
                 <img
-                  src={image.url}
+                  src={$imagePreview}
                   class="d-block w-100 card-img-top"
                   style="height: 13rem; object-fit: cover; border-radius: 4px 4px 0 0;"
                   alt={propertie.title}
                 />
               </div>
+            {:else}
+              {#each propertie.imagesUrl as image, index}
+                <div class="carousel-item {index == 0 ? 'active' : ' '}">
+                  <img
+                    src={image.url}
+                    class="d-block w-100 card-img-top"
+                    style="height: 13rem; object-fit: cover; border-radius: 4px 4px 0 0;"
+                    alt={propertie.title}
+                  />
+                </div>
               {/each}
             {/if}
-
           </div>
 
           <button
             class="carousel-control-prev"
             type="button"
-            data-bs-target={`#${propertie.title.split(RegExp(/s*([.,?:])s*/g), 1).join('').split(' ').join('')}`}
+            data-bs-target={`#${propertie.title
+              .split(RegExp(/s*([.,?:])s*/g), 1)
+              .join("")
+              .split(" ")
+              .join("")}`}
             data-bs-slide="prev"
           >
             <span class="carousel-control-prev-icon" aria-hidden="true" />
@@ -109,7 +128,11 @@
           <button
             class="carousel-control-next"
             type="button"
-            data-bs-target={`#${propertie.title.split(RegExp(/s*([.,?:])s*/g), 1).join('').split(' ').join('')}`}
+            data-bs-target={`#${propertie.title
+              .split(RegExp(/s*([.,?:])s*/g), 1)
+              .join("")
+              .split(" ")
+              .join("")}`}
             data-bs-slide="next"
           >
             <span class="carousel-control-next-icon" aria-hidden="true" />
@@ -126,28 +149,34 @@
               {`${propertie.title.substring(0, 28)}` ||
                 "No hay un título para esta propiedad"}
             </h5>
-            <span class="badge text-bg-light">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
+            <span class="badge text-bg-light"
+              >{propertie.address.development.toUpperCase() ||
+                propertie.address.colony.toUpperCase()}</span
+            >
           </div>
           <h4 class="card-title">
             {`$${Number(propertie.price).toLocaleString("en")} MXN` || "0.00"}
           </h4>
-          
-          <div class="d-flex gap-2 mb-2 align-items-center" style="height: 21px;">
+
+          <div
+            class="d-flex gap-2 mb-2 align-items-center"
+            style="height: 21px;"
+          >
             <div class="d-flex gap-1">
               <spam>{propertie.bedroom || "0"}</spam>
-              <spam><img src="/icons/bed.svg" alt="bedroom"/></spam>
+              <spam><img src="/icons/bed.svg" alt="bedroom" /></spam>
             </div>
             <div class="d-flex gap-1">
               <spam>{propertie.bathroom || "0"}</spam>
-              <spam><img src="/icons/shower.svg" alt="bathroom"/></spam>
+              <spam><img src="/icons/shower.svg" alt="bathroom" /></spam>
             </div>
             <div class="d-flex gap-1">
               <spam>{`${propertie.land ? propertie.land : "0"}`}</spam>
-              <spam><img src="/icons/land.svg" alt="land"/></spam>
+              <spam><img src="/icons/land.svg" alt="land" /></spam>
             </div>
             <div class="d-flex gap-1">
               <spam>{`${propertie.building}` || "0"}</spam>
-              <spam><img src="/icons/rule.svg" alt="building"/></spam>
+              <spam><img src="/icons/rule.svg" alt="building" /></spam>
               <spam>m²</spam>
             </div>
           </div>
@@ -159,13 +188,21 @@
 
           <a
             use:link
-            href={`/ventas-rentas/#/${propertie.title.split(RegExp(/s*([.,?:])s*/g), 1).join('').split(' ').join('-')}`}
+            href={`/ventas-rentas/#/${propertie.title
+              .split(RegExp(/s*([.,?:])s*/g), 1)
+              .join("")
+              .split(" ")
+              .join("-")}`}
             on:click={getPorpertie(propertie.title)}
             class="btn btn-primary">Ver más info</a
           >
 
           {#if propertie.user === $userEmail}
-          <button data-id={propertie.id} class="btn btn-outline-danger" on:click={deleteProperties}>Eliminar</button>
+            <button
+              data-id={propertie.id}
+              class="btn btn-outline-danger"
+              on:click={deleteProperties}>Eliminar</button
+            >
           {/if}
         </div>
 
@@ -187,23 +224,33 @@
   .tag-renta {
     position: absolute;
     top: 0.4rem;
-    right: .4rem;
+    right: 0.4rem;
     padding: 0.1rem 0.6rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: .08rem;
+    letter-spacing: 0.08rem;
     color: azure;
     border-radius: 4px;
   }
 
   .tag-venta {
-    background: rgb(221,25,0);
-    background: linear-gradient(172deg, rgba(221,25,0,1) 0%, rgba(249,85,39,1) 35%, rgba(255,42,0,1) 100%);
+    background: rgb(221, 25, 0);
+    background: linear-gradient(
+      172deg,
+      rgba(221, 25, 0, 1) 0%,
+      rgba(249, 85, 39, 1) 35%,
+      rgba(255, 42, 0, 1) 100%
+    );
   }
 
   .tag-renta {
-    background: rgb(137,141,255);
-    background: linear-gradient(172deg, rgba(137,141,255,1) 0%, rgba(80,181,255,1) 35%, rgba(0,202,255,1) 100%);
+    background: rgb(137, 141, 255);
+    background: linear-gradient(
+      172deg,
+      rgba(137, 141, 255, 1) 0%,
+      rgba(80, 181, 255, 1) 35%,
+      rgba(0, 202, 255, 1) 100%
+    );
   }
 
   @media (max-width: 768px) {

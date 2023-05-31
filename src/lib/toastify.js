@@ -25,7 +25,7 @@ export const toastifyMessage = (message, type) => {
     } else if(type === 'deny') {
         color = "linear-gradient(to right, #b00000, #c93d3d)"
     } else if(type === 'delete') {
-        color = "linear-gradient(to right, #b00000, #84091e)"
+        color = "linear-gradient(to right, #00b09b, #96c93d)"
     }
 
     // @ts-ignore

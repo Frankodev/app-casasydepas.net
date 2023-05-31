@@ -11,6 +11,8 @@
   // variable de estado global
   import {
     user,
+    userEmail,
+    brokerName,
     propertiesUser,
     imagesPropertie,
   } from "../../stores/authStore.js";
@@ -20,6 +22,22 @@
     auth.onAuthStateChanged((userLog) => {
       userLog ? user.set(userLog) : user.set(null);
       $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
+
+      // constructor del nombre del asesor logeado
+      if(userLog) {
+        let fullName = [];
+        const names = $userEmail.split("@", 1).join("").split("_", 2);
+        names.forEach((name) => {
+        const upperCase = name[0].toUpperCase();
+        const wordSubString = name.substring(1);
+        const full = `${upperCase}${wordSubString}`;
+        fullName.push(full);
+      });
+      const broker = fullName.join(" ");
+      brokerName.set(broker)
+      console.log('broker:', broker)
+      }
+
     });
     imagesPropertie.set([]);
   });

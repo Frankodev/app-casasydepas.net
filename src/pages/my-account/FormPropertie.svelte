@@ -8,7 +8,7 @@
     storageRef,
     uploadImages,
     getUrl,
-    deleteImg,
+    deleteToImg,
   } from "../../firebase/config.js";
   // spa-router
   import { push, replace } from "svelte-spa-router";
@@ -62,8 +62,8 @@
   const imageDelete = async ({ target }) => {
     try {
       const imagePathDelete = target.dataset.path;
-      await deleteImg(imagePathDelete);
-
+      await deleteToImg(imagePathDelete);
+      
       const newImages = $imagesPropertie.filter(
         (image) => image.path !== imagePathDelete
       );
@@ -75,6 +75,7 @@
   };
 
   const propertie = {
+    id: "",
     user: email,
     time_stamp: today,
     transaction: "venta",

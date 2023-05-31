@@ -1,17 +1,12 @@
 <script>
-  const today = new Date().toLocaleDateString('es-MX')
 
-  // const email = 'francisco_cisneros@coworking.net'.split('@', 1).join('').split('_', 2)
+  // función para eliminar las imagenes de un array en con un interbalo de tiempo de 1 segundo entre cada llamada a la función de eliminar imagen.
+  // const images = ['image 1', 'image 2', 'image 3', 'image 4', 'image 5']
+  // for(let i = 0; i < images.length; i++) {
+  //   const image = images[i]
+  //   setTimeout(() => console.log('image', image), 1500)
+  // }
 
-  // let names = []
-  // email.forEach((word) => {
-  //   const upperCase = word[0].toUpperCase()
-  //   const wordSubString = word.substring(1)
-  //   const name = `${upperCase}${wordSubString}`
-  //   names.push(name)
-  // })
-  // const broker = names.join(' ')
-  // console.log(broker)
 </script>
 
 <div class="container">
