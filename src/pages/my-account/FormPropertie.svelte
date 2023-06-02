@@ -33,6 +33,18 @@
     });
   });
 
+   // constructor del nombre del asesor logeado
+   let fullName = [];
+    const names = $userEmail.split("@", 1).join("").split("_", 2);
+    names.forEach((name) => {
+      const upperCase = name[0].toUpperCase();
+      const wordSubString = name.substring(1);
+      const names = `${upperCase}${wordSubString}`;
+      fullName.push(names);
+    });
+    const brokerFullName = fullName.join(" ");
+    brokerName.set(brokerFullName)
+
   // variables de entorno
   let urlImage = "";
   let images = [];

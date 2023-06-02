@@ -18,8 +18,8 @@
     onSnapshot(
       collection(db, "properties"),
       (querySnapshot) => {
-        const data = querySnapshot.docs.map((prop) => {
-          return { ...prop.data(), id: prop.id };
+        const data = querySnapshot.docs.map((propertie) => {
+          return { ...propertie.data(), id: propertie.id };
         });
         dataProperties.set(data);
         cardsRenders.set(false);

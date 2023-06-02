@@ -5,6 +5,8 @@
   import { user } from "../../stores/authStore.js";
   export let params;
 
+  console.log('params', params)
+
   const returnView = () => window.history.back();
 </script>
 
@@ -19,7 +21,8 @@
     {#each $viewPropertie as propertie}
 
       <div class="text-center mb-4">
-        <h1 class="text-primary">{params.propertie.split("-").join(" ")}</h1>
+        <!-- <h1 class="text-primary">{params.propertie.split("-").join(" ")}</h1> -->
+        <h1 class="text-primary">{propertie.title}</h1>
         <span class="badge text-bg-dark">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
       </div>
 
