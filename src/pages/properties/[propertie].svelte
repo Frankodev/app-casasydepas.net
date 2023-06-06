@@ -28,6 +28,7 @@
 
       <div class="container-galery">
         <div id="carousel" class="carousel slide carousel-fade">
+          
           <div class="carousel-inner">
 
             {#each propertie.imagesUrl as image, index}
@@ -36,15 +37,15 @@
               </div>
             {/each}
 
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
         </div>
 
         <div>
@@ -172,13 +173,17 @@
   }
 
   .carousel-inner {
-    width: 32rem;
-    height: 22rem;
+    /* width: 32rem; */
+    width: 90%;
+    /* height: 22rem; */
+    height: 90%;
     border-radius: 8px;
   }
 
   .min-render {
-    min-height: 352px;
+    width: 90%;
+    /* min-height: 352px; */
+    height: 90%;
     object-fit: cover;
     object-position: center;
   }
