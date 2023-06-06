@@ -34,10 +34,16 @@
             <a class="nav-link " use:link use:active href="/ventas-rentas">Ventas / Rentas</a>
           </li>
 
-          <li class="nav-item">
-            <!-- class="nav-link disabled" -->
+          <!-- class="nav-link disabled" -->
+          <!-- <li class="nav-item">
             <a class="nav-link disabled" use:link use:active href="/marketplace">Marketplace</a>
+          </li> -->
+
+          {#if $user}
+          <li class="nav-item">
+            <a class="nav-link" use:link use:active href="/buscador">Buscar propiedad</a>
           </li>
+          {/if}
 
           {#if $user}
           <li class="nav-item dropdown">

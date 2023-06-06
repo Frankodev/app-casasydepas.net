@@ -18,7 +18,7 @@
   } from "../../stores/authStore.js";
 
   // función que comprueba si un usuario esta logeado, si lo esta, carga su pagina de propiedades
-  onMount(async () => {
+  onMount(() => {
     auth.onAuthStateChanged((userLog) => {
       userLog ? user.set(userLog) : user.set(null);
       $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
