@@ -5,15 +5,13 @@
   import { user } from "../../stores/authStore.js";
   export let params;
 
-  console.log('params', params)
-
   const returnView = () => window.history.back();
 </script>
 
 <div class="container p-4">
   <div class="mb-3">
     <button class="btn btn-link" on:click={returnView}>
-      Regresar <span>&#11148;</span>
+      Regresar <span> <img src="/icons/return.svg" alt="arrow return"></span>
     </button>
   </div>
 
@@ -21,13 +19,13 @@
     {#each $viewPropertie as propertie}
 
       <div class="text-center mb-4">
-        <!-- <h1 class="text-primary">{params.propertie.split("-").join(" ")}</h1> -->
+        <h1 class="params">{params.propertie.split("-").join(" ")}</h1>
         <h1 class="text-primary">{propertie.title}</h1>
         <span class="badge text-bg-dark">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
       </div>
 
       <div class="container-galery">
-        <div id="carousel" class="carousel slide carousel-fade">
+        <div id="carousel" class="carousel carousel-dark slide">
           
           <div class="carousel-inner">
 
@@ -48,7 +46,7 @@
           </div>
         </div>
 
-        <div>
+        <div class="description">
           <div class={`tag-${propertie.transaction} mb-3 text-center`}>
             <span>{propertie.transaction || "VENTA"}</span>
           </div>
@@ -138,6 +136,10 @@
 
 <style>
 
+  .params {
+    display: none;
+  }
+
   h5,
   h6 {
     font-weight: 500;
@@ -166,6 +168,7 @@
     gap: 1rem;
     margin: .5rem 0 3rem 0;
     justify-content: space-evenly;
+    align-items: center;
   }
 
   .carousel {
@@ -173,17 +176,15 @@
   }
 
   .carousel-inner {
-    /* width: 32rem; */
-    width: 90%;
-    /* height: 22rem; */
-    height: 90%;
+    width: 100%;
+    height: 100%;
     border-radius: 8px;
   }
 
   .min-render {
-    width: 90%;
-    /* min-height: 352px; */
-    height: 90%;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
     object-fit: cover;
     object-position: center;
   }
@@ -216,12 +217,18 @@
     font-weight: 500;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 995px) {
     .container-galery {
       flex-direction: column;
       margin: .5rem auto 1rem auto;
     }
 
+    .description {
+    width: 100%;
+  }
+  }
+
+  @media (max-width: 768px) {
     .carousel {
       width: 100%;
       margin: auto;
@@ -230,14 +237,10 @@
     .carousel-inner {
     width: 100%;
     height: 100%;
-    max-width: 360px;
+    /* max-width: 360px; */
     max-height: 480px;
     border-radius: 8px;
     margin: auto;
-  }
-
-  .min-render {
-    min-height: 269px;
   }
 }
 </style>
