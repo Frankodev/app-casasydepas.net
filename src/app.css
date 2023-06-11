@@ -1,11 +1,13 @@
 
-main {
-  width: 100%;
-  height: 100vh;
+body {
+  min-width: 280px;
+  color: #1c1a1c;
 }
 
-
-
+main {
+  width: 100%;
+  height: 100%;
+}
 
 .row {
   margin: 1rem auto 2rem;

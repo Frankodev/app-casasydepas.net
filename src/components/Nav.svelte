@@ -17,7 +17,9 @@
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid nav-max-width">
 
-      <span class="navbar-brand">casasydepas.net</span>
+      <a class="nav-link" use:link use:active href="/">
+        <span class="navbar-brand logo">casasydepas.net</span>
+      </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -25,10 +27,6 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-          <li class="nav-item">
-            <a class="nav-link" use:link use:active href="/">Inicio</a>
-          </li>
 
           <li class="nav-item">
             <a class="nav-link " use:link use:active href="/ventas-rentas">Ventas / Rentas</a>
@@ -41,7 +39,7 @@
 
           {#if $user}
           <li class="nav-item">
-            <a class="nav-link" use:link use:active href="/buscador">Buscar propiedad</a>
+            <a class="nav-link disabled" use:link use:active href="/buscador">Buscar propiedad</a>
           </li>
           {/if}
 
@@ -73,6 +71,15 @@
   </nav>
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+
+    .logo {
+      color: #03989e;
+      font-size: 1.4rem;
+      font-weight: bolder;
+      font-family: 'Nunito', sans-serif;
+    }
+
     .active-link {
       font-weight: 500;
       color: #000000e6;

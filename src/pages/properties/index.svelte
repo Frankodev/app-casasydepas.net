@@ -33,12 +33,11 @@
 
 <div class="container">
   <div class="text-center">
-    <h1>Ventas y Rentas</h1>
+    <h1>Bienvenido</h1>
     <h6>
       Encuentra las mejores propiedades en la red de casasydepas.net - Coworking Inmobiliario
     </h6>
   </div>
-  <hr />
 
   <main in:fade={{ duration: 600 }} class="mb-2">
     {#if $cardsRenders}

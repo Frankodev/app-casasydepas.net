@@ -31,14 +31,16 @@
   const returnView = () => window.history.back();
 </script>
 
-<div class="container p-4">
-  <div class="mb-3">
-    <button class="btn btn-link" on:click={returnView}>
-      Regresar <span> <img src="/icons/return.svg" alt="arrow return"></span>
-    </button>
-  </div>
+<div class="p-4 wrapper">
+  
 
   <main>
+
+    <div class="container mb-3">
+      <button class="btn btn-link" on:click={returnView}>
+        Regresar <span> <img src="/icons/return.svg" alt="arrow return"></span>
+      </button>
+    </div>
 
     {#await getPropertie }
 
@@ -47,7 +49,7 @@
       {:then}
       {#each $viewPropertie as propertie}
 
-      <div in:fade={{ duration: 600 }} class="container">
+      <div in:fade={{ duration: 600 }} class="container pb-4">
 
 
       <div class="text-center mb-4">
@@ -126,10 +128,10 @@
         </div>
       </div>
 
-      <div class="mb-2">
+      <!-- <div class="mb-2">
         <h5 class="text-info">Características</h5>
         <p class="fields-info">{propertie.features || '* Terraza * Jardín * Alberca * Área de juegos'}</p>
-      </div>
+      </div> -->
 
       <div class="mb-2">
         <h5 class="text-info">Descripción</h5>
@@ -171,6 +173,13 @@
 </div>
 
 <style>
+
+.wrapper {
+  height: 100%;
+  background-color: #edf1f4;
+  background-color: #f2f5f7;
+}
+
   h5,
   h6 {
     font-weight: 500;
@@ -179,7 +188,7 @@
 
   .fields-card,
   .fields-info {
-    background-color: #edf1f4;
+    background-color: #fbfcfd;
     color: #1c1a1c;
     border-radius: .2rem;
   }

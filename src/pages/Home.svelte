@@ -5,8 +5,7 @@
 
 <main class="container">
   <div class="text-center">
-    <h1>Bienvenido</h1>
-    <h6>casasydepas.net - Coworking Inmobiliario</h6>
+    <h1>casasydepas.net - Coworking Inmobiliario</h1>
   </div>
   <hr />
 

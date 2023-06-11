@@ -567,6 +567,13 @@
 </div>
 
 <style>
+
+  form {
+    padding: .8rem;
+    background-color: #fbfcfd;
+    border-radius: 4px;
+  }
+
   input::placeholder,
   textarea::placeholder {
     color: #dadada;
