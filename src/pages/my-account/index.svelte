@@ -45,7 +45,7 @@
 <div class="container">
   <div class="text-center">
     <h1>Mis propiedades</h1>
-    <h6>Bienvenido a la red de casasydepas.net - Coworking Inmobiliario</h6>
+    <h6>¡Hola! Bienvenido a la red de casasydepas.net - Coworking Inmobiliario</h6>
   </div>
   <hr style="color: transparent; margin: 2rem 0;" />
 

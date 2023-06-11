@@ -23,7 +23,7 @@
   // toastify-js
   import { toastifyMessage } from "../../lib/toastify.js";
   // uuid
-  import { v4 as uuidv4 } from "uuid"
+  import { v4 as uuidv4 } from "uuid";
 
   // función que comprueba si un usuario esta logeado, si lo esta, carga su pagina de usuario
   onMount(() => {
@@ -33,22 +33,22 @@
     });
   });
 
-   // constructor del nombre del asesor logeado
-   if($user) {
-     let fullName = [];
-      const names = $userEmail.split("@", 1).join("").split("_", 2);
-      names.forEach((name) => {
-        const upperCase = name[0].toUpperCase();
-        const wordSubString = name.substring(1);
-        const names = `${upperCase}${wordSubString}`;
-        fullName.push(names);
-      });
-      const brokerFullName = fullName.join(" ");
-      brokerName.set(brokerFullName) 
-   }
+  // constructor del nombre del asesor logeado
+  if ($user) {
+    let fullName = [];
+    const names = $userEmail.split("@", 1).join("").split("_", 2);
+    names.forEach((name) => {
+      const upperCase = name[0].toUpperCase();
+      const wordSubString = name.substring(1);
+      const names = `${upperCase}${wordSubString}`;
+      fullName.push(names);
+    });
+    const brokerFullName = fullName.join(" ");
+    brokerName.set(brokerFullName);
+  }
 
   // variables de entorno
-  let uuid = uuidv4().split('-', 1).join('')
+  let uuid = uuidv4().split("-", 1).join("");
   let urlImage = "";
   let images = [];
   let folder = `propertie_${uuid}`;
@@ -58,7 +58,7 @@
   const email = $userEmail;
   const today = new Date().toLocaleDateString("es-MX");
   const broker = $brokerName;
-  
+
   const propertie = {
     id: uuid,
     user: email,
@@ -77,7 +77,14 @@
     bedroom: "2",
     bathroom: "1",
     mid_bathroom: "0",
-    address: {direction: "", development: "", colony: "", city: "", estate: "Guerrero", postal: ""},
+    address: {
+      direction: "",
+      development: "",
+      colony: "",
+      city: "",
+      estate: "Guerrero",
+      postal: "",
+    },
     description: "",
     notes: "",
   };
@@ -87,13 +94,17 @@
     try {
       const img = event.target.files[0];
       // referencia en donde se creará la carpeta y contendra las imgs
-      const imagePath = storageRef(`${email.split("@", 1)}/${folder}/${img.name}`);
+      const imagePath = storageRef(
+        `${email.split("@", 1)}/${folder}/${img.name}`
+      );
       await uploadImages(imagePath, img);
 
       urlImage = await getUrl(imagePath);
       toastifyMessage("Imágen cargada con exito.", "success");
       images.push({ url: urlImage, path: imagePath.fullPath });
       imagesPropertie.set(images);
+
+      event.target.value = "";
     } catch (error) {
       toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
     }
@@ -104,9 +115,14 @@
     try {
       const imagePathDelete = target.dataset.path;
       await deleteToImg(imagePathDelete);
-      
-      const newImages = $imagesPropertie.filter((image) => image.path !== imagePathDelete);
+
+      // const newImages = $imagesPropertie.filter((image) => image.path !== imagePathDelete);
+      const newImages = images.filter(
+        (image) => image.path !== imagePathDelete
+      );
       imagesPropertie.set(newImages);
+      images = [...newImages];
+
       toastifyMessage("Se eliminó la imagen.", "delete");
     } catch (error) {
       toastifyMessage("No se pudo eliminar la imagen.", "deny");
@@ -117,7 +133,10 @@
   const handleSubmit = async () => {
     allPropertiesUser.push({ ...propertie, imagesUrl: $imagesPropertie });
     try {
-      await addDoc(collection(db, "properties"), {...propertie, imagesUrl: $imagesPropertie});
+      await addDoc(collection(db, "properties"), {
+        ...propertie,
+        imagesUrl: $imagesPropertie,
+      });
 
       toastifyMessage("Tu propiedad se ha publicado exitosamente.", "success");
       propertiesUser.set(allPropertiesUser);
@@ -142,8 +161,28 @@
   <hr />
 
   <div class="carrousel-images">
-    <div class="d-flex gap-1 carrousel">
-      {#if !$imagesPropertie.length}
+    <div class="d-flex align-items-center gap-1 carrousel">
+      {#each $imagesPropertie as image}
+        <div class="relative">
+          <button
+            class="close-image bg-danger border rounded-circle"
+            on:click={imageDelete}
+            data-path={image.path}
+          >
+            X
+          </button>
+          <img
+            src={image.url}
+            alt="Imagen de la propiedad"
+            class="border rounded border-2 border-primary border-opacity-75"
+            style="object-fit: cover;"
+            width="148"
+            height="148"
+          />
+        </div>
+      {/each}
+
+      {#if $imagesPropertie.length < 3}
         <div
           class="border border-2 border-primary border-opacity-75 rounded d-flex justify-content-center align-items-center"
           style="overflow: hidden; object-fit: cover; width: 104px; height: 104px;"
@@ -156,34 +195,14 @@
           />
         </div>
       {/if}
-
-      {#each $imagesPropertie as image}
-      <div class="relative">
-        <button
-          class="close-image bg-danger border rounded-circle"
-          on:click={imageDelete}
-          data-path={image.path}
-        >
-          X
-        </button>
-        <img
-          src={image.url}
-          alt="Imagen de la propiedad"
-          class="border rounded border-2 border-primary border-opacity-75"
-          style="object-fit: cover;"
-          width="148"
-          height="148"
-        />
-      </div>
-      {/each}
-        
     </div>
   </div>
 
   <form
     class="form-properties"
     on:submit|preventDefault={handleSubmit}
-    id="form">
+    id="form"
+  >
     <div class="mb-5">
       {#if $imagesPropertie.length < 10}
         <input
@@ -198,7 +217,9 @@
         />
       {/if}
       <label for="files" class="form-label badge text-bg-primary">
-        Sube las mejores fotos <span class="badge bg-danger">{$imagesPropertie.length}/10</span>
+        Sube las mejores fotos <span class="badge bg-danger"
+          >{$imagesPropertie.length}/10</span
+        >
       </label>
     </div>
 
@@ -218,9 +239,9 @@
             <option value="renta">Renta</option>
           </select>
         </div>
-  
+
         <div class="col col-auto">
-          <label for="property" class="form-label">Tipo</label>
+          <label for="property" class="form-label">Propiedad</label>
           <select
             class="form-select"
             aria-label="Default select"
@@ -233,7 +254,7 @@
             <option value="terreno">Terreno</option>
           </select>
         </div>
-  
+
         <div class="col">
           <label for="title" class="form-label">Título</label>
           <input
@@ -243,7 +264,7 @@
             maxlength="88"
             class="form-control"
             id="title"
-            placeholder="Casa en Venta de 2 niveles en la Col. Costa Azul, en Acapulco, Gro."
+            placeholder="Casa en Venta de 2 Niveles en la Col. Costa Azul, en Acapulco, Gro."
             required
           />
         </div>
@@ -261,7 +282,7 @@
           max="9999999"
           class="form-control"
           id="price"
-          placeholder="1,250,000"
+          placeholder="1250000"
           required
         />
       </div>
@@ -276,6 +297,7 @@
           bind:value={propertie.commission}
         >
           <option value="0%">0%</option>
+          <option value="2%">2%</option>
           <option value="3%">3%</option>
           <option value="4%">4%</option>
           <option selected>5%</option>
@@ -306,8 +328,9 @@
           type="tel"
           name="tel"
           id="tel"
-          placeholder="7443218899"
+          placeholder="7444868899"
           bind:value={propertie.tel}
+          required
         />
       </div>
 
@@ -340,12 +363,10 @@
             placeholder="120"
           />
           <div class="form-text mt-0">
-            <small class="text-muted">
-              Opcional
-            </small>
+            <small class="text-muted"> Opcional </small>
           </div>
         </div>
-  
+
         <div class="col">
           <label for="building" class="form-label">Construcción m²</label>
           <input
@@ -359,7 +380,7 @@
             placeholder="220"
           />
         </div>
-  
+
         <div class="col">
           <label for="bedroom" class="form-label">Recámaras</label>
           <select
@@ -377,7 +398,7 @@
             <option value="+7">+7</option>
           </select>
         </div>
-  
+
         <div class="col col-md-2">
           <label for="bathroom" class="form-label">Baños</label>
           <select
@@ -392,7 +413,7 @@
             <option value="+4">+4</option>
           </select>
         </div>
-  
+
         <div class="col col-md-2">
           <label for="mid_bathroom" class="form-label">½ Baños</label>
           <select
@@ -415,21 +436,31 @@
       <div class="row mt-0 mb-2">
         <div class="col">
           <label for="address" class="form-label">Calle y número</label>
-          <input name="address" id="address" bind:value={propertie.address.direction} class="form-control" type="text" placeholder="Av. Principal #123">
+          <input
+            name="address"
+            id="address"
+            bind:value={propertie.address.direction}
+            class="form-control"
+            type="text"
+            placeholder="Av. Cristóbal Colón #100"
+          />
           <div class="form-text mt-0">
-            <small class="text-muted">
-              Opcional
-            </small>
+            <small class="text-muted"> Opcional </small>
           </div>
         </div>
-  
+
         <div class="col col-md-4">
           <label for="development" class="form-label">Desarrollo</label>
-          <input name="development" id="development" bind:value={propertie.address.development} class="form-control" type="text" placeholder="Fracc. La Marquesa">
+          <input
+            name="development"
+            id="development"
+            bind:value={propertie.address.development}
+            class="form-control"
+            type="text"
+            placeholder="Fracc. Costa Azul"
+          />
           <div class="form-text mt-0">
-            <small class="text-muted">
-              Opcional
-            </small>
+            <small class="text-muted"> Opcional </small>
           </div>
         </div>
       </div>
@@ -437,12 +468,26 @@
       <div class="row mt-0">
         <div class="col col-md-4">
           <label for="colony" class="form-label">Colonia</label>
-          <input name="colony" id="colony" bind:value={propertie.address.colony} class="form-control" type="text" placeholder="Col. Llano Largo">
+          <input
+            name="colony"
+            id="colony"
+            bind:value={propertie.address.colony}
+            class="form-control"
+            type="text"
+            placeholder="Costa Azul"
+          />
         </div>
 
         <div class="col col-md-3">
           <label for="city" class="form-label">Ciudad</label>
-          <input name="city" id="city" bind:value={propertie.address.city} class="form-control" type="text" placeholder="Acapulco de Juárez">
+          <input
+            name="city"
+            id="city"
+            bind:value={propertie.address.city}
+            class="form-control"
+            type="text"
+            placeholder="Acapulco de Juárez"
+          />
         </div>
 
         <div class="col col-md-3">
@@ -459,7 +504,14 @@
 
         <div class="col col-md-1">
           <label for="postal" class="form-label">C.P.</label>
-          <input name="postal" id="postal" bind:value={propertie.address.postal} class="form-control" type="text" placeholder="39906">
+          <input
+            name="postal"
+            id="postal"
+            bind:value={propertie.address.postal}
+            class="form-control"
+            type="text"
+            placeholder="39850"
+          />
         </div>
       </div>
     </div>
@@ -468,7 +520,9 @@
       <h2 class="badge text-bg-dark">Descripción</h2>
       <div class="row mt-0">
         <div class="col">
-          <label for="description" class="form-label">Descripción de la propiedad</label>
+          <label for="description" class="form-label"
+            >Descripción de la propiedad</label
+          >
           <textarea
             bind:value={propertie.description}
             name="description"
@@ -478,7 +532,7 @@
             rows="6"
             cols="10"
             wrap="hard"
-            placeholder="Casa en venta en excelente estado, ubicada en la Colonia Costa Azul, a 2 cuadras de la Costera Miguel Alemán, en Acapulco, Gro. Cuenta con 3 recámaras, 2 baños, cocina, sala, comedor ..."
+            placeholder="Casa en venta en excelente estado, ubicada en la Colonia Costa Azul, a 2 cuadras de la Costera Miguel Alemán, en Acapulco, Gro. Cuenta con 2 recámaras, 1 baño, cocina, sala, comedor ..."
             required
           />
         </div>
@@ -497,16 +551,13 @@
             class="form-control"
             id="notes"
             rows="3"
-            placeholder="El pago de la comisión es de $50,000 mil pesos, comparto el 50%. La propiedad se entrega sin muebles, se dejan los 3 aires acondicionados. Etc."
+            placeholder="El pago de la comisión es de $50,000 mil pesos, comparto el 50%. La propiedad se entrega sin muebles, se dejan los 3 aires acondicionados, programar las citas con 24 horas de anticipación ..."
           />
           <div class="form-text mt-0">
-            <small class="text-muted">
-              Opcional
-            </small>
+            <small class="text-muted"> Opcional </small>
           </div>
         </div>
       </div>
-      
     </div>
 
     <button class={`btn btn-primary ${$imagesPropertie.length <= 1 ? "disabled" : ""}`}>

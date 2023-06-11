@@ -4,7 +4,7 @@ import Propertie from '../pages/properties/[propertie].svelte'
 import MyAccount from '../pages/my-account/index.svelte'
 import FormPropertie from '../pages/my-account/FormPropertie.svelte'
 import InfoUser from "../pages/my-account/InfoUser.svelte"
-import Buscador from '../pages/Buscador.svelte'
+import Buscador from '../pages/Searching.svelte'
 import Market from "../pages/Market.svelte"
 import Error from '../pages/Error.svelte'
 

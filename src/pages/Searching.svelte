@@ -6,7 +6,7 @@
     <hr />
   
     <p>
-      Página en donde podrán <strong>buscar y requerir</strong>,Las propiedades que necesitan para su cliente comprador.
+      Página en donde podrán <strong>buscar y requerir</strong>, las propiedades que necesitan para su cliente comprador.
     </p>
 
     <br>
@@ -18,7 +18,7 @@
       <li>Tipo de transacción (Venta o Renta)</li>
       <li>Si es Renta, rango de precio y días que necesita</li>
       <li>Si es Venta, rango de precios</li>
-      <li>Descripcion de la propiedad que necesita</li>
+      <li>Descripcion y características de la propiedad que necesita</li>
       <li>Dirección o desarrollo donde se debe de ubicar la propiedad</li>
       <li>Teléfono de contacto del asesor que requiere</li>
     </ul>
