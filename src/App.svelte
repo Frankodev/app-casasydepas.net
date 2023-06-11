@@ -20,7 +20,7 @@
     auth.onAuthStateChanged(async (userLog) => {
       userLog ? user.set(userLog) : user.set(null);
       userLog ? userEmail.set(userLog.email) : userEmail.set(null);
-      $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
+      // $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
 
       // función que consulta las propiedades del usuario logeado
       let properties = [];
@@ -31,7 +31,7 @@
       const queryRef = query(docsRef, where("user", "==", `${$userEmail}`));
       const querySnapshot = await getDocs(queryRef);
       querySnapshot.forEach((propertie) => {
-        properties.push({...propertie.data(), id: propertie.id});
+        properties.push({...propertie.data()});
       });
       propertiesUser.set(properties);
     });

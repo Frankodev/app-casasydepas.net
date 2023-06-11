@@ -19,7 +19,7 @@
       collection(db, "properties"),
       (querySnapshot) => {
         const data = querySnapshot.docs.map((propertie) => {
-          return { ...propertie.data(), id: propertie.id };
+          return { ...propertie.data() };
         });
         dataProperties.set(data);
         cardsRenders.set(false);

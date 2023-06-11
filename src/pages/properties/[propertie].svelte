@@ -1,9 +1,32 @@
 <script>
+  import { fade } from "svelte/transition";
+  // firebase
+  import { db } from "../../firebase/config.js";
+  import { collection, getDocs, query, where } from "firebase/firestore";
   // dataProperties de stores - variable de estado global
   import { viewPropertie } from "../../stores/dataProperties";
   // user de stores - variable de estado global
   import { user } from "../../stores/authStore.js";
+
+  // params
   export let params;
+  const idPropertie = params.propertie.split('_')[1]
+
+  // función que trae de la db la propiedad a visualizar.
+  let properties = [];
+  async function querySnapShot() {
+    if(!$viewPropertie){
+      const docsRef = collection(db, "properties");
+      const queryRef = query(docsRef, where("id", "==", `${idPropertie}`));
+      const querySnapshot = await getDocs(queryRef);
+      querySnapshot.forEach((propertie) => {
+        properties.push({...propertie.data()});
+      });
+      viewPropertie.set(properties);
+      console.log('querySnapshot')
+    }
+  }
+  const getPropertie = querySnapShot()
 
   const returnView = () => window.history.back();
 </script>
@@ -16,10 +39,18 @@
   </div>
 
   <main>
-    {#each $viewPropertie as propertie}
+
+    {#await getPropertie }
+
+      <p>Loading...</p>
+
+      {:then}
+      {#each $viewPropertie as propertie}
+
+      <div in:fade={{ duration: 600 }} class="container">
+
 
       <div class="text-center mb-4">
-        <h1 class="params">{params.propertie.split("-").join(" ")}</h1>
         <h1 class="text-primary">{propertie.title}</h1>
         <span class="badge text-bg-dark">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
       </div>
@@ -128,18 +159,18 @@
       </div>
       {/if}
 
-      
+    </div>
+  
     {/each}
+
+    {/await}
+
+   
 
   </main>
 </div>
 
 <style>
-
-  .params {
-    display: none;
-  }
-
   h5,
   h6 {
     font-weight: 500;
@@ -189,7 +220,6 @@
     object-position: center;
   }
 
-  /* Tag VENTAS / RENTAS */
 .tag-venta,
 .tag-renta {
     width: 100%;
@@ -237,10 +267,10 @@
     .carousel-inner {
     width: 100%;
     height: 100%;
-    /* max-width: 360px; */
     max-height: 480px;
     border-radius: 8px;
     margin: auto;
   }
 }
+
 </style>

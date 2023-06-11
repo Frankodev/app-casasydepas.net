@@ -48,9 +48,10 @@
    }
 
   // variables de entorno
+  let uuid = uuidv4().split('-', 1).join('')
   let urlImage = "";
   let images = [];
-  let folder = `propertie_${uuidv4().split('-', 1).join('')}`;
+  let folder = `propertie_${uuid}`;
 
   // constructor objeto propertie
   const allPropertiesUser = $propertiesUser;
@@ -59,6 +60,7 @@
   const broker = $brokerName;
   
   const propertie = {
+    id: uuid,
     user: email,
     time_stamp: today,
     transaction: "venta",

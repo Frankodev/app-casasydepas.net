@@ -17,8 +17,8 @@
   export let properties;
 
   // función para mostrar propiedades en su propia página
-  const getPorpertie = (title) => {
-    const propertieView = properties.filter((propertie) => propertie.title === title);
+  const getPorpertie = (id) => {
+    const propertieView = properties.filter((propertie) => propertie.id === id);
     viewPropertie.set(propertieView);
   };
 
@@ -189,8 +189,8 @@
               .split(RegExp(/s*([.,?:])s*/g), 1)
               .join("")
               .split(" ")
-              .join("-")}`}
-            on:click={getPorpertie(propertie.title)}
+              .join("-")}_${propertie.id}`}
+            on:click={getPorpertie(propertie.id)}
             class="btn btn-primary">Ver más info</a
           >
 
