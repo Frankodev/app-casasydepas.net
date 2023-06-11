@@ -8,11 +8,9 @@
   import ModalSignIn from "./components/ModalSignIn.svelte";
   // firebase
   import { auth } from "./firebase/config.js";
-  // spa-router
-  import { push, replace } from "svelte-spa-router";
 
   // variable de estado global
-  import { user, userEmail, propertiesUser } from "./stores/authStore.js";
+  import { user, userEmail } from "./stores/authStore.js";
 
   onMount(() => {
     // función que comprueba si un usuario esta logeado
