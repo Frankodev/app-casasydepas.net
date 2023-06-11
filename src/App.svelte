@@ -22,11 +22,11 @@
   });
 </script>
 
-<div>
-  <Nav />
-  <Router {routes} />
 
-  <slot />
+<Nav />
+<Router {routes} />
 
-  <ModalSignIn />
-</div>
+<slot />
+
+<ModalSignIn />
+
