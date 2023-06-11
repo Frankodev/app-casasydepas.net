@@ -44,7 +44,7 @@
 
     {#await getPropertie }
 
-      <p>Loading...</p>
+      <p class="loading">Loading...</p>
 
       {:then}
       {#each $viewPropertie as propertie}
@@ -174,10 +174,18 @@
 
 <style>
 
+  .loading {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
 .wrapper {
-  height: 100%;
+  min-height: 100%;
   background-color: #edf1f4;
-  background-color: #f2f5f7;
+  /* background-color: #f2f5f7; */
 }
 
   h5,
@@ -188,7 +196,7 @@
 
   .fields-card,
   .fields-info {
-    background-color: #fbfcfd;
+    background-color: #fdfefe;
     color: #1c1a1c;
     border-radius: .2rem;
   }
