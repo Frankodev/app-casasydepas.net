@@ -3,7 +3,8 @@
   import { fade } from "svelte/transition";
 
   // firebase
-  import { auth } from "../../firebase/config.js";
+  import { auth, db } from "../../firebase/config.js";
+  import { collection, getDocs, query, where } from "firebase/firestore";
   // components
   import CardsProperties from "../../components/CardsProperties.svelte";
   // spa-router
@@ -19,12 +20,25 @@
 
   // función que comprueba si un usuario esta logeado, si lo esta, carga su pagina de propiedades
   onMount(() => {
-    auth.onAuthStateChanged((userLog) => {
+    auth.onAuthStateChanged(async (userLog) => {
       userLog ? user.set(userLog) : user.set(null);
       $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
 
+       // función que consulta las propiedades del usuario logeado
+      let properties = [];
+      if (!$user) {
+        propertiesUser.set([]);
+      }
+      const docsRef = collection(db, "properties");
+      const queryRef = query(docsRef, where("user", "==", `${$userEmail}`));
+      const querySnapshot = await getDocs(queryRef);
+      querySnapshot.forEach((propertie) => {
+        properties.push({...propertie.data()});
+      });
+      propertiesUser.set(properties);
+
     });
-    imagesPropertie.set([]);
+    // imagesPropertie.set([]);
   });
 </script>
 

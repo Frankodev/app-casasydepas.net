@@ -7,8 +7,7 @@
   import Nav from "./components/Nav.svelte";
   import ModalSignIn from "./components/ModalSignIn.svelte";
   // firebase
-  import { auth, db } from "./firebase/config.js";
-  import { collection, getDocs, query, where } from "firebase/firestore";
+  import { auth } from "./firebase/config.js";
   // spa-router
   import { push, replace } from "svelte-spa-router";
 
@@ -21,19 +20,6 @@
       userLog ? user.set(userLog) : user.set(null);
       userLog ? userEmail.set(userLog.email) : userEmail.set(null);
       // $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
-
-      // función que consulta las propiedades del usuario logeado
-      let properties = [];
-      if (!$user) {
-        propertiesUser.set([]);
-      }
-      const docsRef = collection(db, "properties");
-      const queryRef = query(docsRef, where("user", "==", `${$userEmail}`));
-      const querySnapshot = await getDocs(queryRef);
-      querySnapshot.forEach((propertie) => {
-        properties.push({...propertie.data()});
-      });
-      propertiesUser.set(properties);
     });
   });
 </script>

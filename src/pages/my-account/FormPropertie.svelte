@@ -509,11 +509,9 @@
       
     </div>
 
-    <button
-      class={`btn btn-primary ${
-        $imagesPropertie.length <= 4 ? "disabled" : ""
-      }`}>Publicar propiedad</button
-    >
+    <button class={`btn btn-primary ${$imagesPropertie.length <= 1 ? "disabled" : ""}`}>
+      Publicar propiedad
+    </button>
   </form>
 </div>
 
