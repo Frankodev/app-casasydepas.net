@@ -91,22 +91,31 @@
 
   // función que carga las imagenes en el storage
   const handleImages = async (event) => {
+    if(event.target.files[0].length <= 0) {
+      toastifyMessage("Selecciona una imagen.", "deny");
+      return
+    }
+
+    // comprobar que el tamaño de la imagen sea menor a 2.5mb 
+    // si es mayor al tamaño permitido, mandar mensaje al usuario que suba una imagen mas pequeña
+    // si es menor al tamaño permitido, subir la imagen al storage
+    
     try {
       const img = event.target.files[0];
-      // referencia en donde se creará la carpeta y contendra las imgs
-      const imagePath = storageRef(
-        `${email.split("@", 1)}/${folder}/${img.name}`
-      );
+      const imagePath = storageRef(`${email.split("@", 1)}/${folder}/${img.name}`);
+
       await uploadImages(imagePath, img);
+      toastifyMessage("Imagen cargada con exito.", "success");
 
       urlImage = await getUrl(imagePath);
-      toastifyMessage("Imágen cargada con exito.", "success");
+
       images.push({ url: urlImage, path: imagePath.fullPath });
       imagesPropertie.set(images);
 
       event.target.value = "";
     } catch (error) {
-      toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
+      toastifyMessage("No se cargó la imagen vuelve a intentarlo.", "deny");
+      event.target.value = "";
     }
   };
 
@@ -117,9 +126,7 @@
       await deleteToImg(imagePathDelete);
 
       // const newImages = $imagesPropertie.filter((image) => image.path !== imagePathDelete);
-      const newImages = images.filter(
-        (image) => image.path !== imagePathDelete
-      );
+      const newImages = images.filter((image) => image.path !== imagePathDelete);
       imagesPropertie.set(newImages);
       images = [...newImages];
 
@@ -162,6 +169,7 @@
 
   <div class="carrousel-images">
     <div class="d-flex align-items-center gap-1 carrousel">
+      
       {#each $imagesPropertie as image}
         <div class="relative">
           <button
@@ -212,7 +220,7 @@
           style="background-color: #f8f8f8;"
           type="file"
           accept="image/png, image/jpg, image/jpeg"
-          size="2500000"
+          size="1024"
           on:change={handleImages}
         />
       {/if}

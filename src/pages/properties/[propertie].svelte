@@ -23,10 +23,10 @@
         properties.push({...propertie.data()});
       });
       viewPropertie.set(properties);
-      console.log('querySnapshot')
     }
   }
   const getPropertie = querySnapShot()
+  console.log('promise', getPropertie)
 
   const returnView = () => window.history.back();
 </script>

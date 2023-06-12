@@ -28,7 +28,7 @@
       const newsPropertiesUser = $propertiesUser.filter((propertie) => propertie.id !== idPropertie)
       await deletePropertie(idPropertie)
 
-      // función que elimina las imagenes del storage
+      // función que elimina las imágenes del storage
       const propertie = $propertiesUser.filter((propertie) => propertie.id === idPropertie);
       const imagesPropertie = propertie[0].imagesUrl.map((image) => image.path);
 
