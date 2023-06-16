@@ -46,6 +46,13 @@
       <p class="loading">Buscando...</p>
 
       {:then}
+
+      {#if !$viewPropertie}
+
+      <h5 class="text-center">La propiedad ya no se encuentra disponible.</h5>
+
+      {/if}
+
       {#each $viewPropertie as propertie}
 
       <div in:fade={{ duration: 600 }} class="container pb-4">
