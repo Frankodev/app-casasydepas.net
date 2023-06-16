@@ -26,7 +26,6 @@
     }
   }
   const getPropertie = querySnapShot()
-  console.log('promise', getPropertie)
 
   const returnView = () => window.history.back();
 </script>
@@ -44,7 +43,7 @@
 
     {#await getPropertie }
 
-      <p class="loading">Loading...</p>
+      <p class="loading">Buscando...</p>
 
       {:then}
       {#each $viewPropertie as propertie}

@@ -250,9 +250,16 @@
     );
   }
 
+  @media (max-width: 945px) {
+    .row-cols-md-3>* {
+    width: 36.333333%;
+    }
+  }
+
   @media (max-width: 768px) {
     .row-cols-md-3 > * {
       padding: 0;
+      width: 100%;
     }
   }
 </style>
