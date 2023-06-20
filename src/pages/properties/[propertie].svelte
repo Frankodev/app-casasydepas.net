@@ -43,7 +43,7 @@
 
     {#await getPropertie }
 
-      <p class="loading">Buscando...</p>
+      <p class="loading...">Buscando...</p>
 
       {:then}
 
@@ -154,13 +154,13 @@
         
           
         <h5 class="text-info">Comentarios / Notas del asesor</h5>
-        <div class="fields-info">
+        <div class="fields-brokers">
           <div class="d-flex align-items-center gap-2 mb-3">
-            <h6 class="text-primary m-0">Comisión</h6>
-            <p class="badge text-bg-dark m-0">{propertie.commission}</p>
+            <h6 class="text-info m-0">Comisión</h6>
+            <p class="badge text-bg-light m-0">{propertie.commission}</p>
   
-            <h6 class="text-primary m-0">Comparto el</h6>
-            <p class="badge text-bg-dark m-0">{propertie.shared}</p>
+            <h6 class="text-info m-0">Comparto el</h6>
+            <p class="badge text-bg-light m-0">{propertie.shared}</p>
           </div>
           <p>{propertie.notes || 'El asesor no dejo ninguna nota.'}</p>
         </div>
@@ -207,11 +207,18 @@
     border-radius: .2rem;
   }
 
+  .fields-brokers {
+    background-color: #1c1a1c;
+    color: #fdfefe;
+    border-radius: .2rem;
+  }
+
   .fields-card {
     padding: .6rem .4rem; 
   }
 
-  .fields-info {
+  .fields-info,
+  .fields-brokers {
     padding: 1rem;
     white-space: pre-line;
   }
