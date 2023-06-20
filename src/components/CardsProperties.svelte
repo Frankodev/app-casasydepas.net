@@ -60,11 +60,7 @@
     <div class="col">
       <div class="card h-100" style="width: 19rem; margin: auto;">
         <div
-          id={propertie.title
-            .split(RegExp(/s*([.,?:])s*/g), 1)
-            .join("")
-            .split(" ")
-            .join("")}
+          id={`slide-${propertie.id}`}
           class="carousel carousel-dark slide"
           data-bs-ride="true"
         >
@@ -72,11 +68,7 @@
             {#each propertie.imagesUrl as _, index}
               <button
                 type="button"
-                data-bs-target={`#${propertie.title
-                  .split(RegExp(/s*([.,?:])s*/g), 1)
-                  .join("")
-                  .split(" ")
-                  .join("")}`}
+                data-bs-target={`#slide-${propertie.id}`}
                 data-bs-slide-to={`${index}`}
                 class={index == 0 ? "active" : " "}
                 aria-current={index == 0 ? "true" : " "}
@@ -112,11 +104,7 @@
           <button
             class="carousel-control-prev"
             type="button"
-            data-bs-target={`#${propertie.title
-              .split(RegExp(/s*([.,?:])s*/g), 1)
-              .join("")
-              .split(" ")
-              .join("")}`}
+            data-bs-target={`#slide-${propertie.id}`}
             data-bs-slide="prev"
           >
             <span class="carousel-control-prev-icon" aria-hidden="true" />
@@ -125,11 +113,7 @@
           <button
             class="carousel-control-next"
             type="button"
-            data-bs-target={`#${propertie.title
-              .split(RegExp(/s*([.,?:])s*/g), 1)
-              .join("")
-              .split(" ")
-              .join("")}`}
+            data-bs-target={`#slide-${propertie.id}`}
             data-bs-slide="next"
           >
             <span class="carousel-control-next-icon" aria-hidden="true" />
