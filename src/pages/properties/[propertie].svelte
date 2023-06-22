@@ -35,7 +35,7 @@
 
   <main>
 
-    <div class="container mb-3">
+    <div class="mb-3">
       <button class="btn btn-link" on:click={returnView}>
         Regresar <span> <img src="/icons/return.svg" alt="arrow return"></span>
       </button>
@@ -43,7 +43,7 @@
 
     {#await getPropertie }
 
-      <p class="loading...">Buscando...</p>
+      <p class="loading">Loading...</p>
 
       {:then}
 
@@ -59,7 +59,7 @@
 
 
       <div class="text-center mb-4">
-        <h1 class="text-primary">{propertie.title}</h1>
+        <h1 >{propertie.title}</h1>
         <span class="badge text-bg-dark">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
       </div>
 
@@ -188,11 +188,9 @@
     justify-content: center;
   }
 
-.wrapper {
-  min-height: 100%;
-  background-color: #edf1f4;
-  /* background-color: #f2f5f7; */
-}
+  .wrapper {
+    min-height: 100vh;
+  }
 
   h5,
   h6 {
@@ -250,8 +248,8 @@
     object-position: center;
   }
 
-.tag-venta,
-.tag-renta {
+  .tag-venta,
+  .tag-renta {
     width: 100%;
     padding: 0.2rem 0.6rem;
     font-size: 1.2rem;
