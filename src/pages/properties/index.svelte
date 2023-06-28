@@ -21,14 +21,40 @@
         const data = querySnapshot.docs.map((propertie) => {
           return { ...propertie.data() };
         });
-        dataProperties.set(data);
         cardsRenders.set(false);
+        dataProperties.set(data);
       },
       (err) => {
         toastifyMessage(`Ocurrio un error ${err}`, "deny");
       }
     );
+    return $dataProperties
   });
+  
+  let dataProperty = $dataProperties
+  let property = '';
+  let transaction = '';
+  
+  const filterProperty = ({target}) => {
+    property = target.value;
+    if(property !== '') {
+      const filterProperty = dataProperty.filter((prop) => prop.property === property)
+      dataProperties.set(filterProperty);
+    }else {
+      dataProperties.set(dataProperty);
+    }
+  }
+
+  const filterTransaction = ({target}) => {
+    transaction = target.value;
+    if(transaction !== '') {
+      const filterTransaction = dataProperty.filter((prop) => prop.transaction === transaction)
+      dataProperties.set(filterTransaction);
+    }else {
+      dataProperties.set(dataProperty);
+    }
+  }
+
 </script>
 
 <div class="container">
@@ -40,6 +66,41 @@
   </div>
 
   <main in:fade={{ duration: 600 }} class="mb-2">
+    <form >
+      <div class="row mt-4 mb-2">
+
+        <div class="col col-md-4">
+          <label class="form-label" for="property">Tipo de propiedad</label>
+          <select
+            class="form-select"
+            name="property"
+            id="property"
+            bind:value={property}
+            on:change={filterProperty}
+          >
+            <option value="" selected>Todas las propiedades</option>
+            <option value="casa">Casa</option>
+            <option value="departamento">Departamento</option>
+          </select>
+        </div>
+  
+        <div class="col col-md-4">
+          <label class="form-label" for="transaction">Operación</label>
+          <select
+            class="form-select"
+            name="transaction"
+            id="transaction"
+            bind:value={transaction}
+            on:change={filterTransaction}
+          >
+            <option value="" selected>En venta y renta</option>
+            <option value="venta">Venta</option>
+            <option value="renta">Renta</option>
+          </select>
+        </div>
+
+      </div>
+    </form>
     {#if $cardsRenders}
       <CardsRender />
     {/if}
