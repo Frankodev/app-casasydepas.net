@@ -6,6 +6,7 @@ import { writable, readable } from 'svelte/store'
 
 // exportando la variable dataProperties de tipo writable
 export const dataProperties = writable([])
-export const imagePreview = readable(noImage)
-export const cardsRenders = writable(true)
+export const propertiesFilter = writable([])
 export const viewPropertie = writable(null)
+export const cardsRenders = writable(true)
+export const imagePreview = readable(noImage)
