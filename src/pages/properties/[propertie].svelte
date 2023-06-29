@@ -120,7 +120,7 @@
 
           <div class="mb-3">
             <h5 class="text-info">Datos de contacto</h5>
-            <span class="badge text-bg-dark mb-1">Agente Inmobiliario</span>
+            <span class="badge text-bg-dark mb-1">Coworker Inmobiliario</span>
             <h5 class="text-dark-emphasis fields-card">{propertie.broker || 'casasydepas.net'}</h5>
             <a href={`tel:${propertie.tel}`} class="btn btn-primary">Llamar asesor</a>
             <a target="_blank" href={`https://wa.me/521${propertie.whatsapp}`} class="btn btn-success">WhatsApp</a>

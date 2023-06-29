@@ -29,9 +29,10 @@
     }
   });
 
+  // Filtros
   let property = 'todas';
   let transaction = 'todas';
-  
+  // filtro Tipo de Propiedad
   const filterProperty = ({target}) => {
     property = target.value;
     if(property !== 'todas') {
@@ -41,7 +42,7 @@
       propertiesFilter.set($dataProperties);
     }
   }
-
+  // filtro Tipo de Operación
   const filterTransaction = ({target}) => {
     transaction = target.value;
     if(transaction !== 'todas') {
