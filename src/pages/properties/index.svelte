@@ -11,60 +11,44 @@
   // toastify-js
   import { toastifyMessage } from "../../lib/toastify.js";
   // dataProperties de stores - variable de estado global
-  import { dataProperties, cardsRenders } from "../../stores/dataProperties.js";
+  import { dataProperties, cardsRenders, propertiesFilter } from "../../stores/dataProperties.js";
 
   onMount( async() => {
-    // función que trae las propiedades que están almacenadas en firestore
-    // const refOnSnaoShot = onSnapshot(
-    //   collection(db, "properties"),
-    //   (querySnapshot) => {
-    //     const data = querySnapshot.docs.map((propertie) => {
-    //       return { ...propertie.data() };
-    //     });
-    //     cardsRenders.set(false);
-    //     dataProperties.set(data);
-    //   },
-    //   (err) => {
-    //     toastifyMessage(`Ocurrio un error ${err}`, "deny");
-    //   }
-    //   );
-    
-    let data = []
+    let dataProps = []
     try {
       const querySnapshot = await getDocs(collection(db, 'properties'))
       querySnapshot.forEach((propertie) => {
-        data.push(propertie.data())
+        dataProps.push(propertie.data())
       })
       cardsRenders.set(false);
-      dataProperties.set(data);
-      console.log(data)
+      dataProperties.set(dataProps);
+      propertiesFilter.set($dataProperties);
+
     } catch (error) {
       toastifyMessage(`Ocurrio un error ${err}`, "deny");
     }
   });
 
-
-  let dataProperty = $dataProperties
   let property = 'todas';
   let transaction = 'todas';
   
   const filterProperty = ({target}) => {
     property = target.value;
     if(property !== 'todas') {
-      const filterProp = dataProperty.filter((prop) => prop.property === property)
-      dataProperties.set(filterProp);
+      const filterProps = $dataProperties.filter((prop) => prop.property === property)
+      propertiesFilter.set(filterProps);
     }else {
-      dataProperties.set(dataProperty);
+      propertiesFilter.set($dataProperties);
     }
   }
 
   const filterTransaction = ({target}) => {
     transaction = target.value;
     if(transaction !== 'todas') {
-      const filterTransaction = dataProperty.filter((prop) => prop.transaction === transaction)
-      dataProperties.set(filterTransaction);
+      const filterTransaction = $dataProperties.filter((prop) => prop.transaction === transaction)
+      propertiesFilter.set(filterTransaction);
     }else {
-      dataProperties.set(dataProperty);
+      propertiesFilter.set($dataProperties);
     }
   }
 
@@ -114,15 +98,18 @@
 
       </div>
     </form>
-    {#if $cardsRenders}
+
+    <div in:fade={{ duration: 600 }}>
+      {#if $cardsRenders}
       <CardsRender />
-      {:else if $dataProperties.length > 0}
-      <CardsProperties properties={$dataProperties} />
+      {:else if $propertiesFilter.length > 0}
+      <CardsProperties properties={$propertiesFilter} />
       {:else}
       <center class="mt-4">
         <h4 class="text-warning">No encontramos propiedades.</h4>
       </center>
-    {/if}
+      {/if}
+    </div>
       
 
   </main>
