@@ -3,7 +3,7 @@
   import { onMount, onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   // firebase
-  import { collection, onSnapshot } from "firebase/firestore";
+  import { collection, onSnapshot, getDocs } from "firebase/firestore";
   import { db } from "../../firebase/config.js";
   // components
   import CardsRender from "../../components/CardsRender.svelte";
@@ -13,28 +13,37 @@
   // dataProperties de stores - variable de estado global
   import { dataProperties, cardsRenders } from "../../stores/dataProperties.js";
 
-  onMount(() => {
+  onMount( async() => {
     // función que trae las propiedades que están almacenadas en firestore
-    const refOnSnaoShot = onSnapshot(
-      collection(db, "properties"),
-      (querySnapshot) => {
-        const data = querySnapshot.docs.map((propertie) => {
-          return { ...propertie.data() };
-        });
-        cardsRenders.set(false);
-        dataProperties.set(data);
-      },
-      (err) => {
-        toastifyMessage(`Ocurrio un error ${err}`, "deny");
-      }
-      );
+    // const refOnSnaoShot = onSnapshot(
+    //   collection(db, "properties"),
+    //   (querySnapshot) => {
+    //     const data = querySnapshot.docs.map((propertie) => {
+    //       return { ...propertie.data() };
+    //     });
+    //     cardsRenders.set(false);
+    //     dataProperties.set(data);
+    //   },
+    //   (err) => {
+    //     toastifyMessage(`Ocurrio un error ${err}`, "deny");
+    //   }
+    //   );
+    
+    let data = []
+    try {
+      const querySnapshot = await getDocs(collection(db, 'properties'))
+      querySnapshot.forEach((propertie) => {
+        data.push(propertie.data())
+      })
+      cardsRenders.set(false);
+      dataProperties.set(data);
+      console.log(data)
+    } catch (error) {
+      toastifyMessage(`Ocurrio un error ${err}`, "deny");
+    }
   });
 
-  // onDestroy(() => {
-  //   refOnSnaoShot();
-  //   console.log('desmontado')
-  // });
-  
+
   let dataProperty = $dataProperties
   let property = 'todas';
   let transaction = 'todas';
