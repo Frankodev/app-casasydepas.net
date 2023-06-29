@@ -3,7 +3,7 @@
   import { onMount, onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   // firebase
-  import { collection, onSnapshot, getDocs } from "firebase/firestore";
+  import { collection, onSnapshot, getDocs, query, limit } from "firebase/firestore";
   import { db } from "../../firebase/config.js";
   // components
   import CardsRender from "../../components/CardsRender.svelte";
@@ -16,7 +16,9 @@
   onMount( async() => {
     let dataProps = []
     try {
-      const querySnapshot = await getDocs(collection(db, 'properties'))
+      const queryLimit = query(collection(db, 'properties'), limit(10))
+      // const querySnapshot = await getDocs(collection(db, 'properties'))
+      const querySnapshot = await getDocs(queryLimit)
       querySnapshot.forEach((propertie) => {
         dataProps.push(propertie.data())
       })
