@@ -5,7 +5,7 @@
   import { link } from 'svelte-spa-router'
   import active from 'svelte-spa-router/active'
   // user de stores - variable de estado global
-  import { user, propertiesUser } from '../stores/authStore.js'
+  import { user, propertiesUser, limitPropertiesUser } from '../stores/authStore.js'
 
   const handleLogOut = async () => {
     await auth.signOut()
@@ -48,8 +48,8 @@
             <a class="nav-link dropdown-toggle active-link" href="/#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi cuenta</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" use:link use:active href="/mi-cuenta/#/mis-propiedades">Administrar mis propiedades</a></li>
+              {#if $propertiesUser.length < $limitPropertiesUser}
               <li><hr class="dropdown-divider"></li>
-              {#if $propertiesUser.length < 10}
               <li><a class="dropdown-item" use:link use:active href="/mi-cuenta/#/publicar-propiedades">Publicar propiedad</a></li>
               <!-- <li><hr class="dropdown-divider"></li> -->
               {/if}

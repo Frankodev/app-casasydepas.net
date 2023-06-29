@@ -1,6 +1,6 @@
 <script>
   // @ts-nocheck
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   // firebase
   import { collection, onSnapshot } from "firebase/firestore";
@@ -15,7 +15,7 @@
 
   onMount(() => {
     // función que trae las propiedades que están almacenadas en firestore
-    onSnapshot(
+    const refOnSnaoShot = onSnapshot(
       collection(db, "properties"),
       (querySnapshot) => {
         const data = querySnapshot.docs.map((propertie) => {
@@ -27,19 +27,23 @@
       (err) => {
         toastifyMessage(`Ocurrio un error ${err}`, "deny");
       }
-    );
-    return $dataProperties
+      );
   });
+
+  // onDestroy(() => {
+  //   refOnSnaoShot();
+  //   console.log('desmontado')
+  // });
   
   let dataProperty = $dataProperties
-  let property = '';
-  let transaction = '';
+  let property = 'todas';
+  let transaction = 'todas';
   
   const filterProperty = ({target}) => {
     property = target.value;
-    if(property !== '') {
-      const filterProperty = dataProperty.filter((prop) => prop.property === property)
-      dataProperties.set(filterProperty);
+    if(property !== 'todas') {
+      const filterProp = dataProperty.filter((prop) => prop.property === property)
+      dataProperties.set(filterProp);
     }else {
       dataProperties.set(dataProperty);
     }
@@ -47,7 +51,7 @@
 
   const filterTransaction = ({target}) => {
     transaction = target.value;
-    if(transaction !== '') {
+    if(transaction !== 'todas') {
       const filterTransaction = dataProperty.filter((prop) => prop.transaction === transaction)
       dataProperties.set(filterTransaction);
     }else {
@@ -66,10 +70,9 @@
   </div>
 
   <main in:fade={{ duration: 600 }} class="mb-2">
-    <form >
-      <div class="row mt-4 mb-2">
-
-        <div class="col col-md-4">
+    <form>
+      <div class="row mt-4 mb-2 filter">
+        <div class="col col-md-3">
           <label class="form-label" for="property">Tipo de propiedad</label>
           <select
             class="form-select"
@@ -78,13 +81,14 @@
             bind:value={property}
             on:change={filterProperty}
           >
-            <option value="" selected>Todas las propiedades</option>
+            <option value="todas" selected>Todas las propiedades</option>
             <option value="casa">Casa</option>
             <option value="departamento">Departamento</option>
+            <option value="terreno">Terreno</option>
           </select>
         </div>
   
-        <div class="col col-md-4">
+        <div class="col col-md-3">
           <label class="form-label" for="transaction">Operación</label>
           <select
             class="form-select"
@@ -93,7 +97,7 @@
             bind:value={transaction}
             on:change={filterTransaction}
           >
-            <option value="" selected>En venta y renta</option>
+            <option value="todas" selected>Venta y Renta</option>
             <option value="venta">Venta</option>
             <option value="renta">Renta</option>
           </select>
@@ -103,8 +107,23 @@
     </form>
     {#if $cardsRenders}
       <CardsRender />
+      {:else if $dataProperties.length > 0}
+      <CardsProperties properties={$dataProperties} />
+      {:else}
+      <center class="mt-4">
+        <h4 class="text-warning">No encontramos propiedades.</h4>
+      </center>
     {/if}
-    <CardsProperties properties={$dataProperties} />
+      
+
   </main>
 
 </div>
+
+<style>
+  @media screen and (max-width: 798px) {
+    .filter {
+      flex-direction: column;
+    }
+  }
+</style>

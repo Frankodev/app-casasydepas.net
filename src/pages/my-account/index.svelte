@@ -13,9 +13,8 @@
   import {
     user,
     userEmail,
-    brokerName,
     propertiesUser,
-    imagesPropertie,
+    limitPropertiesUser
   } from "../../stores/authStore.js";
 
   // función que comprueba si un usuario esta logeado, si lo esta, carga su pagina de propiedades
@@ -51,7 +50,7 @@
 
   <div class="container" in:fade={{ duration: 600 }}>
     <div class="container-btn-upload-propertie">
-      {#if $propertiesUser.length < 10}
+      {#if $propertiesUser.length < $limitPropertiesUser}
       <a
         use:link
         href="/mi-cuenta/#/publicar-propiedades"

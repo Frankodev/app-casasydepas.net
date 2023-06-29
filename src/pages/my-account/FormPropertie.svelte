@@ -19,6 +19,7 @@
     brokerName,
     propertiesUser,
     imagesPropertie,
+    limitPropertiesUser
   } from "../../stores/authStore.js";
   // toastify-js
   import { toastifyMessage } from "../../lib/toastify.js";
@@ -30,6 +31,7 @@
     auth.onAuthStateChanged((userLog) => {
       userLog ? user.set(userLog) : user.set(null);
       $user ? replace("/mi-cuenta/#/publicar-propiedades") : push("/");
+      $propertiesUser.length < $limitPropertiesUser ? replace("/mi-cuenta/#/publicar-propiedades") : push("/mi-cuenta/#/mis-propiedades");
     });
   });
 

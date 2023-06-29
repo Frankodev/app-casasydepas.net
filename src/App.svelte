@@ -1,13 +1,15 @@
 <script>
   import { onMount } from "svelte";
+  // firebase
+  import { auth } from "./firebase/config.js";
+  // dataProperties de stores - variable de estado global
+  import { dataProperties } from "./stores/dataProperties.js";
   // spa-router
   import Router from "svelte-spa-router";
   import { routes } from "./router/router.js";
   // components
   import Nav from "./components/Nav.svelte";
   import ModalSignIn from "./components/ModalSignIn.svelte";
-  // firebase
-  import { auth } from "./firebase/config.js";
 
   // variable de estado global
   import { user, userEmail } from "./stores/authStore.js";
@@ -19,7 +21,7 @@
       userLog ? userEmail.set(userLog.email) : userEmail.set(null);
       // $user ? replace("/mi-cuenta/#/mis-propiedades") : push("/");
     });
-  });
+    });
 </script>
 
 
