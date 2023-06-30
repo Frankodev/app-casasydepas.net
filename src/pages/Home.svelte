@@ -1,7 +1,6 @@
 <script>
-  import {fade} from 'svelte/transition'
-
-
+  import Loading from '../components/Spinner.svelte';
+  import {fade} from 'svelte/transition';
 </script>
 
 <div class="container">
