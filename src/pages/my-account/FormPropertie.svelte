@@ -161,10 +161,10 @@
 
 <div class="container relative">
   <div class="text-center">
-    <h1>Publicar propiedad</h1>
-    <p>
+    <h1 class="g-title">Publicar propiedad</h1>
+    <p class="g-paragraph">
       Publica tus propiedades para llegar a más clientes y a toda la red de
-      asesores de <br /> casasydepas.net - Coworking Inmobiliario
+      asesores de casasydepas.net
     </p>
   </div>
   <hr />

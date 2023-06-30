@@ -59,10 +59,8 @@
 
 <div class="container">
   <div class="text-center">
-    <h1>Bienvenido</h1>
-    <h6>
-      Encuentra las mejores propiedades en la red de casasydepas.net - Coworking Inmobiliario
-    </h6>
+    <h1 class="g-title">Venta y Renta</h1>
+    <p class="g-paragraph">Encuentra la propiedad que necesitas en la red de casasydepas.net</p>
   </div>
 
   <main in:fade={{ duration: 600 }} class="mb-2">

@@ -29,7 +29,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
           <li class="nav-item">
-            <a class="nav-link " use:link use:active href="/ventas-rentas">Ventas / Rentas</a>
+            <a class="nav-link " use:link use:active href="/ventas-rentas">Venta / Renta</a>
           </li>
 
           <!-- class="nav-link disabled" -->
@@ -71,15 +71,7 @@
   </nav>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
-
-    .logo {
-      color: #03989e;
-      font-size: 1.4rem;
-      font-weight: bolder;
-      font-family: 'Nunito', sans-serif;
-    }
-
+    
     .active-link {
       font-weight: 500;
       color: #000000e6;
