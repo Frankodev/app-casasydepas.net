@@ -19,7 +19,7 @@
   
   <div in:fade={{ duration: 600 }} class="g-card">
     <h4 class="g-card__title">¿Qué es casasydepas.net?</h4>
-    <p class="g-card__paragraph">casasydepas.net es una plataforma pensada para todos los <strong>Brokers Inmobiliarios</strong> que quieren compartir con otros brokers una propiedad en venta o renta, asi mismo que puedan buscar en toda la red una propiedad para su cliente.</p>    
+    <p class="g-card__paragraph">casasydepas.net es una plataforma pensada para todos los <strong>Brokers Inmobiliarios</strong> que quieren compartir con otros brokers una propiedad en venta o renta, así mismo podrás buscar en toda la red la propiedad que necesitas para tu cliente.</p>    
   </div>
 
   <div in:fade={{ duration: 600 }} class="g-card">
