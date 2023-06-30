@@ -33,7 +33,7 @@
     <p class="g-card__paragraph">Si eres broker inmobiliario, sigue estos pasos para darte de alta en la plataforma y poder <strong>buscar y compartir tus propiedades en venta o renta con toda la red</strong> de casasydepas.net</p>
   </div>
 
-  <div class="accordion" id="accordion">
+  <div class="accordion mb-4" id="accordion">
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -43,8 +43,8 @@
       <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordion">
         <div class="accordion-body">
           <p class="g-card__paragraph">
-            Puedes llamarnos o enviarnos un mensaje de WhatsApp al 
-            <em>teléfono 
+            Puedes llamarnos o enviarnos un mensaje de WhatsApp al
+            <em>teléfono
               <a href="https://wa.me/527444545657/?text=%C2%A1Hola!%20Quiero%20m%C3%A1s%20informaci%C3%B3n%20para%20tener%20mi%20cuenta%20en%20la%20plataforma%20de%20casasydepas.net,%20gracias." target="_blank" rel="noopener noreferrer">(744) 454 5657</a>
             </em>, para brindarte toda la información para tu acceso a la plataforma. 
           </p>
