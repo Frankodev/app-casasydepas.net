@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
   import { onMount } from "svelte";
   // firebase
   import { addDoc, collection } from "firebase/firestore";
@@ -23,6 +25,9 @@
   } from "../../stores/authStore.js";
   // toastify-js
   import { toastifyMessage } from "../../lib/toastify.js";
+  // components
+  import Spinner from '../../components/Spinner.svelte';
+
   // uuid
   import { v4 as uuidv4 } from "uuid";
 
@@ -31,8 +36,8 @@
     auth.onAuthStateChanged((userLog) => {
       userLog ? user.set(userLog) : user.set(null);
       $user ? replace("/mi-cuenta/#/publicar-propiedades") : push("/");
-      $propertiesUser.length < $limitPropertiesUser ? replace("/mi-cuenta/#/publicar-propiedades") : push("/mi-cuenta/#/mis-propiedades");
     });
+    $propertiesUser.length < $limitPropertiesUser ? replace("/mi-cuenta/#/publicar-propiedades") : push("/mi-cuenta/#/mis-propiedades");
   });
 
   // constructor del nombre del asesor logeado
@@ -171,7 +176,6 @@
 
   <div class="carrousel-images">
     <div class="d-flex align-items-center gap-1 carrousel">
-      
       {#each $imagesPropertie as image}
         <div class="relative">
           <button
@@ -204,6 +208,11 @@
             height="48"
           />
         </div>
+        <!-- {#await promise}
+        <div>
+          <Spinner />
+        </div>
+        {/await} -->
       {/if}
     </div>
   </div>
