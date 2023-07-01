@@ -13,7 +13,7 @@ height: 100%;
 display: flex;
 justify-content: center;
 align-items: center;
-margin: 1rem auto;
+margin: 4rem auto;
 }
 
 .spinner {
