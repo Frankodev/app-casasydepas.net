@@ -117,7 +117,7 @@
   
             <div class="mb-3 pt-3">
               <span class="badge text-bg-dark mb-1">Fecha de alta</span>
-              <p>{propertie.time_stamp || '00/00/0000'}</p>
+              <h5>{propertie.time_stamp || '00/00/0000'}</h5>
             </div>
           </div>
 
@@ -186,7 +186,8 @@
       </div>
 
       <div class="mb-2 fields-card">
-        <h5 class="title">Descripción</h5>
+        <!-- <h5 class="title">Descripción</h5> -->
+        <h5 class="title">Más información</h5>
         <p class="fields-info">{propertie.description}</p>
       </div>
 
