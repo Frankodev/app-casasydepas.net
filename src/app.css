@@ -51,6 +51,8 @@ main {
 }
 
 .pitch {
+	position: relative;
+	top: -10px;
 	color: #ff2131;
 	font-size: 1rem;
 	font-weight: normal;
@@ -67,6 +69,8 @@ main {
 
 .g-title {
 	font-weight: 600;
+    line-height: 1.2;
+    color: #3a4a59;
 }
 
 .g-paragraph {
@@ -85,6 +89,7 @@ main {
 
 .g-card__paragraph {
 	color: #333;
+    color: #202021;
 	font-size: .9rem;
 	line-height: 1.2;
 }

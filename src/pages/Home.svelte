@@ -27,7 +27,6 @@
   </div>
 
   <div in:fade={{ duration: 600 }} class="g-card">
-    <!-- <h4 class="g-card__title">¿Cómo obtengo una cuenta?</h4> -->
     <h4 class="g-card__title">¿Qué beneficios obtengo?</h4>
     <p class="g-card__paragraph">Si eres broker inmobiliario, sigue estos pasos para darte de alta en la plataforma y poder <strong>buscar y compartir tus propiedades en venta o renta con toda la red</strong> de casasydepas.net</p>
   </div>
@@ -89,6 +88,13 @@
 </div>
 
 <style>
+  
+  h4 {
+    font-weight: 500;
+    line-height: 1.2;
+    color: #3a4a59;
+  }
+
   .accordion {
     --bs-accordion-active-bg: #101419;
     --bs-accordion-bg: #edf1ff;
