@@ -62,7 +62,7 @@
 
 
       <div class="text-center mb-4">
-        <h1 >{propertie.title}</h1>
+        <h1 class="propertie__title">{propertie.title}</h1>
         <span class="badge text-bg-dark">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
       </div>
 
@@ -229,6 +229,23 @@
 
 <style>
 
+.wrapper {
+    min-height: 100vh;
+  }
+
+  h1,
+  h4,
+  h5,
+  h6 {
+    font-weight: 500;
+    line-height: 1.2;
+    color: #3a4a59;
+  }
+
+  .propertie__title {
+    font-size: 2.5rem;
+  }
+
   .btns__call-broker {
     display: inline-flex;
     justify-content: flex-start;
@@ -260,9 +277,9 @@
     padding: .2rem 1rem;
   }
 
-  .btn__return:hover {
+  /* .btn__return:hover {
     font-size: 1rem;
-  }
+  } */
 
   .btn__return:hover span {
     transform: translate(-2.4px, 0);
@@ -293,18 +310,8 @@
     background: linear-gradient(172deg, #21ff30 0%, #167247 35%, #11912f 100%);
   }
 
-  
 
-  .wrapper {
-    min-height: 100vh;
-  }
-
-  h5,
-  h6 {
-    font-weight: 500;
-    line-height: 1.2;
-  }
-
+  /* fields cards */
   .title {
     color: #ff2131;
     font-weight: 600;
@@ -317,6 +324,7 @@
   .fields-card {
     background-color: #fdfefe;
     color: #1c1a1c;
+    color: #202021;
     padding: 1rem;
     border-radius: .2rem;
     box-shadow: 0 1px 2px 0 rgb(0, 0, 0, 25%);
@@ -433,6 +441,10 @@
   }
 
   @media (max-width: 768px) {
+    .propertie__title {
+    font-size: 1.5rem;
+  }
+
     .carousel {
       width: 100%;
       margin: auto;
