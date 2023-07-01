@@ -1,6 +1,4 @@
 <script>
-// @ts-nocheck
-
   import { onMount } from "svelte";
   // firebase
   import { addDoc, collection } from "firebase/firestore";
@@ -81,6 +79,7 @@
     whatsapp: "",
     land: "",
     building: "",
+    parking: "1",
     bedroom: "2",
     bathroom: "1",
     mid_bathroom: "0",
@@ -96,9 +95,9 @@
     notes: "",
   };
 
-  // función que carga las imagenes en el storage
-  const handleImages = async (event) => {
-    if(event.target.files[0].length <= 0) {
+  // función que carga las imagenes al storage de firestore
+  const handleImages = async ({target}) => {
+    if(target.files[0].length <= 0) {
       toastifyMessage("Selecciona una imagen.", "deny");
       return
     }
@@ -108,21 +107,18 @@
     // si es menor al tamaño permitido, subir la imagen al storage
     
     try {
-      const img = event.target.files[0];
+      const img = target.files[0];
       const imagePath = storageRef(`${email.split("@", 1)}/${folder}/${img.name}`);
-
       await uploadImages(imagePath, img);
       toastifyMessage("Imagen cargada con exito.", "success");
-
       urlImage = await getUrl(imagePath);
-
       images.push({ url: urlImage, path: imagePath.fullPath });
       imagesPropertie.set(images);
+      target.value = "";
 
-      event.target.value = "";
     } catch (error) {
       toastifyMessage("No se cargó la imagen vuelve a intentarlo.", "deny");
-      event.target.value = "";
+      target.value = "";
     }
   };
 
@@ -136,8 +132,8 @@
       const newImages = images.filter((image) => image.path !== imagePathDelete);
       imagesPropertie.set(newImages);
       images = [...newImages];
-
       toastifyMessage("Se eliminó la imagen.", "delete");
+
     } catch (error) {
       toastifyMessage("No se pudo eliminar la imagen.", "deny");
     }
@@ -158,6 +154,7 @@
       document.getElementById("form").reset();
       imagesPropertie.set([]);
       replace("/mi-cuenta/#/mis-propiedades");
+      
     } catch (error) {
       toastifyMessage("Upss. Algo salió mal vuelve a intentarlo.", "deny");
     }
@@ -169,13 +166,14 @@
     <h1 class="g-title">Publicar propiedad</h1>
     <p class="g-paragraph">
       Publica tus propiedades para llegar a más clientes y a toda la red de
-      asesores de casasydepas.net
+      coworkers de casasydepas.net
     </p>
   </div>
   <hr />
 
   <div class="carrousel-images">
     <div class="d-flex align-items-center gap-1 carrousel">
+
       {#each $imagesPropertie as image}
         <div class="relative">
           <button
@@ -208,11 +206,6 @@
             height="48"
           />
         </div>
-        <!-- {#await promise}
-        <div>
-          <Spinner />
-        </div>
-        {/await} -->
       {/if}
     </div>
   </div>
@@ -401,6 +394,21 @@
         </div>
 
         <div class="col">
+          <label for="parking" class="form-label">Estacionamientos</label>
+          <select
+            class="form-select"
+            name="parking"
+            id="parking"
+            bind:value={propertie.parking}
+          >
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">+4</option>
+          </select>
+        </div>
+
+        <div class="col">
           <label for="bedroom" class="form-label">Recámaras</label>
           <select
             class="form-select"
@@ -418,7 +426,7 @@
           </select>
         </div>
 
-        <div class="col col-md-2">
+        <div class="col">
           <label for="bathroom" class="form-label">Baños</label>
           <select
             class="form-select"
@@ -433,7 +441,7 @@
           </select>
         </div>
 
-        <div class="col col-md-2">
+        <div class="col">
           <label for="mid_bathroom" class="form-label">½ Baños</label>
           <select
             class="form-select"

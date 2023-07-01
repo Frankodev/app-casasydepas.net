@@ -8,6 +8,9 @@
   // user de stores - variable de estado global
   import { user } from "../../stores/authStore.js";
 
+  // components 
+  import Spinner from '../../components/Spinner.svelte'
+
   // params
   export let params;
   const idPropertie = params.propertie.split('_')[1]
@@ -35,15 +38,15 @@
 
   <main>
 
-    <div class="mb-3">
-      <button class="btn btn-link" on:click={returnView}>
-        Regresar <span> <img src="/icons/return.svg" alt="arrow return"></span>
+    <div>
+      <button class="btn btn__return" on:click={returnView}>
+        <span><img src="/icons/arrow_left.svg" alt="arrow return"></span> Regresar 
       </button>
     </div>
 
     {#await getPropertie }
-
-      <p class="loading">Loading...</p>
+      
+      <Spinner />
 
       {:then}
 
@@ -90,62 +93,108 @@
             <span>{propertie.transaction || "VENTA"}</span>
           </div>
 
-          <div class="mb-3">
-            <h5 class="text-info">Precio</h5>
-            <h4 class="fields-card">{`$${Number(propertie.price).toLocaleString("en")} MXN` || "0.00"}</h4>
-          </div>
-
-          <div class="mb-3">
-            <h5 class="text-info">Distribución</h5>
-            <div class="d-flex gap-2 mb-2 align-items-center fields-card" >
-              <div class="d-flex gap-1">
-                <spam class="distribution">{propertie.bedroom || "0"}</spam>
-                <spam class="opacity-75"><img class="opacity-75" src="/icons/bed.svg" alt="bedroom" width="28" height="28"/></spam>
-              </div>
-              <div class="d-flex gap-1">
-                <spam class="distribution">{propertie.bathroom || "0"}</spam>
-                <spam class="opacity-75"><img class="opacity-75" src="/icons/shower.svg" alt="bathroom" width="28" height="28"/></spam>
-              </div>
-              <div class="d-flex gap-1">
-                <spam class="distribution">{`${propertie.land ? propertie.land : "0"}`}</spam>
-                <spam class="opacity-75"><img class="opacity-75" src="/icons/land.svg" alt="land" width="28" height="28"/></spam>
-              </div>
-              <div class="d-flex gap-1">
-                <spam class="distribution">{`${propertie.building}` || "0"}</spam>
-                <spam class="opacity-75"><img class="opacity-75" src="/icons/rule.svg" alt="building" width="28" height="28"/></spam>
-                <spam>m²</spam>
-              </div>
+          <div class="fields-card">
+            <div class="mb-3 pt-3">
+              <h5 class="title">Precio</h5>
+              <h4>{`$${Number(propertie.price).toLocaleString("en")} MXN` || "0.00"}</h4>
             </div>
-          </div>
+  
+            <div class="mb-3 pt-3">
+              <h5 class="title">Datos de contacto</h5>
+              <span class="badge text-bg-dark mb-1">Coworker Inmobiliario</span>
+              <h4 class="text-dark-emphasis">{propertie.broker || 'Coworker'}</h4>
 
-          <div class="mb-3">
-            <h5 class="text-info">Datos de contacto</h5>
-            <span class="badge text-bg-dark mb-1">Coworker Inmobiliario</span>
-            <h5 class="text-dark-emphasis fields-card">{propertie.broker || 'casasydepas.net'}</h5>
-            <a href={`tel:${propertie.tel}`} class="btn btn-primary">Llamar asesor</a>
-            <a target="_blank" href={`https://wa.me/521${propertie.whatsapp}`} class="btn btn-success">WhatsApp</a>
-          </div>
+              <div class="btns__call-broker">
+                <a href={`tel:${propertie.tel}`} class="btn btn__call">
+                  Llamar asesor
+                  <span><img src="/icons/phone.svg" alt="whatsapp"></span>
+                </a>
+  
+                <a target="_blank" href={`https://wa.me/52${propertie.whatsapp}`} class="btn btn__message">
+                  Enviar
+                  <span><img src="/icons/message.svg" alt="whatsapp"></span>
+                </a>
+              </div>
 
-          <div class="mb-3">
-            <span class="badge text-bg-dark mb-1">Fecha de alta</span>
-            <p class="fields-card">{propertie.time_stamp || '00/00/0000'}</p>
+            </div>
+  
+            <div class="mb-3 pt-3">
+              <span class="badge text-bg-dark mb-1">Fecha de alta</span>
+              <p>{propertie.time_stamp || '00/00/0000'}</p>
+            </div>
           </div>
 
         </div>
       </div>
 
       <!-- <div class="mb-2">
-        <h5 class="text-info">Características</h5>
+        <h5 class="title">Características</h5>
         <p class="fields-info">{propertie.features || '* Terraza * Jardín * Alberca * Área de juegos'}</p>
       </div> -->
 
-      <div class="mb-2">
-        <h5 class="text-info">Descripción</h5>
+      <div class="mb-2 fields-card">
+        <h5 class="title">Distribución</h5>
+        
+        <div class="distribution">
+
+          <div class="distribution__items">
+            <p class="distribution__item">
+              <spam><img src="/icons/land.svg" alt="land" width="26" height="26"/></spam>
+              <spam class="distribution__propertie">{`${propertie.land ? propertie.land : "0"}m²`}</spam>
+              | Terreno
+            </p>
+          </div>
+
+          <div class="distribution__items">
+            <p class="distribution__item">
+              <spam><img src="/icons/rule.svg" alt="building" width="26" height="26"/></spam>
+              <spam class="distribution__propertie">{`${propertie.building ? propertie.building : "0"}m²`}</spam>
+              | Construcción
+            </p>
+          </div>
+
+          <div class="distribution__items">
+            <p class="distribution__item">
+              <spam><img src="/icons/parking.svg" alt="bedroom" width="26" height="26"/></spam>
+              <spam class="distribution__propertie">{propertie.parking || "1"}</spam>
+              Estacionamientos
+            </p>
+          </div>
+
+          <div class="distribution__items">
+            <p class="distribution__item">
+              <spam><img src="/icons/bed.svg" alt="bedroom" width="26" height="26"/></spam>
+              <spam class="distribution__propertie">{propertie.bedroom || "1"}</spam>
+              Recámaras
+            </p>
+          </div>
+
+          <div class="distribution__items">
+            <p class="distribution__item">
+              <spam><img src="/icons/shower.svg" alt="bathroom" width="26" height="26"/></spam>
+              <spam class="distribution__propertie">{propertie.bathroom || "1"}</spam>
+              Baños completos
+            </p>
+          </div>
+
+          <div class="distribution__items">
+            <p class="distribution__item">
+              <spam><img src="/icons/mid_bathroom.svg" alt="bathroom" width="26" height="26"/></spam>
+              <spam class="distribution__propertie">{propertie.mid_bathroom || "0"}</spam>
+              ½ Baños
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="mb-2 fields-card">
+        <h5 class="title">Descripción</h5>
         <p class="fields-info">{propertie.description}</p>
       </div>
 
-      <div class="mb-2">
-        <h5 class="text-info">Dirección</h5>
+      <div class="mb-2 fields-card">
+        <h5 class="title">Dirección</h5>
         <p class="fields-info">{`${propertie.address.direction}, ${propertie.address.colony}, ${propertie.address.city}, ${propertie.address.estate}, ${propertie.address.postal}` || "No se proporcionó la dirección de la propiedad"}</p>
       </div>
 
@@ -153,16 +202,16 @@
       <div class="mb-2">
         
           
-        <h5 class="text-info">Comentarios / Notas del asesor</h5>
+        <h5 class="title">Comentarios / Notas del asesor</h5>
         <div class="fields-brokers">
           <div class="d-flex align-items-center gap-2 mb-3">
-            <h6 class="text-info m-0">Comisión</h6>
-            <p class="badge text-bg-light m-0">{propertie.commission}</p>
+            <h6 class="text-dark fw-bold m-0">Comisión</h6>
+            <p class="badge text-bg-light p-2 fw-bold m-0">{propertie.commission}</p>
   
-            <h6 class="text-info m-0">Comparto el</h6>
-            <p class="badge text-bg-light m-0">{propertie.shared}</p>
+            <h6 class="text-dark fw-bold m-0">Comparto el</h6>
+            <p class="badge text-bg-light p-2 fw-bold m-0">{propertie.shared}</p>
           </div>
-          <p>{propertie.notes || 'El asesor no dejo ninguna nota.'}</p>
+          <p class="fields-info">{propertie.notes || 'El asesor no dejo ninguna nota.'}</p>
         </div>
       </div>
       {/if}
@@ -180,13 +229,71 @@
 
 <style>
 
-  .loading {
-    width: 100%;
-    height: 100vh;
-    display: flex;
+  .btns__call-broker {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+
+  .btn__return,
+  .btn__call,
+  .btn__message {
+    width: max-content;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: .3rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    animation: all .4s ease;
+
   }
+
+  .btn__return {
+    background-color: #425cc7;
+    color: #fff;
+    font-size: .98rem;
+    font-weight: bold;
+    padding: .2rem 1rem;
+  }
+
+  .btn__return:hover {
+    font-size: 1rem;
+  }
+
+  .btn__return:hover span {
+    transform: translate(-2.4px, 0);
+    -webkit-transform: translate(-2.4px, 0);
+    -moz-transform: translate(-2.4px, 0);
+    -ms-transform: translate(-2.4px, 0);
+  }
+
+  .btn__call,
+  .btn__message {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .btn__call {
+    background: #ff2131;
+  }
+
+  .btn__call:hover {
+    background: #ef2533;
+  }
+
+  .btn__message {
+    background: linear-gradient(172deg, #21ff30 0%, #198854 35%, #11912f 100%);
+  }
+  
+  .btn__message:hover {
+    background: linear-gradient(172deg, #21ff30 0%, #167247 35%, #11912f 100%);
+  }
+
+  
 
   .wrapper {
     min-height: 100vh;
@@ -198,21 +305,27 @@
     line-height: 1.2;
   }
 
-  .fields-card,
-  .fields-info {
-    background-color: #fdfefe;
-    color: #1c1a1c;
-    border-radius: .2rem;
-  }
-
-  .fields-brokers {
-    background-color: #1c1a1c;
-    color: #fdfefe;
-    border-radius: .2rem;
+  .title {
+    color: #ff2131;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: "Nunito", sans-serif;
+    letter-spacing: .8px;
+    font-size: 1rem;
   }
 
   .fields-card {
-    padding: .6rem .4rem; 
+    background-color: #fdfefe;
+    color: #1c1a1c;
+    padding: 1rem;
+    border-radius: .2rem;
+    box-shadow: 0 1px 2px 0 rgb(0, 0, 0, 25%);
+  }
+
+  .fields-brokers {
+    background-color: #abd0ff;
+    color: #1c1a1c;
+    border-radius: .2rem;
   }
 
   .fields-info,
@@ -227,7 +340,7 @@
     gap: 1rem;
     margin: .5rem 0 3rem 0;
     justify-content: space-evenly;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .carousel {
@@ -237,6 +350,7 @@
   .carousel-inner {
     width: 100%;
     height: 100%;
+    max-height: 450px;
     border-radius: 8px;
   }
 
@@ -270,10 +384,41 @@
     background: linear-gradient(172deg, rgba(137,141,255,1) 0%, rgba(80,181,255,1) 35%, rgba(0,202,255,1) 100%);
   }
 
-  .distribution {
-    font-size: 18px;
-    font-weight: 500;
+  .description {
+    min-width: 268px;
   }
+
+  /* distribucion */
+  .distribution {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .distribution__items {
+    display: flex;
+    align-items: center;
+  }
+
+  .distribution__item {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    margin: 1rem 0;
+
+    font-size: .9rem;
+    padding: .2rem .4rem;
+    border-radius: 4px;
+  }
+  
+  .distribution__propertie {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
 
   @media (max-width: 995px) {
     .container-galery {
@@ -284,6 +429,7 @@
     .description {
     width: 100%;
   }
+
   }
 
   @media (max-width: 768px) {
@@ -296,8 +442,20 @@
     width: 100%;
     height: 100%;
     max-height: 480px;
-    border-radius: 8px;
     margin: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .distribution,
+  .fields-info { 
+    padding: 1rem 0;
+  }
+
+  .distribution {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
   }
 }
 
