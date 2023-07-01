@@ -33,12 +33,9 @@
   const returnView = () => window.history.back();
 </script>
 
-<div class="p-4 wrapper">
-  
-
+<div class="wrapper">
   <main>
-
-    <div>
+    <div class="container">
       <button class="btn btn__return" on:click={returnView}>
         <span><img src="/icons/arrow_left.svg" alt="arrow return"></span> Regresar 
       </button>
@@ -231,6 +228,7 @@
 
 .wrapper {
     min-height: 100vh;
+    padding: 1.5rem;
   }
 
   h1,
@@ -276,10 +274,6 @@
     font-weight: bold;
     padding: .2rem 1rem;
   }
-
-  /* .btn__return:hover {
-    font-size: 1rem;
-  } */
 
   .btn__return:hover span {
     transform: translate(-2.4px, 0);
@@ -400,7 +394,7 @@
   .distribution {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     gap: 1rem;
     padding: 1rem;
@@ -428,7 +422,12 @@
   }
 
 
+  /* medias queries */
   @media (max-width: 995px) {
+    .wrapper {
+    padding: .5rem;
+    }
+
     .container-galery {
       flex-direction: column;
       margin: .5rem auto 1rem auto;
@@ -436,7 +435,7 @@
 
     .description {
     width: 100%;
-  }
+    }
 
   }
 
