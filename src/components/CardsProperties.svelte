@@ -143,22 +143,22 @@
             class="d-flex gap-2 mb-2 align-items-center"
             style="height: 21px;"
           >
-            <div class="d-flex gap-1">
+            <div class="distribution__item">
               <spam>{propertie.bedroom || "0"}</spam>
               <spam><img src="/icons/bed.svg" alt="bedroom" /></spam>
             </div>
-            <div class="d-flex gap-1">
+            <div class="distribution__item">
               <spam>{propertie.bathroom || "0"}</spam>
               <spam><img src="/icons/shower.svg" alt="bathroom" /></spam>
             </div>
-            <div class="d-flex gap-1">
-              <spam>{`${propertie.land ? propertie.land : "0"}`}</spam>
-              <spam><img src="/icons/land.svg" alt="land" /></spam>
+            <div class="distribution__item">
+              <spam>{`${ propertie.parking || "1"}`}</spam>
+              <spam><img src="/icons/parking.svg" alt="parking" /></spam>
             </div>
-            <div class="d-flex gap-1">
-              <spam>{`${propertie.building}` || "0"}</spam>
+            <div class="distribution__item">
+              <spam>{`${propertie.building}m²` || "0"}</spam>
               <spam><img src="/icons/rule.svg" alt="building" /></spam>
-              <spam>m²</spam>
+              <!-- <spam>m²</spam> -->
             </div>
           </div>
 
@@ -232,6 +232,14 @@
       rgba(80, 181, 255, 1) 35%,
       rgba(0, 202, 255, 1) 100%
     );
+  }
+
+  /* card propiedades */
+  .distribution__item {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    padding: .25rem;
   }
 
   @media (max-width: 945px) {
