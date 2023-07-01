@@ -11,11 +11,9 @@
 width: 100%;
 height: 100%;
 display: flex;
-flex-direction: column;
-gap: 2rem;
 justify-content: center;
 align-items: center;
-margin: auto;
+margin: 1rem auto;
 }
 
 .spinner {
