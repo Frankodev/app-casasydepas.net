@@ -58,7 +58,7 @@
 <div class="row row-cols-1 row-cols-md-3 g-4 row-prop">
   {#each properties as propertie}
     <div class="col">
-      <div class="card h-100" style="width: 19rem; margin: auto;">
+      <div class="card h-100">
         <div
           id={`slide-${propertie.id}`}
           class="carousel carousel-dark slide"
@@ -201,6 +201,12 @@
 </div>
 
 <style>
+
+  .card {
+    width: 19rem;
+    margin: auto;
+  }
+
   .tag-venta,
   .tag-renta {
     position: absolute;
@@ -249,9 +255,20 @@
   }
 
   @media (max-width: 768px) {
+
+    .card {
+      width: 21rem;
+    }
+
     .row-cols-md-3 > * {
       padding: 0;
       width: 100%;
+    }
+  }
+
+  @media (max-width: 398px) {
+    .card {
+      width: 17rem;
     }
   }
 </style>

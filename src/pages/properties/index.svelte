@@ -118,7 +118,7 @@
 </div>
 
 <style>
-  @media screen and (max-width: 798px) {
+  @media screen and (max-width: 765px) {
     .filter {
       flex-direction: column;
     }
