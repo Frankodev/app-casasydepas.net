@@ -140,23 +140,23 @@
           </h4>
 
           <div
-            class="d-flex gap-2 mb-2 align-items-center"
+            class="d-flex gap-1 mb-2 align-items-center"
             style="height: 21px;"
           >
             <div class="distribution__item">
-              <spam>{propertie.bedroom || "0"}</spam>
+              <spam class="distribution__item-value">{propertie.bedroom || "0"}</spam>
               <spam><img src="/icons/bed.svg" alt="bedroom" /></spam>
             </div>
             <div class="distribution__item">
-              <spam>{propertie.bathroom || "0"}</spam>
+              <spam class="distribution__item-value">{propertie.bathroom || "0"}</spam>
               <spam><img src="/icons/shower.svg" alt="bathroom" /></spam>
             </div>
             <div class="distribution__item">
-              <spam>{`${ propertie.parking || "1"}`}</spam>
+              <spam class="distribution__item-value">{`${ propertie.parking || "1"}`}</spam>
               <spam><img src="/icons/parking.svg" alt="parking" /></spam>
             </div>
             <div class="distribution__item">
-              <spam>{`${propertie.building}m²` || "0"}</spam>
+              <spam class="distribution__item-value">{`${propertie.building}m²` || "0"}</spam>
               <spam><img src="/icons/rule.svg" alt="building" /></spam>
               <!-- <spam>m²</spam> -->
             </div>
@@ -236,7 +236,15 @@
     display: flex;
     align-items: center;
     gap: .25rem;
-    padding: .25rem;
+
+    background-color: #ebedee;
+    padding: .25rem .50rem;
+    border-radius: 4px;
+  }
+
+  .distribution__item-value {
+    color: #0c0f12;
+    font-weight: 600;
   }
 
   @media (max-width: 945px) {

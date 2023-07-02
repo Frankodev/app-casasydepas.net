@@ -322,7 +322,7 @@
 
   .fields-card {
     background-color: #fdfefe;
-    color: #3a4a59;
+	  color: #171e24;
     padding: 1rem;
     border-radius: .2rem;
     box-shadow: 0 1px 2px 0 rgb(0, 0, 0, 25%);
@@ -408,6 +408,7 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 1rem;
+    color: #3a4a59;
     padding: 1rem;
   }
 
@@ -429,7 +430,7 @@
   .distribution__propertie {
     font-size: 18px;
     font-weight: 600;
-    color: #383847;
+    color: #171e24;
   }
 
   /* medias queries */
