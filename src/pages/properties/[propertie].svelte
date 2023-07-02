@@ -59,8 +59,8 @@
 
 
       <div class="text-center mb-4">
-        <h1 class="propertie__title">{propertie.title}</h1>
         <span class="badge text-bg-dark">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
+        <h1 class="propertie__title">{propertie.title}</h1>
       </div>
 
       <div class="container-galery">
@@ -184,17 +184,16 @@
           </div>
 
         </div>
+
+        <div>
+          <h5 class="title">Dirección</h5>
+          <p class="fields-direction">{`${propertie.address.direction}, ${propertie.address.colony}, ${propertie.address.city}, ${propertie.address.estate}, ${propertie.address.postal}` || "No se proporcionó la dirección de la propiedad"}</p>
+        </div>
       </div>
 
       <div class="mb-2 fields-card">
-        <!-- <h5 class="title">Descripción</h5> -->
         <h5 class="title">Más información</h5>
         <p class="fields-info">{propertie.description}</p>
-      </div>
-
-      <div class="mb-2 fields-card">
-        <h5 class="title">Dirección</h5>
-        <p class="fields-info">{`${propertie.address.direction}, ${propertie.address.colony}, ${propertie.address.city}, ${propertie.address.estate}, ${propertie.address.postal}` || "No se proporcionó la dirección de la propiedad"}</p>
       </div>
 
       {#if $user}
@@ -243,7 +242,7 @@
   }
 
   .propertie__title {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
   }
 
   .btns__call-broker {
@@ -270,9 +269,7 @@
   }
 
   .btn__return {
-    background-color: #425cc7;
     background-color: #d9def4;
-    color: #fff;
     color: #2e408b;
     font-size: .98rem;
     font-weight: bold;
@@ -290,22 +287,26 @@
   .btn__message {
     color: #fff;
     font-weight: 600;
+
+    animation: all .3s ease;
   }
 
   .btn__call {
     background: #ff2131;
   }
-
+  
   .btn__call:hover {
-    background: #ef2533;
+    background: #ff3f4c;
+    box-shadow: 0 1px 2px 0 rgb(0, 0, 0, 25%);
   }
 
   .btn__message {
-    background: linear-gradient(172deg, #21ff30 0%, #198854 35%, #11912f 100%);
+    background: linear-gradient(172deg, #21ff30 0%, #167247 35%, #11912f 100%);
   }
   
   .btn__message:hover {
-    background: linear-gradient(172deg, #21ff30 0%, #167247 35%, #11912f 100%);
+    background: linear-gradient(172deg, #21ff30 0%, #198854 35%, #11912f 100%);
+    box-shadow: 0 1px 2px 0 rgb(0, 0, 0, 25%);
   }
 
 
@@ -321,8 +322,7 @@
 
   .fields-card {
     background-color: #fdfefe;
-    color: #1c1a1c;
-    color: #202021;
+    color: #3a4a59;
     padding: 1rem;
     border-radius: .2rem;
     box-shadow: 0 1px 2px 0 rgb(0, 0, 0, 25%);
@@ -338,6 +338,11 @@
   .fields-brokers {
     padding: 1rem;
     white-space: pre-line;
+  }
+
+  .fields-direction {
+    font-weight: bold;
+    letter-spacing: .4px;
   }
 
   .container-galery {
@@ -376,7 +381,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .28rem;
-    color: azure;
+    color: #fdfefe;
     border-radius: 4px;
   }
 
@@ -400,7 +405,7 @@
   .distribution {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     flex-wrap: wrap;
     gap: 1rem;
     padding: 1rem;
@@ -416,7 +421,6 @@
     align-items: center;
     gap: .4rem;
     margin: 1rem 0;
-
     font-size: .9rem;
     padding: .2rem .4rem;
     border-radius: 4px;
@@ -425,8 +429,8 @@
   .distribution__propertie {
     font-size: 18px;
     font-weight: 600;
+    color: #383847;
   }
-
 
   /* medias queries */
   @media (max-width: 995px) {
@@ -447,7 +451,7 @@
 
   @media (max-width: 768px) {
     .propertie__title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
     .carousel {
