@@ -220,23 +220,15 @@
   }
 
   .tag-venta {
-    background: rgb(221, 25, 0);
-    background: linear-gradient(
-      172deg,
-      rgba(221, 25, 0, 1) 0%,
-      rgba(249, 85, 39, 1) 35%,
-      rgba(255, 42, 0, 1) 100%
-    );
+    background: #1D976C;
+    background: -webkit-linear-gradient(to right, #31d76d, #1D976C);
+    background: linear-gradient(to right, #31d76d, #1D976C);
   }
 
   .tag-renta {
-    background: rgb(137, 141, 255);
-    background: linear-gradient(
-      172deg,
-      rgba(137, 141, 255, 1) 0%,
-      rgba(80, 181, 255, 1) 35%,
-      rgba(0, 202, 255, 1) 100%
-    );
+    background: #00d2ff;
+    background: -webkit-linear-gradient(to left, #3a7bd5, #00d2ff);
+    background: linear-gradient(to left, #3a7bd5, #00d2ff);
   }
 
   /* card propiedades */

@@ -86,11 +86,12 @@
         </div>
 
         <div class="description">
-          <div class={`tag-${propertie.transaction} mb-3 text-center`}>
-            <span>{propertie.transaction || "VENTA"}</span>
-          </div>
-
           <div class="fields-card">
+            
+            <div class={`tag-${propertie.transaction} mb-3 text-center`}>
+              <span>{propertie.transaction || "VENTA"}</span>
+            </div>
+
             <div class="mb-3 pt-3">
               <h5 class="title">Precio</h5>
               <h4>{`$${Number(propertie.price).toLocaleString("en")} MXN` || "0.00"}</h4>
@@ -270,7 +271,9 @@
 
   .btn__return {
     background-color: #425cc7;
+    background-color: #d9def4;
     color: #fff;
+    color: #2e408b;
     font-size: .98rem;
     font-weight: bold;
     padding: .2rem 1rem;
@@ -378,13 +381,15 @@
   }
 
   .tag-venta {
-    background: rgb(221,25,0);
-    background: linear-gradient(172deg, rgba(221,25,0,1) 0%, rgba(249,85,39,1) 35%, rgba(255,42,0,1) 100%);
+    background: #1D976C;
+    background: -webkit-linear-gradient(to right, #31d76d, #1D976C);
+    background: linear-gradient(to right, #31d76d, #1D976C); 
   }
 
   .tag-renta {
-    background: rgb(137,141,255);
-    background: linear-gradient(172deg, rgba(137,141,255,1) 0%, rgba(80,181,255,1) 35%, rgba(0,202,255,1) 100%);
+    background: #00d2ff;
+    background: -webkit-linear-gradient(to left, #3a7bd5, #00d2ff);
+    background: linear-gradient(to left, #3a7bd5, #00d2ff);
   }
 
   .description {
