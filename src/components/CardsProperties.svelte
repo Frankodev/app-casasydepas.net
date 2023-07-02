@@ -201,7 +201,6 @@
 </div>
 
 <style>
-
   .card {
     width: 19rem;
     margin: auto;
@@ -266,7 +265,7 @@
     }
   }
 
-  @media (max-width: 398px) {
+  @media (max-width: 375px) {
     .card {
       width: 17rem;
     }
