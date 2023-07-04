@@ -30,5 +30,6 @@
     <li>precio o rengo de los precios</li>
     <li>telefono de contacto</li>
     <li>dirección de contacto</li>
+    <li>Zona en donde se encuentra - (para poder filtrar por zona y hacer mas rapida la busqueda para los usuarios)</li>
   </ul>
 </div>

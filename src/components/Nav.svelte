@@ -12,6 +12,8 @@
     user.set(null)
   }
 
+  // función que cierra la sesión del usuario despues de 30 minutos
+
 </script>
 
 <nav class="navbar navbar-expand-lg bg-light">

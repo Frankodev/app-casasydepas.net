@@ -65,7 +65,7 @@
       <div class="text-center p-4">
         <p>
           Comienza a dar de alta las propiedades en venta o renta que quieras
-          compartir en la red de casasydepas.net - Coworking Inmobiliario
+          compartir con la red de Coworkers Inmobiliarios de casasydepas.net
         </p>
         <a
           use:link
