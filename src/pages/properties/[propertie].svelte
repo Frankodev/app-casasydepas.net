@@ -51,11 +51,6 @@
 
 <div class="wrapper">
   <main>
-    <div class="container">
-      <button class="btn btn__return" on:click={returnView}>
-        <span><img src="/icons/arrow_left.svg" alt="arrow return"></span> Regresar 
-      </button>
-    </div>
 
     {#await getPropertie }
       
@@ -73,6 +68,17 @@
 
       <div in:fade={{ duration: 600 }} class="container pb-4">
 
+        <div class="container p-4 d-flex justify-content-between">
+          <button class="btn btn__return" on:click={returnView}>
+            <span><img src="/icons/arrow_left.svg" alt="arrow return"></span> Regresar 
+          </button>
+    
+          <button type="button" class="btn share" on:click={share}>
+            <img src="/icons/share.svg" alt="share">
+            <tool-tip role="tooltip">{copyLink ? 'Link copiado' : 'Compartir link'}</tool-tip>
+            <span class="copy" id="copy">link copiado</span>
+          </button>
+        </div>
 
       <div class="text-center mb-4">
         <span class="badge text-bg-dark">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
@@ -128,13 +134,6 @@
                   Enviar
                   <span><img src="/icons/message.svg" alt="whatsapp"></span>
                 </a>
-
-                <!-- compartir -->
-                <button type="button" class="btn share" on:click={share}>
-                  <img src="/icons/share.svg" alt="share">
-                  <tool-tip role="tooltip">{copyLink ? 'Link copiado' : 'Compartir link'}</tool-tip>
-                  <span class="copy" id="copy">link copiado</span>
-                </button>
 
               </div>
 
@@ -359,11 +358,12 @@
   tool-tip {
     width: max-content;
     position: absolute;
-    top: -85%;
-    left: 0;
+    top: -90%;
+    right: 50%;
+    transform: translate(50%, 0);
     font-size: .8rem;
     
-    padding: .5rem 1rem;
+    padding: .45rem .85rem;
     color: #2e408b;
     background-color: #fff;
     box-shadow: 0 0 10px rgb(0, 0, 0, 25%);
@@ -396,7 +396,8 @@
     display: none;
     position: absolute;
     width: max-content;
-    left: 50%;
+    bottom: 44px;
+    left: -25%;
     color: #2e408b;
     font-size: .8rem;
     font-weight: 500;
@@ -409,25 +410,25 @@
 
   @keyframes copycolor {
     0% {
-      bottom: 30px;
+      bottom: 38px;
     }
     15% {
-      bottom: 35px;
+      bottom: 39px;
     }
     25% {
       bottom: 40px;
     }
     50% {
-      bottom: 42.5px;
+      bottom: 41px;
     }
     75% {
-      bottom: 45px;
+      bottom: 42px;
     }
     100% {
-      bottom: 47.5px;
+      bottom: 43px;
     }
     125% {
-      bottom: 48px;
+      bottom: 44px;
     }
   }
 
