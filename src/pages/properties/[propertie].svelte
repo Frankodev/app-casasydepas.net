@@ -30,6 +30,17 @@
   }
   const getPropertie = querySnapShot()
 
+  const share = () => {
+    const copy = document.getElementById('copy')
+    const urlShare = window.location.href
+    navigator.clipboard.writeText(urlShare)
+
+    copy.classList.add("active");
+    setTimeout(() => {
+      copy.classList.remove("active");
+    }, 990);
+  }
+
   const returnView = () => window.history.back();
 </script>
 
@@ -103,15 +114,23 @@
               <h4 class="text-dark-emphasis">{propertie.broker || 'Coworker'}</h4>
 
               <div class="btns__call-broker">
-                <a href={`tel:${propertie.tel}`} class="btn btn__call">
+                <a href={`tel:${propertie.tel}`} class="btn btn__call" role="button">
                   Llamar asesor
                   <span><img src="/icons/phone.svg" alt="whatsapp"></span>
                 </a>
   
-                <a target="_blank" href={`https://wa.me/52${propertie.whatsapp}`} class="btn btn__message">
+                <a target="_blank" href={`https://wa.me/52${propertie.whatsapp}`} class="btn btn__message" role="button">
                   Enviar
                   <span><img src="/icons/message.svg" alt="whatsapp"></span>
                 </a>
+
+                <!-- compartir -->
+                <button type="button" class="btn share" on:click={share}>
+                  <img src="/icons/share.svg" alt="share">
+                  <tool-tip role="tooltip">Compartir link</tool-tip>
+                  <span class="copy" id="copy">link copiado</span>
+                </button>
+
               </div>
 
             </div>
@@ -226,7 +245,6 @@
 </div>
 
 <style>
-
 .wrapper {
     min-height: 100vh;
     padding: 1.5rem;
@@ -245,6 +263,7 @@
     font-size: 2.3rem;
   }
 
+  /* btns contact brokers */
   .btns__call-broker {
     display: inline-flex;
     justify-content: flex-start;
@@ -307,6 +326,104 @@
   .btn__message:hover {
     background: linear-gradient(172deg, #21ff30 0%, #198854 35%, #11912f 100%);
     box-shadow: 0 1px 2px 0 rgb(0, 0, 0, 25%);
+  }
+
+  /* btn share */
+  .share {
+    all: unset;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    padding: .6rem;
+    border-radius: 50%;
+    background-color: #2e408b;
+    background-color: #d9def4;
+
+    cursor: pointer;
+  }
+  
+  .share, 
+  .share img {
+    transition: all .3s ease;
+  }
+
+  /* tool tip */
+  tool-tip {
+    width: max-content;
+    position: absolute;
+    top: -85%;
+    left: 0;
+    font-size: .8rem;
+    
+    padding: .5rem 1rem;
+    color: #2e408b;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgb(0, 0, 0, 25%);
+    border-radius: 8px;
+    
+    pointer-events: none;
+    user-select: none;
+    
+    z-index: 1;
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+
+  :has(> tool-tip):hover tool-tip {
+    opacity: 1;
+  }
+
+  .share:hover,
+  .share:active {
+    box-shadow: 0 1px 42px 0 rgb(0, 0, 0, 25%);
+  }
+  
+  .share:hover img,
+  .share:active img {
+    transform: scale(1.06);
+  }
+
+  /* btn copy */
+  .copy {
+    display: none;
+    position: absolute;
+    width: max-content;
+    left: 50%;
+    color: #2e408b;
+    font-size: .8rem;
+    font-weight: 500;
+  }
+
+  .copy.active {
+    display: block;
+    animation: copycolor 1.2s ease-in-out;
+  }
+
+  @keyframes copycolor {
+    0% {
+      bottom: 30px;
+    }
+    15% {
+      bottom: 35px;
+    }
+    25% {
+      bottom: 40px;
+    }
+    50% {
+      bottom: 42.5px;
+    }
+    75% {
+      bottom: 45px;
+    }
+    100% {
+      bottom: 47.5px;
+    }
+    125% {
+      bottom: 48px;
+    }
   }
 
 

@@ -17,6 +17,12 @@
 <main >
   
   <div in:fade={{ duration: 600 }} class="g-card">
+    <h4 class="g-card__title">¿Coworking Inmobiliario?</h4>
+    <p class="g-card__paragraph">Conocemos el <strong>coworking</strong> como un espacio compartido, <em>físico o virtual</em> donde profesionales como autónomos, empresarios o empleados que cuentan con la modalidad parcial o total de teletrabajo, así como pymes o startups, pueden desarrollar su actividad.</p>
+    <p class="g-card__paragraph">Nosotros le dimos un enfoque al <strong>Sector Inmobiliario</strong>, y creamos este espacio exclusivamente para todos los <strong>Brokers e Inmobiliarias</strong> para trabajar en conjunto, con el fin de potenciar el portafolio de propiedades en venta y renta.</p>
+  </div>
+
+  <div in:fade={{ duration: 600 }} class="g-card">
     <h4 class="g-card__title">¿Qué es casasydepas.net?</h4>
     <p class="g-card__paragraph">casasydepas.net es una plataforma pensada para todos los <strong>Brokers Inmobiliarios</strong> que quieren compartir con otros brokers una propiedad en venta o renta, así mismo podrás buscar en toda la red la propiedad que necesitas para tu cliente.</p>    
   </div>
