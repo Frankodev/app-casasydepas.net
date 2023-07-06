@@ -40,7 +40,7 @@
   <div class="accordion mb-4" id="accordion">
     <div class="accordion-item">
       <h2 class="accordion-header">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
           1.- Solicita tu acceso
         </button>
       </h2>
@@ -59,14 +59,14 @@
 
     <div class="accordion-item">
       <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           2.- Busca una propiedad
         </button>
       </h2>
       <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordion">
         <div class="accordion-body">
           <p class="g-card__paragraph">
-            Busca la propiedad que necesites para tu cliente ya sea una casa, departamento o terreno en venta o renta, ponte en contacto con el <strong>Coworker</strong> que público la propiedad para afinar detalles y concretar una cita.
+            Busca la propiedad que necesites para tu cliente ya sea una casa, departamento o terreno en venta o renta, ponte en contacto con el <strong>Coworker</strong> que público la propiedad para afinar detalles y concretar la visita a la propiedad.
           </p>
         </div>
       </div>

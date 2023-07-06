@@ -11,6 +11,9 @@
   // components 
   import Spinner from '../../components/Spinner.svelte'
 
+  // variables de entorno
+  let copyLink = false;
+
   // params
   export let params;
   const idPropertie = params.propertie.split('_')[1]
@@ -34,6 +37,8 @@
     const copy = document.getElementById('copy')
     const urlShare = window.location.href
     navigator.clipboard.writeText(urlShare)
+
+    copyLink = true
 
     copy.classList.add("active");
     setTimeout(() => {
@@ -127,7 +132,7 @@
                 <!-- compartir -->
                 <button type="button" class="btn share" on:click={share}>
                   <img src="/icons/share.svg" alt="share">
-                  <tool-tip role="tooltip">Compartir link</tool-tip>
+                  <tool-tip role="tooltip">{copyLink ? 'Link copiado' : 'Compartir link'}</tool-tip>
                   <span class="copy" id="copy">link copiado</span>
                 </button>
 
