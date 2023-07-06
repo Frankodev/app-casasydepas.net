@@ -80,8 +80,8 @@
           </button>
         </div>
 
-      <div class="text-center mb-4">
-        <span class="badge text-bg-dark">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
+      <div class="text-center mt-2 mb-4">
+        <span class="badge text-bg-dark mb-2">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
         <h1 class="propertie__title">{propertie.title}</h1>
       </div>
 
