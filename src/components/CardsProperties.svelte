@@ -53,6 +53,11 @@
       toastifyMessage("No se pudo eliminar la propiedad.", "deny");
     }
   };
+
+  const editProperties = async ({target}) => {
+    const idPropertie = target.dataset.id
+    // console.log('editando id...', idPropertie);
+  }
 </script>
 
 <div class="row row-cols-1 row-cols-md-3 g-4 row-prop">
@@ -180,10 +185,25 @@
 
           {#if propertie.user === $userEmail}
             <button
+              type="button"
               data-id={propertie.id}
-              class="btn btn-outline-danger"
-              on:click={deleteProperties}>Eliminar</button
+              class="btn btn-delete"
+              on:click={deleteProperties}> Eliminar
+              <!-- <span><img src="./icons/delete.svg" alt="delete"></span>
+              <tool-tip role="tooltip" class="tooltip" >Eliminar</tool-tip>
+              <span data-id={propertie.id} class="propertie-id"></span> -->
+              </button
             >
+
+            <!-- <button
+              type="button"
+              class="btn btn-edit"
+              on:click={editProperties}>
+              <span><img src="./icons/edit.svg" alt="edit"></span>
+              <tool-tip role="tooltip" class="tooltip">Editar</tool-tip>
+              <span data-id={propertie.id} class="propertie-id"></span>
+              </button
+            > -->
           {/if}
         </div>
 
@@ -245,6 +265,39 @@
   .distribution__item-value {
     color: #0c0f12;
     font-weight: 600;
+  }
+
+  .btn-delete,
+  .btn-edit {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    font-weight: 400;
+
+    transition: all .3s ease;
+  }
+  
+  .btn-delete {
+    background-color: #ff2131;
+  }
+
+  .btn-delete:hover {
+    background-color: #f41c2a;
+  }
+
+  .btn-edit {
+    background-color: #1D976C;
+  }
+
+  .propertie-id {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-radius: 4px;
   }
 
   @media (max-width: 945px) {

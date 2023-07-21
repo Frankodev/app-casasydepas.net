@@ -36,4 +36,4 @@ export const getUrl = (imagesUrl) => getDownloadURL(imagesUrl)
 export const deleteToImg = (imagesDelete) => deleteObject(ref(storage, imagesDelete))
 
 // función para eliminar una propiedad
-export const deletePropertie = (idProperti) => deleteDoc(doc(db, 'properties', idProperti))
+export const deletePropertie = (idPropertie) => deleteDoc(doc(db, 'properties', idPropertie))

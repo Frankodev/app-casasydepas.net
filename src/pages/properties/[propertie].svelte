@@ -34,16 +34,10 @@
   const getPropertie = querySnapShot()
 
   const share = () => {
-    const copy = document.getElementById('copy')
     const urlShare = window.location.href
     navigator.clipboard.writeText(urlShare)
 
     copyLink = true
-
-    copy.classList.add("active");
-    setTimeout(() => {
-      copy.classList.remove("active");
-    }, 990);
   }
 
   const returnView = () => window.history.back();
@@ -69,19 +63,18 @@
       <div in:fade={{ duration: 600 }} class="container pb-4">
 
         <div class="container p-4 d-flex justify-content-between">
-          <button class="btn btn__return" on:click={returnView}>
+          <button type="button" class="btn btn__return" on:click={returnView}>
             <span><img src="/icons/arrow_left.svg" alt="arrow return"></span> Regresar 
           </button>
     
           <button type="button" class="btn share" on:click={share}>
             <img src="/icons/share.svg" alt="share">
-            <tool-tip role="tooltip">{copyLink ? 'Link copiado' : 'Compartir link'}</tool-tip>
-            <span class="copy" id="copy">link copiado</span>
+            <tool-tip role="tooltip" class="{!copyLink ? "tooltip" : "tooltip copy"}">{copyLink ? 'Link copiado' : 'Compartir link'}</tool-tip>
           </button>
         </div>
 
       <div class="text-center mt-2 mb-4">
-        <span class="badge text-bg-dark mb-2">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span>
+        <!-- <span class="badge text-bg-dark mb-2">{propertie.address.development.toUpperCase() || propertie.address.colony.toUpperCase()}</span> -->
         <h1 class="propertie__title">{propertie.title}</h1>
       </div>
 
@@ -160,6 +153,22 @@
 
           <div class="distribution__items">
             <p class="distribution__item">
+              <spam><img src="/icons/type_home.svg" alt="type home" width="26" height="26"/></spam>
+              Tipo propiedad |
+              <spam class="distribution__propertie">{`${propertie.property}`}</spam>
+            </p>
+          </div>
+
+          <div class="distribution__items">
+            <p class="distribution__item">
+              <spam><img src="/icons/development.svg" alt="land" width="26" height="26"/></spam>
+              Desarrollo |
+              <spam class="distribution__propertie">{`${propertie.address.development ? propertie.address.development : "No aplica"}`}</spam>
+            </p>
+          </div>
+
+          <div class="distribution__items">
+            <p class="distribution__item">
               <spam><img src="/icons/land.svg" alt="land" width="26" height="26"/></spam>
               <spam class="distribution__propertie">{`${propertie.land ? propertie.land : "0"}m²`}</spam>
               | Terreno
@@ -210,7 +219,7 @@
 
         <div>
           <h5 class="title">Dirección</h5>
-          <p class="fields-direction">{`${propertie.address.direction}, ${propertie.address.colony}, ${propertie.address.city}, ${propertie.address.estate}, ${propertie.address.postal}` || "No se proporcionó la dirección de la propiedad"}</p>
+          <p class="fields-direction">{`${propertie.address.direction || 'No especificada'}, ${propertie.address.colony || 'No especificada'}, ${propertie.address.city}, ${propertie.address.estate}.` || "No se proporcionó la dirección de la propiedad"}</p>
         </div>
       </div>
 
@@ -354,85 +363,6 @@
     transition: all .3s ease;
   }
 
-  /* tool tip */
-  tool-tip {
-    width: max-content;
-    position: absolute;
-    top: -90%;
-    right: 50%;
-    transform: translate(50%, 0);
-    font-size: .8rem;
-    
-    padding: .45rem .85rem;
-    color: #2e408b;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgb(0, 0, 0, 25%);
-    border-radius: 8px;
-    
-    pointer-events: none;
-    user-select: none;
-    
-    z-index: 1;
-    opacity: 0;
-    transition: opacity .3s ease;
-  }
-
-  :has(> tool-tip):hover tool-tip {
-    opacity: 1;
-  }
-
-  .share:hover,
-  .share:active {
-    box-shadow: 0 1px 42px 0 rgb(0, 0, 0, 25%);
-  }
-  
-  .share:hover img,
-  .share:active img {
-    transform: scale(1.06);
-  }
-
-  /* btn copy */
-  .copy {
-    display: none;
-    position: absolute;
-    width: max-content;
-    bottom: 44px;
-    left: -25%;
-    color: #2e408b;
-    font-size: .8rem;
-    font-weight: 500;
-  }
-
-  .copy.active {
-    display: block;
-    animation: copycolor 1.2s ease-in-out;
-  }
-
-  @keyframes copycolor {
-    0% {
-      bottom: 38px;
-    }
-    15% {
-      bottom: 39px;
-    }
-    25% {
-      bottom: 40px;
-    }
-    50% {
-      bottom: 41px;
-    }
-    75% {
-      bottom: 42px;
-    }
-    100% {
-      bottom: 43px;
-    }
-    125% {
-      bottom: 44px;
-    }
-  }
-
-
   /* fields cards */
   .title {
     color: #ff2131;
@@ -453,6 +383,7 @@
 
   .fields-brokers {
     background-color: #abd0ff;
+    background-color: #dbebff;
     color: #1c1a1c;
     border-radius: .2rem;
   }
@@ -466,6 +397,8 @@
   .fields-direction {
     font-weight: bold;
     letter-spacing: .4px;
+
+    padding: 0 0 0 1rem;
   }
 
   .container-galery {
