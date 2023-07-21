@@ -155,7 +155,7 @@
             <p class="distribution__item">
               <spam><img src="/icons/type_home.svg" alt="type home" width="26" height="26"/></spam>
               Tipo propiedad |
-              <spam class="distribution__propertie">{`${propertie.property}`}</spam>
+              <spam class="distribution__propertie">{`${propertie.property.slice(0, 1).toUpperCase()}${propertie.property.slice(1)}`}</spam>
             </p>
           </div>
 

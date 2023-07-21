@@ -133,12 +133,10 @@
           <div class="mb-2">
             <h5 class="card-title text-primary mb-0">
               {`${propertie.title.substring(0, 28)}` ||
-                "No hay un título para esta propiedad"}
+              `Propiedad en ${propertie.transaction}`}
             </h5>
-            <span class="badge text-bg-light"
-              >{propertie.address.development.toUpperCase() ||
-                propertie.address.colony.toUpperCase()}</span
-            >
+            <span class="badge text-bg-dark"
+              >{propertie.property.toUpperCase()}</span>
           </div>
           <h4 class="card-title">
             {`$${Number(propertie.price).toLocaleString("en")} MXN` || "0.00"}
@@ -149,20 +147,20 @@
             style="height: 21px;"
           >
             <div class="distribution__item">
-              <spam class="distribution__item-value">{propertie.bedroom || "0"}</spam>
               <spam><img src="/icons/bed.svg" alt="bedroom" /></spam>
+              <spam class="distribution__item-value">{propertie.bedroom || "0"}</spam>
             </div>
             <div class="distribution__item">
-              <spam class="distribution__item-value">{propertie.bathroom || "0"}</spam>
               <spam><img src="/icons/shower.svg" alt="bathroom" /></spam>
+              <spam class="distribution__item-value">{propertie.bathroom || "0"}</spam>
             </div>
             <div class="distribution__item">
-              <spam class="distribution__item-value">{`${ propertie.parking || "1"}`}</spam>
               <spam><img src="/icons/parking.svg" alt="parking" /></spam>
+              <spam class="distribution__item-value">{`${ propertie.parking || "1"}`}</spam>
             </div>
             <div class="distribution__item">
-              <spam class="distribution__item-value">{`${propertie.building}m²` || "0"}</spam>
               <spam><img src="/icons/rule.svg" alt="building" /></spam>
+              <spam class="distribution__item-value">{`${propertie.building}m²` || "0"}</spam>
               <!-- <spam>m²</spam> -->
             </div>
           </div>
@@ -255,7 +253,7 @@
   .distribution__item {
     display: flex;
     align-items: center;
-    gap: .25rem;
+    gap: .35rem;
 
     background-color: #ebedee;
     padding: .25rem .50rem;
