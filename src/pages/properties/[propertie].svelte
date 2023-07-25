@@ -43,6 +43,10 @@
   const returnView = () => window.history.back();
 </script>
 
+<svelte:head>
+  <title>casasydepas.net</title>
+</svelte:head>
+
 <div class="wrapper">
   <main>
 
