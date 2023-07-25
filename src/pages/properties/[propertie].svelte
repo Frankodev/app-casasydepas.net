@@ -16,9 +16,6 @@
 
   // params
   export let params;
-
-  console.log('params', params.propertie);
-
   const idPropertie = params.propertie.split('_')[1];
 
   // función que trae de la db la propiedad a visualizar.
@@ -126,7 +123,7 @@
                   <span><img src="/icons/phone.svg" alt="whatsapp"></span>
                 </a>
   
-                <a target="_blank" href={`https://wa.me/52${propertie.whatsapp}?text=¡Hola!+Vi+esto+en,+https://casasydepas-net.web.app/#/ventas-rentas/#/${params.propertie}`} class="btn btn__message" role="button">
+                <a target="_blank" href={`https://wa.me/52${propertie.whatsapp}?text=¡Hola!+Podrías+darme+más+información+de...+https://casasydepas-net.web.app/%23/ventas-rentas/%23/${params.propertie}`} class="btn btn__message" role="button">
                   Enviar
                   <span><img src="/icons/message.svg" alt="whatsapp"></span>
                 </a>
